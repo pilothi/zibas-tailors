@@ -1,1 +1,1389 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zibas Tailors - Production & Ironing Tracker</title>
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#1e3a8a">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3050/3050253.png">
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #3b82f6;
+      --teal: #0f766e;
+      --purple: #6d28d9;
+      --orange: #c2410c;
+      --orange-bg: #fff7ed;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --success: #16a34a;
+      --success-bg: #f0fdf4;
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --text: #1f2937;
+    }
+
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { margin: 0; padding: 0; background-color: var(--bg); color: var(--text); }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      position: relative;
+    }
+    header h1 { margin: 0; font-size: 1.35rem; letter-spacing: 0.5px; }
+    header p { margin: 4px 0 0; font-size: 0.8rem; opacity: 0.85; }
+
+    .header-actions {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 6px;
+    }
+    .sync-btn {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    @media (max-width: 600px) {
+      .header-actions { position: static; transform: none; justify-content: center; margin-top: 8px; }
+    }
+
+    #loader {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.82);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    .spinner {
+      border: 4px solid #e5e7eb;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 10px;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 9000;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+    .modal-box {
+      background: white;
+      border-radius: 12px;
+      max-width: 520px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .manage-group { margin-bottom: 14px; border-bottom: 1px solid #f3f4f6; padding-bottom: 10px; }
+    .manage-group h4 { margin: 0 0 8px 0; font-size: 0.9rem; color: var(--primary); }
+    .manage-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .manage-tag {
+      background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 20px;
+      font-size: 0.83rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .manage-tag button {
+      background: var(--danger); color: white; border: none; border-radius: 50%;
+      width: 18px; height: 18px; font-size: 0.7rem; cursor: pointer; line-height: 1;
+    }
+
+    .container { max-width: 980px; margin: 18px auto; padding: 0 12px; }
+
+    .alert-section {
+      background: var(--danger-bg);
+      border: 1px solid #fca5a5;
+      border-left: 5px solid var(--danger);
+      border-radius: 8px;
+      padding: 12px 15px;
+      margin-bottom: 18px;
+      display: none;
+    }
+    .alert-section h3 { margin: 0 0 8px 0; color: var(--danger); font-size: 0.95rem; }
+    .alert-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .alert-badge {
+      background: white; border: 1px solid #f87171; color: #991b1b;
+      padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-bottom: 15px;
+    }
+    @media (max-width: 720px) { .tabs { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 450px) { .tabs { grid-template-columns: repeat(2, 1fr); } }
+
+    .tab-btn {
+      padding: 11px 6px; border: none; border-radius: 8px; font-size: 0.86rem;
+      font-weight: 700; cursor: pointer; background: #e5e7eb; color: #374151; text-align: center;
+    }
+    .tab-btn.active { background: var(--primary); color: white; }
+
+    .card {
+      background: var(--card); border-radius: 10px; padding: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 14px; }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+    label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.86rem; }
+    input[type="text"], input[type="number"], input[type="date"], select {
+      width: 100%; padding: 9px 11px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.95rem; background: white;
+    }
+
+    .staff-bar {
+      display: flex; flex-wrap: wrap; gap: 8px; background: #f8fafc; padding: 10px;
+      border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 15px; align-items: center; justify-content: space-between;
+    }
+    .btn-add-staff {
+      background: var(--teal); color: white; border: none; border-radius: 6px;
+      padding: 7px 12px; font-weight: 600; cursor: pointer; font-size: 0.82rem; white-space: nowrap;
+    }
+    .btn-manage-del {
+      background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5; border-radius: 6px;
+      padding: 7px 10px; font-weight: 700; cursor: pointer; font-size: 0.8rem; white-space: nowrap;
+    }
+
+    .quick-chips-bar { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 14px; align-items: center; }
+    .bill-chip {
+      background: #eff6ff; border: 1px solid #93c5fd; color: #1e40af;
+      padding: 5px 11px; border-radius: 16px; font-size: 0.82rem; font-weight: 700; cursor: pointer;
+    }
+
+    .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
+    .item-box {
+      border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px; text-align: center; background: #f9fafb; position: relative;
+    }
+    .item-box .del-custom-box {
+      position: absolute; top: 4px; right: 4px; background: #fee2e2; color: var(--danger);
+      border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 0.7rem; font-weight: bold; cursor: pointer; line-height: 1;
+    }
+    .item-box span.title { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; }
+    .counter { display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .counter button {
+      width: 32px; height: 32px; border: none; border-radius: 6px;
+      background: var(--primary-light); color: white; font-size: 1.1rem; font-weight: bold; cursor: pointer;
+    }
+    .counter button.minus { background: #9ca3af; }
+    .counter input {
+      width: 42px; text-align: center; font-size: 1.05rem; font-weight: bold;
+      border: 1px solid #d1d5db; border-radius: 4px; padding: 4px;
+    }
+
+    .manual-item-box {
+      background: #f0f9ff; border: 1px dashed #7dd3fc; border-radius: 8px; padding: 12px; margin-bottom: 10px;
+    }
+    .manual-row { display: grid; grid-template-columns: 1fr 90px auto; gap: 8px; align-items: center; }
+    @media (max-width: 500px) { .manual-row { grid-template-columns: 1fr 75px auto; } }
+    .custom-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .custom-chip {
+      background: white; border: 1px solid #38bdf8; color: #0369a1;
+      padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .custom-chip button {
+      background: #ef4444; color: white; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; cursor: pointer; line-height: 1;
+    }
+
+    .btn-submit {
+      width: 100%; padding: 13px; background: var(--success); color: white;
+      border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer;
+    }
+    .btn-submit:hover { background: #15803d; }
+
+    .assign-row {
+      border: 1px solid #e5e7eb; background: #f9fafb; border-radius: 8px; padding: 12px; margin-bottom: 10px;
+      display: grid; grid-template-columns: 140px 1fr; gap: 12px; align-items: center;
+    }
+    @media (max-width: 650px) { .assign-row { grid-template-columns: 1fr; gap: 8px; } }
+    .item-badge {
+      font-weight: 700; color: var(--primary); font-size: 0.98rem;
+      background: #e0e7ff; padding: 6px 10px; border-radius: 6px; text-align: center;
+    }
+
+    .worker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 14px; margin-top: 12px; }
+    .worker-card {
+      background: #faf5ff; border: 2px solid #d8b4fe; border-radius: 12px; padding: 18px 12px;
+      text-align: center; cursor: pointer; transition: 0.2s; position: relative;
+    }
+    .worker-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+    .worker-card .card-del-btn {
+      position: absolute; top: 8px; right: 8px; background: #fee2e2; color: var(--danger);
+      border: 1px solid #fca5a5; border-radius: 50%; width: 24px; height: 24px; font-size: 0.75rem; font-weight: bold; cursor: pointer; line-height: 1; z-index: 2;
+    }
+    .worker-card .w-icon { font-size: 2rem; margin-bottom: 6px; display: block; }
+    .worker-card .w-name {
+      font-size: 1.25rem; font-weight: 900; color: var(--purple); display: block; text-transform: uppercase; letter-spacing: 0.6px;
+    }
+    .worker-card .w-count {
+      display: inline-block; margin-top: 8px; font-size: 0.8rem; background: white;
+      color: #4b5563; padding: 4px 10px; border-radius: 12px; border: 1px solid #e9d5ff; font-weight: 600;
+    }
+
+    .worker-card.ironer-card { background: var(--orange-bg); border-color: #fdba74; }
+    .worker-card.ironer-card .w-name { color: var(--orange); font-size: 1.35rem; }
+    .worker-card.ironer-card .w-count { border-color: #fed7aa; }
+
+    .btn-back {
+      background: #e5e7eb; color: #1f2937; border: none; padding: 8px 14px;
+      border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.88rem;
+    }
+
+    .assign-box-purple { background: #faf5ff; border: 1px solid #d8b4fe; border-radius: 8px; padding: 14px; margin: 14px 0 20px; }
+    .assign-box-orange { background: var(--orange-bg); border: 1px solid #fdba74; border-radius: 8px; padding: 14px; margin: 14px 0 20px; }
+
+    .found-item-row {
+      display: grid; grid-template-columns: auto 1fr 1.2fr; gap: 10px; align-items: center;
+      background: white; border: 1px solid #e5e7eb; padding: 10px; border-radius: 7px; margin-bottom: 8px;
+    }
+    .found-item-row.iron-row { grid-template-columns: auto 1fr auto; }
+    @media (max-width: 600px) {
+      .found-item-row { grid-template-columns: auto 1fr; }
+      .found-item-row select { grid-column: 1 / -1; }
+    }
+    .found-item-row input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--purple); cursor: pointer; }
+    .found-item-row.iron-row input[type="checkbox"] { accent-color: var(--orange); }
+
+    .stats-filter-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; margin-bottom: 14px; }
+    .total-counter-banner {
+      background: var(--orange); color: white; padding: 10px 14px; border-radius: 8px;
+      font-size: 1rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; margin-top: 10px;
+    }
+
+    .history-card {
+      border: 1px solid #e5e7eb; border-left: 4px solid var(--purple); background: #ffffff;
+      border-radius: 7px; padding: 10px 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+    }
+    .history-card.iron-history { border-left-color: var(--orange); }
+    .history-right { display: flex; align-items: center; gap: 8px; }
+    .history-time { font-size: 0.78rem; background: #f3f4f6; color: #374151; padding: 4px 9px; border-radius: 5px; font-weight: 600; }
+
+    .btn-icon-del {
+      background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5;
+      border-radius: 6px; padding: 4px 8px; font-size: 0.8rem; font-weight: bold; cursor: pointer;
+    }
+
+    .filter-pills { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+    .pill {
+      padding: 6px 12px; border-radius: 20px; border: 1px solid #d1d5db;
+      background: white; cursor: pointer; font-size: 0.82rem; font-weight: 600;
+    }
+    .pill.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .pill.orange-pill.active { background: var(--orange); border-color: var(--orange); }
+
+    .bill-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px; margin-bottom: 14px; background: white; }
+    .bill-card.urgent { border-left: 5px solid var(--danger); background: #fffafa; }
+    .bill-card.tomorrow { border-left: 5px solid var(--warning); background: #fffdf5; }
+    .bill-card.completed { border-left: 5px solid var(--success); background: var(--success-bg); }
+
+    .bill-header {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 6px;
+    }
+    .bill-no { font-size: 1.18rem; font-weight: 800; color: var(--primary); }
+    
+    .delivery-tag { font-size: 0.82rem; padding: 3px 9px; border-radius: 6px; font-weight: 600; background: #e5e7eb; }
+    .delivery-tag.urgent { background: #fee2e2; color: #b91c1c; }
+    .delivery-tag.tomorrow { background: #fef3c7; color: #b45309; }
+    .delivery-tag.done { background: #dcfce7; color: #15803d; }
+
+    .status-item-list { display: flex; flex-direction: column; gap: 8px; }
+    .status-item-row {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+      padding: 9px 12px; border: 1px solid #e5e7eb; border-radius: 7px; background: #f8fafc;
+    }
+    .status-item-row.ironed-done { background: #dcfce7; border-color: #86efac; }
+    .item-left { display: flex; align-items: center; gap: 8px; }
+    .item-name { font-weight: 700; font-size: 0.95rem; }
+    .item-stage-pill {
+      font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; font-weight: 700; background: #e0e7ff; color: #1e40af;
+    }
+    .item-stage-pill.done { background: #16a34a; color: white; }
+    .item-workers { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.78rem; align-items: center; }
+    .w-chip { background: white; border: 1px solid #cbd5e1; padding: 2px 7px; border-radius: 4px; color: #334155; }
+
+    .bill-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 10px; padding-top: 8px; border-top: 1px dashed #e5e7eb; font-size: 0.82rem; color: #6b7280;
+    }
+    .btn-delete-bill {
+      background: #fee2e2; border: 1px solid #fca5a5; color: var(--danger);
+      padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="spinner"></div>
+  <span id="loaderText">Google Sheet-മായി ബന്ധിപ്പിക്കുന്നു...</span>
+</div>
+
+<div id="manageModal" class="modal-overlay">
+  <div class="modal-box">
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e5e7eb; padding-bottom:10px; margin-bottom:14px;">
+      <h3 style="margin:0; color:var(--danger);">🗑️ സ്റ്റാഫുകളെയും ഐറ്റംസുകളെയും ഡിലീറ്റ് ചെയ്യുക</h3>
+      <button type="button" class="btn-back" onclick="closeManageModal()">✕</button>
+    </div>
+    <div id="manageModalBody"></div>
+  </div>
+</div>
+
+<header>
+  <h1>ZIBAS TAILORS</h1>
+  <p>കട്ടിംഗ് ➔ തയ്യൽ ➔ ബട്ടൺ ➔ അയേണിംഗ് ➔ ഡെലിവറി സ്റ്റാറ്റസ്</p>
+  <div class="header-actions">
+    <button class="sync-btn" onclick="openManageModal()">⚙️ സ്റ്റാഫ് ഡിലീറ്റ്</button>
+    <button class="sync-btn" onclick="loadAllData()">🔄 Sync</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <div id="alertSection" class="alert-section">
+    <h3>⚠️ ഡെലിവറി അടുത്ത / തീരാനുള്ള ബില്ലുകൾ (Delivery Tomorrow / Due):</h3>
+    <div id="alertList" class="alert-list"></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('statusTab', this)">📊 സ്റ്റാറ്റസ് (Status)</button>
+    <button class="tab-btn" onclick="switchTab('ironingTab', this)">🔥 അയേണിംഗ്</button>
+    <button class="tab-btn" onclick="switchTab('entryTab', this)">➕ പുതിയ ബിൽ</button>
+    <button class="tab-btn" onclick="switchTab('cuttingTab', this)">✂️ കട്ടിംഗ്</button>
+    <button class="tab-btn" onclick="switchTab('buttonTab', this)">🔘 ബട്ടൺ & തയ്യൽ</button>
+  </div>
+
+  <!-- TAB 1: STATUS -->
+  <div id="statusTab" class="card">
+    <div style="margin-bottom: 12px;">
+      <label>ബിൽ നമ്പർ സെർച്ച് ചെയ്യുക (Search Bill Status):</label>
+      <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="renderBills()">
+    </div>
+    <div class="filter-pills">
+      <button class="pill active" onclick="setFilter('all', this)">എല്ലാം (All)</button>
+      <button class="pill" onclick="setFilter('pending', this)">തീരാനുള്ളവ (Pending)</button>
+      <button class="pill" onclick="setFilter('urgent', this)">നാളെ / ഇന്ന് ഡെലിവറി</button>
+      <button class="pill" onclick="setFilter('completed', this)">റെഡി (Ready)</button>
+    </div>
+    <div id="billsContainer"></div>
+  </div>
+
+  <!-- TAB 2: IRONING -->
+  <div id="ironingTab" class="card" style="display: none;">
+    <div id="ironerListView">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+        <h3 style="margin:0; color: var(--orange);">🔥 അയേണിംഗ് വിഭാഗം (Ironing Staff)</h3>
+        <button type="button" class="btn-add-staff" style="background:var(--orange);" onclick="promptNewStaff('Ironer')">+ പുതിയ അയേണിംഗ് സ്റ്റാഫ്</button>
+      </div>
+      <p style="font-size:0.88rem; color:#4b5563; margin-top:0;">നിങ്ങളുടെ പേരിൽ ക്ലിക്ക് ചെയ്ത് പ്രൊഫൈലിൽ കയറുക:</p>
+      <div id="ironersGrid" class="worker-grid"></div>
+    </div>
+
+    <div id="ironerDetailView" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid #e5e7eb; padding-bottom:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button type="button" class="btn-back" onclick="closeIronerDetail()">⬅️ തിരികെ</button>
+          <h2 id="selectedIronerTitle" style="margin:0; color:var(--orange); text-transform:uppercase;"></h2>
+        </div>
+      </div>
+
+      <div class="assign-box-orange">
+        <label style="color:var(--orange); font-size:0.95rem; margin-bottom:8px;">➕ അയൺ ചെയ്ത ബിൽ നമ്പർ ചേർക്കുക:</label>
+        <input type="text" id="ironTabBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForIroner()">
+        <div id="ironTabFoundBillArea" style="margin-top:12px;"></div>
+      </div>
+
+      <h4 style="margin:0 0 8px 0; color:#374151;">📊 അയൺ ചെയ്തവയുടെ കണക്ക് (Filter & History):</h4>
+      <div class="stats-filter-box">
+        <div class="filter-pills" style="margin-bottom:8px;">
+          <button type="button" class="pill orange-pill active" onclick="setIronerFilter('thisWeek', this)">ഈ ആഴ്ച (This Week)</button>
+          <button type="button" class="pill orange-pill" onclick="setIronerFilter('today', this)">ഇന്ന് (Today)</button>
+          <button type="button" class="pill orange-pill" onclick="setIronerFilter('lastWeek', this)">കഴിഞ്ഞ ആഴ്ച (Last Week)</button>
+          <button type="button" class="pill orange-pill" onclick="setIronerFilter('all', this)">എല്ലാം (All Time)</button>
+          <button type="button" class="pill orange-pill" onclick="setIronerFilter('custom', this)">📅 തീയതി തിരഞ്ഞെടുക്കുക</button>
+        </div>
+
+        <div id="ironerCustomDateRow" class="form-row" style="display:none; margin-top:10px; margin-bottom:0;">
+          <div>
+            <label>മുതൽ (From Date):</label>
+            <input type="date" id="ironFilterFrom" onchange="renderIronerDetail()">
+          </div>
+          <div>
+            <label>വരെ (To Date):</label>
+            <input type="date" id="ironFilterTo" onchange="renderIronerDetail()">
+          </div>
+        </div>
+
+        <div class="total-counter-banner">
+          <span id="ironerFilterLabel">ഈ ആഴ്ച ആകെ അയൺ ചെയ്തത്:</span>
+          <span id="ironerTotalCount" style="font-size:1.3rem;">0 എണ്ണം</span>
+        </div>
+      </div>
+      <div id="ironerHistoryList"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: NEW BILL (SAVE BUTTON RIGHT BELOW DATE & STAYS ON SAME TAB) -->
+  <div id="entryTab" class="card" style="display: none;">
+    <h3 style="margin-top:0; color: var(--primary);">1. പുതിയ ബിൽ ചേർക്കുക</h3>
+    <div class="form-row">
+      <div>
+        <label>ബിൽ നമ്പർ (Bill Number) *</label>
+        <input type="text" id="billNo" placeholder="ഉദാ: 1045">
+      </div>
+      <div>
+        <label>ഡെലിവറി ഡേറ്റ് (Delivery Date) *</label>
+        <input type="date" id="deliveryDate">
+      </div>
+    </div>
+
+    <!-- Save button placed directly under Bill Number & Date for fast entry without scrolling -->
+    <button class="btn-submit" style="margin-bottom: 18px;" onclick="saveBill()">💾 ബിൽ സേവ് ചെയ്യുക</button>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px; border-top: 1px solid #e5e7eb; padding-top: 14px;">
+      <label style="margin:0;">ഐറ്റംസിന്റെ എണ്ണം തിരഞ്ഞെടുക്കുക:</label>
+      <button type="button" class="btn-add-staff" onclick="promptNewStaff('ItemType')">+ പുതിയ സ്ഥിരം ഐറ്റം</button>
+    </div>
+
+    <div id="itemsGrid" class="items-grid"></div>
+
+    <div class="manual-item-box">
+      <label style="color: #0369a1; margin-bottom: 8px;">✍️ മറ്റ് ഐറ്റംസ് മാനുവൽ ആയി ചേർക്കാൻ (ഉദാ: Coat, Suit, Alteration):</label>
+      <div class="manual-row">
+        <input type="text" id="customItemName" placeholder="ഐറ്റത്തിന്റെ പേര്...">
+        <input type="number" id="customItemCount" value="1" min="1" placeholder="എണ്ണം">
+        <button type="button" class="btn-add-staff" style="background: var(--primary); padding: 10px 14px;" onclick="addManualCustomItem()">+ ചേർക്കുക</button>
+      </div>
+      <div id="customItemsList" class="custom-chips"></div>
+    </div>
+  </div>
+
+  <!-- TAB 4: CUTTING -->
+  <div id="cuttingTab" class="card" style="display: none;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+      <h3 style="margin:0; color: var(--primary);">2. കട്ടിംഗ് അസൈൻ ചെയ്യുക (ഓരോ ഐറ്റത്തിനും)</h3>
+      <div style="display:flex; gap:6px;">
+        <button type="button" class="btn-add-staff" onclick="promptNewStaff('Cutter')">+ പുതിയ കട്ടർ</button>
+        <button type="button" class="btn-manage-del" onclick="openManageModal()">🗑️ കട്ടറെ ഡിലീറ്റ്</button>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 8px;">
+      <label>ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (Search Bill Number) *</label>
+      <input type="text" id="cuttingBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForCutting()">
+    </div>
+
+    <div id="pendingCuttingChips" class="quick-chips-bar"></div>
+    <div id="cuttingSelectedBillHeader" style="display:none; font-weight:700; color:var(--primary); margin:10px 0; font-size:1rem;"></div>
+
+    <div id="cuttingQuickApply" class="staff-bar" style="display:none;">
+      <span style="font-size:0.85rem; font-weight:600;">എല്ലാ ഐറ്റത്തിനും ഒരേ കട്ടറെ നൽകാൻ:</span>
+      <div style="display:flex; gap:6px;">
+        <select id="bulkCutterSelect" style="width:auto; padding:6px;"></select>
+        <button type="button" class="btn-add-staff" style="background:var(--primary);" onclick="applyBulkCutter()">Apply All</button>
+      </div>
+    </div>
+
+    <div id="cuttingItemsContainer"></div>
+    <button id="btnSaveCutting" class="btn-submit" style="background: var(--primary); display:none;" onclick="submitCuttingItems()">✂️ കട്ടിംഗ് വിവരങ്ങൾ സേവ് ചെയ്യുക</button>
+  </div>
+
+  <!-- TAB 5: BUTTON & TAILOR -->
+  <div id="buttonTab" class="card" style="display: none;">
+    <div id="buttonWorkerListView">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+        <h3 style="margin:0; color: var(--purple);">🔘 ബട്ടൺ വെക്കുന്ന ആളുകൾ (Button Workers)</h3>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button type="button" class="btn-add-staff" onclick="promptNewStaff('Tailor')">+ പുതിയ തയ്യൽക്കാരൻ</button>
+          <button type="button" class="btn-add-staff" style="background:var(--purple);" onclick="promptNewStaff('Button')">+ പുതിയ ബട്ടൺ വർക്കർ</button>
+          <button type="button" class="btn-manage-del" onclick="openManageModal()">🗑️ ഡിലീറ്റ്</button>
+        </div>
+      </div>
+      <p style="font-size:0.85rem; color:#4b5563; margin-top:0;">ബട്ടൺ വെക്കാൻ കൊടുക്കുന്നതിനും ഇതുവരെ കൊടുത്തവ കാണുന്നതിനും താഴെ ആളുടെ പേരിൽ ക്ലിക്ക് ചെയ്യുക:</p>
+      <div id="buttonWorkersGrid" class="worker-grid"></div>
+    </div>
+
+    <div id="buttonWorkerDetailView" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid #e5e7eb; padding-bottom:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button type="button" class="btn-back" onclick="closeButtonWorkerDetail()">⬅️ തിരികെ</button>
+          <h3 id="selectedButtonWorkerTitle" style="margin:0; color:var(--purple); text-transform:uppercase;"></h3>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-add-staff" onclick="promptNewStaff('Tailor')">+ പുതിയ തയ്യൽക്കാരൻ</button>
+          <button type="button" class="btn-manage-del" onclick="openManageModal()">🗑️ ഡിലീറ്റ്</button>
+        </div>
+      </div>
+
+      <div class="assign-box-purple">
+        <label style="color:var(--purple); font-size:0.95rem; margin-bottom:8px;">➕ പുതിയ ബിൽ ബട്ടൺ വെക്കാൻ കൊടുക്കുക:</label>
+        <input type="text" id="btnTabBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForButtonWorker()">
+        <div id="btnTabFoundBillArea" style="margin-top:12px;"></div>
+      </div>
+
+      <h4 style="margin:0 0 10px 0; color:#374151;">📋 ഇതുവരെ ബട്ടൺ വെക്കാൻ കൊടുത്തവ (സമയസഹിതം):</h4>
+      <div id="buttonWorkerHistoryList"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ⚠️ ഇവിടെ നിങ്ങളുടെ Google Apps Script Web App (/exec) ലിങ്ക് പേസ്റ്റ് ചെയ്യുക:
+  const API_URL = 'https://script.google.com/macros/s/AKfycbw55tsv_nEZv0pjrtMDF3_LcKFH-LmRN7qiFt1HF0DWi8H6z1kICTeMyRxGBLRcIlQ1/exec';
+
+  let bills = [];
+  let staff = { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [] };
+  let currentFilter = 'all';
+  let manualCustomItems = [];
+  let selectedButtonWorker = null;
+  let selectedIroner = null;
+  let ironerDateFilter = 'thisWeek';
+  let activeCuttingBillId = null;
+
+  const DEFAULT_ITEM_TYPES = [
+    { key: 'Shirt', label: 'ഷർട്ട് (Shirt)' },
+    { key: 'Pant', label: 'പാന്റ് (Pant)' },
+    { key: 'Jubba', label: 'ജുബ്ബ (Jubba)' },
+    { key: 'Pajama', label: 'പൈജാമ (Pajama)' },
+    { key: 'Kurta', label: 'കുർത്ത (Kurta)' },
+    { key: 'Qamees', label: 'ഖമീസ് (Qamees)' }
+  ];
+
+  window.onload = () => {
+    const defaultDate = new Date();
+    defaultDate.setDate(defaultDate.getDate() + 3);
+    document.getElementById('deliveryDate').valueAsDate = defaultDate;
+    renderItemBoxes();
+    loadAllData();
+  };
+
+  function showLoader(msg) {
+    document.getElementById('loaderText').innerText = msg || 'ലോഡ് ചെയ്യുന്നു...';
+    document.getElementById('loader').style.display = 'flex';
+  }
+
+  function hideLoader() {
+    document.getElementById('loader').style.display = 'none';
+  }
+
+  async function callApi(payload, loaderMsg) {
+    if (!API_URL || API_URL.includes('നിങ്ങളുടെ_EXEC_LINK')) {
+      alert('index.html ഫയലിൽ നിങ്ങളുടെ Apps Script (/exec) ലിങ്ക് ചേർത്തിട്ടില്ല!');
+      return false;
+    }
+    showLoader(loaderMsg);
+    try {
+      let response;
+      if (!payload) {
+        response = await fetch(API_URL);
+        const data = await response.json();
+        bills = data.bills || [];
+        staff = data.staff || { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [] };
+      } else {
+        response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        const resJson = await response.json();
+        if (!resJson.success) throw new Error(resJson.error || 'Server Error');
+        bills = resJson.data.bills || [];
+        staff = resJson.data.staff || { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [] };
+      }
+      hideLoader();
+      refreshAllActiveViews();
+      return true;
+    } catch (err) {
+      hideLoader();
+      alert('ബന്ധിപ്പിക്കുന്നതിൽ പിശക്: ' + err.message);
+      return false;
+    }
+  }
+
+  function loadAllData() {
+    callApi(null, 'Google Sheet-ൽ നിന്ന് ഡാറ്റ എടുക്കുന്നു...');
+  }
+
+  function refreshAllActiveViews() {
+    renderItemBoxes();
+    renderBills();
+    if (document.getElementById('manageModal').style.display === 'flex') renderManageModalContent();
+    if (document.getElementById('ironingTab').style.display === 'block') {
+      if (selectedIroner) renderIronerDetail();
+      else renderIronersList();
+    }
+    if (document.getElementById('cuttingTab').style.display === 'block') {
+      renderPendingCuttingChips();
+      if (activeCuttingBillId) renderCuttingItemsForm(activeCuttingBillId);
+    }
+    if (document.getElementById('buttonTab').style.display === 'block') {
+      if (selectedButtonWorker) renderButtonWorkerDetail();
+      else renderButtonWorkersList();
+    }
+  }
+
+  function switchTab(tabId, btn) {
+    ['statusTab', 'ironingTab', 'entryTab', 'cuttingTab', 'buttonTab'].forEach(id => {
+      document.getElementById(id).style.display = id === tabId ? 'block' : 'none';
+    });
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    if (tabId === 'statusTab') renderBills();
+    if (tabId === 'ironingTab') {
+      selectedIroner = null;
+      document.getElementById('ironerListView').style.display = 'block';
+      document.getElementById('ironerDetailView').style.display = 'none';
+      renderIronersList();
+    }
+    if (tabId === 'cuttingTab') setupCuttingTab();
+    if (tabId === 'buttonTab') {
+      selectedButtonWorker = null;
+      document.getElementById('buttonWorkerListView').style.display = 'block';
+      document.getElementById('buttonWorkerDetailView').style.display = 'none';
+      renderButtonWorkersList();
+    }
+  }
+
+  function openManageModal() {
+    renderManageModalContent();
+    document.getElementById('manageModal').style.display = 'flex';
+  }
+
+  function closeManageModal() {
+    document.getElementById('manageModal').style.display = 'none';
+  }
+
+  function renderManageModalContent() {
+    const body = document.getElementById('manageModalBody');
+    const categories = [
+      { role: 'Cutter', title: '✂️ കട്ടർമാർ (Cutters)' },
+      { role: 'Tailor', title: '🧵 തയ്യൽക്കാർ (Tailors)' },
+      { role: 'Button', title: '🔘 ബട്ടൺ വർക്കർമാർ (Button Workers)' },
+      { role: 'Ironer', title: '🔥 അയേണിംഗ് സ്റ്റാഫുകൾ (Ironers)' },
+      { role: 'ItemType', title: '👕 പുതിയതായി ചേർത്ത സ്ഥിരം ഐറ്റംസ് (Custom Items)' }
+    ];
+
+    body.innerHTML = categories.map(cat => {
+      const list = staff[cat.role] || [];
+      const tagsHtml = list.length === 0 
+        ? '<span style="font-size:0.8rem; color:#9ca3af;">പേരുകൾ ഒന്നും ഇല്ല</span>'
+        : list.map(name => `
+            <span class="manage-tag">
+              ${name}
+              <button type="button" onclick="deleteStaffMember('${cat.role}', '${name.replace(/'/g, "\\'")}')">✕</button>
+            </span>
+          `).join('');
+
+      return `<div class="manage-group"><h4>${cat.title}</h4><div class="manage-tags">${tagsHtml}</div></div>`;
+    }).join('');
+  }
+
+  function deleteStaffMember(role, name, event) {
+    if (event) event.stopPropagation();
+    if (!confirm(`"${name}" എന്ന പേര് ഡിലീറ്റ് ചെയ്യണമെന്ന് ഉറപ്പാണോ?`)) return;
+    if (selectedIroner === name) selectedIroner = null;
+    if (selectedButtonWorker === name) selectedButtonWorker = null;
+    callApi({ action: 'deleteStaff', role, name }, 'ഡിലീറ്റ് ചെയ്യുന്നു...');
+  }
+
+  function getAllPresetTypes() {
+    const list = DEFAULT_ITEM_TYPES.map(d => ({ ...d, isCustom: false }));
+    (staff.ItemType || []).forEach(customName => {
+      if (!list.some(item => item.key.toLowerCase() === customName.toLowerCase())) {
+        list.push({ key: customName, label: customName, isCustom: true });
+      }
+    });
+    return list;
+  }
+
+  function renderItemBoxes() {
+    const grid = document.getElementById('itemsGrid');
+    const allTypes = getAllPresetTypes();
+    const currentCounts = {};
+    allTypes.forEach(t => {
+      const el = document.getElementById('count-' + t.key);
+      if (el) currentCounts[t.key] = parseInt(el.value) || 0;
+    });
+
+    grid.innerHTML = allTypes.map(t => `
+      <div class="item-box">
+        ${t.isCustom ? `<button type="button" class="del-custom-box" onclick="deleteStaffMember('ItemType', '${t.key.replace(/'/g, "\\'")}')">✕</button>` : ''}
+        <span class="title">${t.label}</span>
+        <div class="counter">
+          <button type="button" class="minus" onclick="updateCount('${t.key}', -1)">-</button>
+          <input type="text" id="count-${t.key}" value="${currentCounts[t.key] || 0}" readonly>
+          <button type="button" onclick="updateCount('${t.key}', 1)">+</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function promptNewStaff(role) {
+    const roleNames = {
+      Cutter: 'കട്ടറുടെ പേര് (Cutter Name)',
+      Tailor: 'തയ്യൽക്കാരന്റെ പേര് (Tailor Name)',
+      Button: 'ബട്ടൺ വെക്കുന്ന ആളുടെ പേര്',
+      Ironer: 'അയേണിംഗ് സ്റ്റാഫിന്റെ പേര്',
+      ItemType: 'പുതിയ സ്ഥിരം ഐറ്റത്തിന്റെ പേര് (ഉദാ: Safari, Suit)'
+    };
+    const name = prompt(`${roleNames[role]} നൽകുക:`);
+    if (!name || !name.trim()) return;
+    callApi({ action: 'addStaff', role, name: name.trim() }, 'സേവ് ചെയ്യുന്നു...');
+  }
+
+  function formatCurrentDateTime() {
+    const now = new Date();
+    const datePart = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+    const timePart = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+    return `${datePart}, ${timePart}`;
+  }
+
+  function getTodayISO() {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  }
+
+  // --- IRONING ---
+  function renderIronersList() {
+    const grid = document.getElementById('ironersGrid');
+    const ironers = staff.Ironer || [];
+    if (ironers.length === 0) {
+      grid.innerHTML = `<p style="color:#6b7280; grid-column:1/-1;">അയേണിംഗ് സ്റ്റാഫുകളുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
+      return;
+    }
+    grid.innerHTML = ironers.map(name => {
+      let weeklyCount = 0;
+      bills.forEach(b => b.items.forEach(it => {
+        if (it.ironed && it.ironer === name && isDateInFilter(it.ironDate || it.ironTime, 'thisWeek')) weeklyCount++;
+      }));
+      const safeName = name.replace(/'/g, "\\'");
+      return `
+        <div class="worker-card ironer-card" onclick="openIronerDetail('${safeName}')">
+          <button type="button" class="card-del-btn" onclick="deleteStaffMember('Ironer', '${safeName}', event)">✕</button>
+          <span class="w-icon">🔥</span>
+          <span class="w-name">${name.toUpperCase()}</span>
+          <span class="w-count">ഈ ആഴ്ച: ${weeklyCount} എണ്ണം</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openIronerDetail(ironerName) {
+    selectedIroner = ironerName;
+    ironerDateFilter = 'thisWeek';
+    document.getElementById('ironerListView').style.display = 'none';
+    document.getElementById('ironerDetailView').style.display = 'block';
+    document.getElementById('selectedIronerTitle').innerText = `🔥 ${ironerName.toUpperCase()}`;
+    document.getElementById('ironTabBillSearch').value = '';
+    document.getElementById('ironTabFoundBillArea').innerHTML = '';
+    const pills = document.querySelectorAll('.orange-pill');
+    pills.forEach(p => p.classList.remove('active'));
+    if (pills[0]) pills[0].classList.add('active');
+    document.getElementById('ironerCustomDateRow').style.display = 'none';
+    renderIronerDetail();
+  }
+
+  function closeIronerDetail() {
+    selectedIroner = null;
+    document.getElementById('ironerDetailView').style.display = 'none';
+    document.getElementById('ironerListView').style.display = 'block';
+    renderIronersList();
+  }
+
+  function searchBillForIroner() {
+    const query = document.getElementById('ironTabBillSearch').value.trim().toLowerCase();
+    const area = document.getElementById('ironTabFoundBillArea');
+    area.innerHTML = '';
+    if (!query) return;
+
+    let matchedBill = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
+    if (!matchedBill) {
+      area.innerHTML = `<p style="color:#dc2626; font-size:0.85rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      return;
+    }
+
+    let rowsHtml = `<div style="font-weight:700; color:var(--primary); margin-bottom:8px;">Bill #${matchedBill.billNo} (ഡെലിവറി: ${matchedBill.deliveryDate})</div>`;
+    matchedBill.items.forEach((item, idx) => {
+      const isCurrent = item.ironed && item.ironer === selectedIroner;
+      const isOther = item.ironed && item.ironer !== selectedIroner;
+      let note = isCurrent ? `<small style="color:#16a34a;">(ചെയ്തു കഴിഞ്ഞു: ${item.ironTime || ''})</small>` : (isOther ? `<small style="color:#d97706;">(നിലവിൽ: ${item.ironer})</small>` : '');
+      rowsHtml += `
+        <div class="found-item-row iron-row">
+          <input type="checkbox" class="iron-assign-check" data-idx="${idx}" ${isCurrent ? 'checked' : ''}>
+          <div><strong>${item.label}</strong> ${note}</div>
+          <span style="font-size:0.78rem; color:#6b7280;">${item.tailor ? '🧵 ' + item.tailor : ''}</span>
+        </div>
+      `;
+    });
+    rowsHtml += `<button type="button" class="btn-submit" style="background:var(--orange); margin-top:8px;" onclick="saveAssignedIronItems('${matchedBill.id}')">✅ അയൺ ചെയ്തവ സേവ് ചെയ്യുക (${selectedIroner.toUpperCase()})</button>`;
+    area.innerHTML = rowsHtml;
+  }
+
+  async function saveAssignedIronItems(billId) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill) return;
+    const nowTime = formatCurrentDateTime();
+    const todayISO = getTodayISO();
+
+    document.querySelectorAll('.iron-assign-check').forEach(cb => {
+      const idx = parseInt(cb.getAttribute('data-idx'));
+      if (cb.checked) {
+        if (!bill.items[idx].ironed || bill.items[idx].ironer !== selectedIroner) {
+          bill.items[idx].ironTime = nowTime;
+          bill.items[idx].ironDate = todayISO;
+        }
+        bill.items[idx].ironed = true;
+        bill.items[idx].ironer = selectedIroner;
+      } else if (bill.items[idx].ironer === selectedIroner) {
+        bill.items[idx].ironed = false;
+        bill.items[idx].ironer = '';
+        bill.items[idx].ironTime = '';
+        bill.items[idx].ironDate = '';
+      }
+    });
+
+    document.getElementById('ironTabBillSearch').value = '';
+    document.getElementById('ironTabFoundBillArea').innerHTML = '';
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'അയേണിംഗ് സേവ് ചെയ്യുന്നു...');
+  }
+
+  async function removeIroningEntry(billId, itemIdx) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill || !confirm(`Bill #${bill.billNo} (${bill.items[itemIdx].label})-ന്റെ അയേണിംഗ് എൻട്രി ഡിലീറ്റ് ചെയ്യണമോ?`)) return;
+    bill.items[itemIdx].ironed = false;
+    bill.items[itemIdx].ironer = '';
+    bill.items[itemIdx].ironTime = '';
+    bill.items[itemIdx].ironDate = '';
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'ഡിലീറ്റ് ചെയ്യുന്നു...');
+  }
+
+  function setIronerFilter(filterType, btn) {
+    ironerDateFilter = filterType;
+    document.querySelectorAll('.orange-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const customRow = document.getElementById('ironerCustomDateRow');
+    if (filterType === 'custom') {
+      customRow.style.display = 'grid';
+      if (!document.getElementById('ironFilterFrom').value) {
+        document.getElementById('ironFilterFrom').value = getTodayISO();
+        document.getElementById('ironFilterTo').value = getTodayISO();
+      }
+    } else customRow.style.display = 'none';
+    renderIronerDetail();
+  }
+
+  function parseItemDate(dateOrTimeStr) {
+    if (!dateOrTimeStr) return null;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateOrTimeStr)) {
+      const p = dateOrTimeStr.split('-');
+      return new Date(p[0], p[1] - 1, p[2]);
+    }
+    const parsed = new Date(dateOrTimeStr.split(',')[0]);
+    if (!isNaN(parsed.getTime())) { parsed.setHours(0, 0, 0, 0); return parsed; }
+    return null;
+  }
+
+  function isDateInFilter(dateStr, filterMode) {
+    if (filterMode === 'all') return true;
+    const itemDate = parseItemDate(dateStr);
+    if (!itemDate) return false;
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    if (filterMode === 'today') return itemDate.getTime() === today.getTime();
+
+    const dayOfWeek = today.getDay();
+    const diffToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    const startOfThisWeek = new Date(today);
+    startOfThisWeek.setDate(today.getDate() - diffToMonday);
+
+    if (filterMode === 'thisWeek') {
+      const endOfThisWeek = new Date(startOfThisWeek);
+      endOfThisWeek.setDate(startOfThisWeek.getDate() + 6);
+      return itemDate >= startOfThisWeek && itemDate <= endOfThisWeek;
+    }
+    if (filterMode === 'lastWeek') {
+      const startOfLastWeek = new Date(startOfThisWeek);
+      startOfLastWeek.setDate(startOfThisWeek.getDate() - 7);
+      const endOfLastWeek = new Date(startOfThisWeek);
+      endOfLastWeek.setDate(startOfThisWeek.getDate() - 1);
+      return itemDate >= startOfLastWeek && itemDate <= endOfLastWeek;
+    }
+    if (filterMode === 'custom') {
+      const f = document.getElementById('ironFilterFrom').value;
+      const t = document.getElementById('ironFilterTo').value;
+      if (f && itemDate < parseItemDate(f)) return false;
+      if (t && itemDate > parseItemDate(t)) return false;
+      return true;
+    }
+    return true;
+  }
+
+  function renderIronerDetail() {
+    const historyContainer = document.getElementById('ironerHistoryList');
+    const titles = { thisWeek: 'ഈ ആഴ്ച ആകെ അയൺ ചെയ്തത്:', today: 'ഇന്ന് ആകെ അയൺ ചെയ്തത്:', lastWeek: 'കഴിഞ്ഞ ആഴ്ച ആകെ അയൺ ചെയ്തത്:', all: 'ഇതുവരെ ആകെ അയൺ ചെയ്തത്:', custom: 'തിരഞ്ഞെടുത്ത ദിവസങ്ങളിൽ:' };
+    document.getElementById('ironerFilterLabel').innerText = titles[ironerDateFilter] || 'ആകെ എണ്ണം:';
+
+    const matchedItems = [];
+    bills.forEach(bill => bill.items.forEach((item, idx) => {
+      if (item.ironed && item.ironer === selectedIroner && isDateInFilter(item.ironDate || item.ironTime, ironerDateFilter)) {
+        matchedItems.push({ billId: bill.id, itemIdx: idx, billNo: bill.billNo, label: item.label, ironTime: item.ironTime || '', tailor: item.tailor });
+      }
+    }));
+
+    document.getElementById('ironerTotalCount').innerText = `${matchedItems.length} എണ്ണം`;
+    if (matchedItems.length === 0) {
+      historyContainer.innerHTML = `<p style="color:#6b7280; font-size:0.9rem;">ഈ കാലയളവിൽ അയൺ ചെയ്ത ഐറ്റംസ് ഒന്നും കണ്ടെത്തിയില്ല.</p>`;
+      return;
+    }
+    historyContainer.innerHTML = matchedItems.map(h => `
+      <div class="history-card iron-history">
+        <div>
+          <strong style="color:var(--primary); font-size:1rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          ${h.tailor ? `<div style="font-size:0.8rem; color:#4b5563;">🧵 തയ്ച്ചത്: ${h.tailor}</div>` : ''}
+        </div>
+        <div class="history-right">
+          <span class="history-time">🕒 ${h.ironTime}</span>
+          <button type="button" class="btn-icon-del" onclick="removeIroningEntry('${h.billId}', ${h.itemIdx})">🗑️</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // --- NEW BILL (STAYS ON NEW BILL TAB AFTER SAVING) ---
+  function updateCount(itemKey, delta) {
+    const input = document.getElementById('count-' + itemKey);
+    if (!input) return;
+    let val = parseInt(input.value) + delta;
+    if (val < 0) val = 0;
+    input.value = val;
+  }
+
+  function addManualCustomItem() {
+    const nameInput = document.getElementById('customItemName');
+    const countInput = document.getElementById('customItemCount');
+    const name = nameInput.value.trim();
+    const count = parseInt(countInput.value) || 0;
+    if (!name || count <= 0) return alert('ഐറ്റത്തിന്റെ പേരും എണ്ണവും നൽകുക!');
+    const existing = manualCustomItems.find(i => i.name.toLowerCase() === name.toLowerCase());
+    if (existing) existing.count += count;
+    else manualCustomItems.push({ name, count });
+    nameInput.value = ''; countInput.value = 1;
+    renderManualCustomChips();
+  }
+
+  function removeManualCustomItem(index) {
+    manualCustomItems.splice(index, 1);
+    renderManualCustomChips();
+  }
+
+  function renderManualCustomChips() {
+    document.getElementById('customItemsList').innerHTML = manualCustomItems.map((item, idx) => `
+      <span class="custom-chip">${item.name} × ${item.count} <button type="button" onclick="removeManualCustomItem(${idx})">✕</button></span>
+    `).join('');
+  }
+
+  async function saveBill() {
+    const billNoInput = document.getElementById('billNo');
+    const billNo = billNoInput.value.trim();
+    const deliveryDate = document.getElementById('deliveryDate').value;
+    if (!billNo || !deliveryDate) return alert('ബിൽ നമ്പറും ഡെലിവറി ഡേറ്റും നൽകുക!');
+
+    const itemsList = [];
+    const allTypes = getAllPresetTypes();
+    allTypes.forEach(t => {
+      const count = parseInt(document.getElementById('count-' + t.key)?.value) || 0;
+      for (let i = 1; i <= count; i++) {
+        itemsList.push({ label: count > 1 ? `${t.key} #${i}` : t.key, cutter: '', tailor: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false });
+      }
+    });
+    manualCustomItems.forEach(mItem => {
+      for (let i = 1; i <= mItem.count; i++) {
+        itemsList.push({ label: mItem.count > 1 ? `${mItem.name} #${i}` : mItem.name, cutter: '', tailor: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false });
+      }
+    });
+
+    if (itemsList.length === 0) return alert('കുറഞ്ഞത് ഒരു ഐറ്റം എങ്കിലും തിരഞ്ഞെടുക്കുക!');
+
+    const ok = await callApi({ action: 'addBill', billData: { billNo, deliveryDate, items: itemsList } }, 'ബിൽ സേവ് ചെയ്യുന്നു...');
+    if (ok) {
+      billNoInput.value = '';
+      allTypes.forEach(t => { const inp = document.getElementById('count-' + t.key); if (inp) inp.value = 0; });
+      manualCustomItems = [];
+      renderManualCustomChips();
+      alert(`✅ ബിൽ #${billNo} സേവ് ചെയ്തു! അടുത്ത പുതിയ ബിൽ ചേർക്കാം.`);
+      billNoInput.focus();
+    }
+  }
+
+  // --- CUTTING ---
+  function setupCuttingTab() {
+    activeCuttingBillId = null;
+    document.getElementById('cuttingBillSearch').value = '';
+    document.getElementById('cuttingSelectedBillHeader').style.display = 'none';
+    document.getElementById('cuttingQuickApply').style.display = 'none';
+    document.getElementById('cuttingItemsContainer').innerHTML = '';
+    document.getElementById('btnSaveCutting').style.display = 'none';
+    renderPendingCuttingChips();
+  }
+
+  function renderPendingCuttingChips() {
+    const chipsDiv = document.getElementById('pendingCuttingChips');
+    const unassigned = bills.filter(b => b.items.some(it => !it.cutter));
+    if (unassigned.length === 0) {
+      chipsDiv.innerHTML = '<span style="font-size:0.82rem; color:#16a34a;">✅ എല്ലാ ബില്ലുകൾക്കും കട്ടർമാരെ അസൈൻ ചെയ്തിട്ടുണ്ട്.</span>';
+      return;
+    }
+    chipsDiv.innerHTML = `<span style="font-size:0.8rem; color:#4b5563; font-weight:600;">കട്ടിംഗ് ബാക്കിയുള്ളവ:</span>` +
+      unassigned.slice(0, 15).map(b => `<span class="bill-chip" onclick="selectCuttingBillFromChip('${b.billNo}')">#${b.billNo} (${b.items.length})</span>`).join('');
+  }
+
+  function selectCuttingBillFromChip(billNo) {
+    document.getElementById('cuttingBillSearch').value = billNo;
+    searchBillForCutting();
+  }
+
+  function searchBillForCutting() {
+    const query = document.getElementById('cuttingBillSearch').value.trim().toLowerCase();
+    const headerDiv = document.getElementById('cuttingSelectedBillHeader');
+    const quickBar = document.getElementById('cuttingQuickApply');
+    const container = document.getElementById('cuttingItemsContainer');
+    const saveBtn = document.getElementById('btnSaveCutting');
+
+    if (!query) { setupCuttingTab(); return; }
+    let matched = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
+    if (!matched) {
+      activeCuttingBillId = null;
+      headerDiv.style.display = 'block';
+      headerDiv.innerHTML = `<span style="color:#dc2626; font-size:0.88rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</span>`;
+      quickBar.style.display = 'none'; container.innerHTML = ''; saveBtn.style.display = 'none';
+      return;
+    }
+    renderCuttingItemsForm(matched.id);
+  }
+
+  function renderCuttingItemsForm(billId) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill) return;
+    activeCuttingBillId = bill.id;
+    const headerDiv = document.getElementById('cuttingSelectedBillHeader');
+    headerDiv.style.display = 'block';
+    headerDiv.innerHTML = `Bill #${bill.billNo} <span style="font-weight:normal; font-size:0.85rem; color:#4b5563;">(ഡെലിവറി: ${bill.deliveryDate})</span>`;
+
+    document.getElementById('bulkCutterSelect').innerHTML = '<option value="">-- കട്ടർ --</option>' + staff.Cutter.map(c => `<option value="${c}">${c}</option>`).join('');
+    document.getElementById('cuttingQuickApply').style.display = 'flex';
+    document.getElementById('btnSaveCutting').style.display = 'block';
+
+    document.getElementById('cuttingItemsContainer').innerHTML = bill.items.map((item, idx) => {
+      const options = '<option value="">-- കട്ടറെ ഒഴിവാക്കുക / തിരഞ്ഞെടുക്കുക --</option>' + staff.Cutter.map(c => `<option value="${c}" ${item.cutter === c ? 'selected' : ''}>${c}</option>`).join('');
+      return `<div class="assign-row"><div class="item-badge">${item.label}</div><div><label>കട്ടർ (Cutter):</label><select class="item-cutter-select" data-idx="${idx}">${options}</select></div></div>`;
+    }).join('');
+  }
+
+  function applyBulkCutter() {
+    const val = document.getElementById('bulkCutterSelect').value;
+    if (val) document.querySelectorAll('.item-cutter-select').forEach(sel => sel.value = val);
+  }
+
+  async function submitCuttingItems() {
+    if (!activeCuttingBillId) return;
+    const bill = bills.find(b => b.id === activeCuttingBillId);
+    document.querySelectorAll('.item-cutter-select').forEach(sel => {
+      bill.items[parseInt(sel.getAttribute('data-idx'))].cutter = sel.value;
+    });
+    await callApi({ action: 'updateBillItems', billId: activeCuttingBillId, updatedItemsJson: JSON.stringify(bill.items) }, 'കട്ടിംഗ് സേവ് ചെയ്യുന്നു...');
+    alert(`Bill #${bill.billNo}-ലെ കട്ടിംഗ് വിവരങ്ങൾ സേവ് ചെയ്തു!`);
+    setupCuttingTab();
+  }
+
+  // --- BUTTON WORKER ---
+  function renderButtonWorkersList() {
+    const grid = document.getElementById('buttonWorkersGrid');
+    const workers = staff.Button || [];
+    if (workers.length === 0) {
+      grid.innerHTML = `<p style="color:#6b7280; grid-column:1/-1;">ബട്ടൺ വെക്കുന്ന ആളുകളുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
+      return;
+    }
+    grid.innerHTML = workers.map(wName => {
+      let total = 0;
+      bills.forEach(b => b.items.forEach(it => { if (it.buttonWorker === wName) total++; }));
+      const safeName = wName.replace(/'/g, "\\'");
+      return `
+        <div class="worker-card" onclick="openButtonWorkerDetail('${safeName}')">
+          <button type="button" class="card-del-btn" onclick="deleteStaffMember('Button', '${safeName}', event)">✕</button>
+          <span class="w-icon">🔘</span>
+          <span class="w-name">${wName.toUpperCase()}</span>
+          <span class="w-count">ആകെ കൊടുത്തത്: ${total} ഐറ്റംസ്</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openButtonWorkerDetail(workerName) {
+    selectedButtonWorker = workerName;
+    document.getElementById('buttonWorkerListView').style.display = 'none';
+    document.getElementById('buttonWorkerDetailView').style.display = 'block';
+    document.getElementById('selectedButtonWorkerTitle').innerText = `🔘 ${workerName.toUpperCase()}`;
+    document.getElementById('btnTabBillSearch').value = '';
+    document.getElementById('btnTabFoundBillArea').innerHTML = '';
+    renderButtonWorkerDetail();
+  }
+
+  function closeButtonWorkerDetail() {
+    selectedButtonWorker = null;
+    document.getElementById('buttonWorkerDetailView').style.display = 'none';
+    document.getElementById('buttonWorkerListView').style.display = 'block';
+    renderButtonWorkersList();
+  }
+
+  function searchBillForButtonWorker() {
+    const query = document.getElementById('btnTabBillSearch').value.trim().toLowerCase();
+    const area = document.getElementById('btnTabFoundBillArea');
+    area.innerHTML = '';
+    if (!query) return;
+
+    let matched = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
+    if (!matched) {
+      area.innerHTML = `<p style="color:#dc2626; font-size:0.85rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      return;
+    }
+
+    let rowsHtml = `<div style="font-weight:700; color:var(--primary); margin-bottom:8px;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
+    matched.items.forEach((item, idx) => {
+      const isHere = item.buttonWorker === selectedButtonWorker;
+      const note = (item.buttonWorker && !isHere) ? `<small style="color:#d97706;">(നിലവിൽ: ${item.buttonWorker})</small>` : (isHere ? `<small style="color:#16a34a;">(നൽകിക്കഴിഞ്ഞു: ${item.buttonTime || ''})</small>` : '');
+      const tailorOpts = '<option value="">-- തയ്ച്ച ആൾ (Tailor) --</option>' + staff.Tailor.map(t => `<option value="${t}" ${item.tailor === t ? 'selected' : ''}>${t}</option>`).join('');
+      rowsHtml += `
+        <div class="found-item-row">
+          <input type="checkbox" class="btn-assign-check" data-idx="${idx}" ${isHere ? 'checked' : ''}>
+          <div><strong>${item.label}</strong> ${note}</div>
+          <select class="btn-assign-tailor" data-idx="${idx}">${tailorOpts}</select>
+        </div>
+      `;
+    });
+    rowsHtml += `<button type="button" class="btn-submit" style="background:var(--purple); margin-top:8px;" onclick="saveAssignedButtonItems('${matched.id}')">✅ ${selectedButtonWorker}-ക്ക് ബട്ടൺ വെക്കാൻ കൊടുക്കുക (Save)</button>`;
+    area.innerHTML = rowsHtml;
+  }
+
+  async function saveAssignedButtonItems(billId) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill) return;
+    const checkboxes = document.querySelectorAll('.btn-assign-check');
+    const tailorSelects = document.querySelectorAll('.btn-assign-tailor');
+    const nowTime = formatCurrentDateTime();
+
+    checkboxes.forEach((cb, i) => {
+      const idx = parseInt(cb.getAttribute('data-idx'));
+      const tailorVal = tailorSelects[i].value;
+      if (cb.checked) {
+        if (bill.items[idx].buttonWorker !== selectedButtonWorker || !bill.items[idx].buttonTime) bill.items[idx].buttonTime = nowTime;
+        bill.items[idx].buttonWorker = selectedButtonWorker;
+        if (tailorVal) bill.items[idx].tailor = tailorVal;
+      } else if (bill.items[idx].buttonWorker === selectedButtonWorker) {
+        bill.items[idx].buttonWorker = '';
+        bill.items[idx].buttonTime = '';
+      }
+    });
+
+    document.getElementById('btnTabBillSearch').value = '';
+    document.getElementById('btnTabFoundBillArea').innerHTML = '';
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'സേവ് ചെയ്യുന്നു...');
+  }
+
+  async function removeButtonEntry(billId, itemIdx) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill || !confirm(`Bill #${bill.billNo} (${bill.items[itemIdx].label})-ന്റെ ബട്ടൺ എൻട്രി ഡിലീറ്റ് ചെയ്യണമോ?`)) return;
+    bill.items[itemIdx].buttonWorker = '';
+    bill.items[itemIdx].buttonTime = '';
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'ഡിലീറ്റ് ചെയ്യുന്നു...');
+  }
+
+  function renderButtonWorkerDetail() {
+    const historyContainer = document.getElementById('buttonWorkerHistoryList');
+    const items = [];
+    bills.forEach(bill => bill.items.forEach((item, idx) => {
+      if (item.buttonWorker === selectedButtonWorker) {
+        items.push({ billId: bill.id, itemIdx: idx, billNo: bill.billNo, deliveryDate: bill.deliveryDate, label: item.label, tailor: item.tailor, buttonTime: item.buttonTime || '', ironed: item.ironed });
+      }
+    }));
+
+    if (items.length === 0) {
+      historyContainer.innerHTML = `<p style="color:#6b7280; font-size:0.9rem;">${selectedButtonWorker}-ക്ക് ഇതുവരെ ബട്ടൺ വെക്കാൻ ഐറ്റംസ് ഒന്നും കൊടുത്തിട്ടില്ല.</p>`;
+      return;
+    }
+    historyContainer.innerHTML = items.map(h => `
+      <div class="history-card">
+        <div>
+          <strong style="color:var(--primary); font-size:1rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          ${h.ironed ? '<span style="background:#dcfce7; color:#15803d; font-size:0.75rem; padding:2px 6px; border-radius:4px; margin-left:6px; font-weight:bold;">✅ Ironed</span>' : ''}
+          <div style="font-size:0.83rem; color:#4b5563;">🧵 തയ്ച്ചത്: <strong>${h.tailor || 'ചേർത്തിട്ടില്ല'}</strong> | ഡെലിവറി: ${h.deliveryDate}</div>
+        </div>
+        <div class="history-right">
+          <span class="history-time">🕒 ${h.buttonTime}</span>
+          <button type="button" class="btn-icon-del" onclick="removeButtonEntry('${h.billId}', ${h.itemIdx})">🗑️</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // --- STATUS PAGE ---
+  function getItemStage(item) {
+    if (item.ironed) return 'Ready';
+    if (item.buttonWorker || item.tailor) return 'Buttoning / Ironing';
+    if (item.cutter) return 'Cutting / Stitching';
+    return 'New Bill';
+  }
+
+  async function deleteSingleItemFromBill(billId, itemIdx) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill) return;
+    if (bill.items.length === 1) {
+      if (confirm(`ഇത് ബില്ലിലെ അവസാനത്തെ ഐറ്റമാണ്. Bill #${bill.billNo} മുഴുവനായി ഡിലീറ്റ് ചെയ്യണോ?`)) deleteBill(billId);
+      return;
+    }
+    if (!confirm(`Bill #${bill.billNo}-ൽ നിന്ന് "${bill.items[itemIdx].label}" ഡിലീറ്റ് ചെയ്യണമെന്ന് ഉറപ്പാണോ?`)) return;
+    bill.items.splice(itemIdx, 1);
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'ഐറ്റം ഡിലീറ്റ് ചെയ്യുന്നു...');
+  }
+
+  async function deleteBill(billId) {
+    if (!confirm('ഈ ബിൽ മുഴുവനായി ഡിലീറ്റ് ചെയ്യണമെന്ന് ഉറപ്പാണോ?')) return;
+    await callApi({ action: 'deleteBill', billId }, 'ബിൽ ഡിലീറ്റ് ചെയ്യുന്നു...');
+  }
+
+  function setFilter(filterType, btn) {
+    currentFilter = filterType;
+    document.querySelectorAll('#statusTab .pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    renderBills();
+  }
+
+  function getDaysDiff(dateStr) {
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const parts = dateStr.split('-');
+    const target = new Date(parts[0], parts[1] - 1, parts[2]); target.setHours(0, 0, 0, 0);
+    return Math.round((target - today) / (1000 * 60 * 60 * 24));
+  }
+
+  function quickSearchBill(billNo) {
+    document.getElementById('searchInput').value = billNo;
+    setFilter('all', document.querySelectorAll('#statusTab .pill')[0]);
+    switchTab('statusTab', document.querySelectorAll('.tab-btn')[0]);
+  }
+
+  function renderBills() {
+    const search = document.getElementById('searchInput').value.trim().toLowerCase();
+    const container = document.getElementById('billsContainer');
+    const alertSection = document.getElementById('alertSection');
+    const alertList = document.getElementById('alertList');
+
+    container.innerHTML = ''; alertList.innerHTML = '';
+    let hasAlerts = false;
+
+    bills.forEach(bill => {
+      const pendingCount = bill.items.filter(i => !i.ironed).length;
+      const diff = getDaysDiff(bill.deliveryDate);
+      if (pendingCount > 0 && diff <= 1) {
+        hasAlerts = true;
+        let statusText = diff === 1 ? 'നാളെ ഡെലിവറി' : (diff === 0 ? 'ഇന്ന് ഡെലിവറി' : 'ഡേറ്റ് കഴിഞ്ഞു');
+        const badge = document.createElement('div');
+        badge.className = 'alert-badge';
+        badge.innerHTML = `Bill #${bill.billNo} (${pendingCount} ബാക്കി) - ${statusText}`;
+        badge.onclick = () => quickSearchBill(bill.billNo);
+        alertList.appendChild(badge);
+      }
+    });
+    alertSection.style.display = hasAlerts ? 'block' : 'none';
+
+    const filteredBills = bills.filter(bill => {
+      if (!bill.billNo.toLowerCase().includes(search)) return false;
+      const pendingCount = bill.items.filter(i => !i.ironed).length;
+      const diff = getDaysDiff(bill.deliveryDate);
+      if (currentFilter === 'pending') return pendingCount > 0;
+      if (currentFilter === 'completed') return pendingCount === 0;
+      if (currentFilter === 'urgent') return pendingCount > 0 && diff <= 1;
+      return true;
+    });
+
+    if (filteredBills.length === 0) {
+      container.innerHTML = `<p style="text-align:center; color:#6b7280; padding:20px;">ബില്ലുകൾ ഒന്നും കണ്ടെത്തിയില്ല.</p>`;
+      return;
+    }
+
+    filteredBills.forEach(bill => {
+      const totalItems = bill.items.length;
+      const ironedCount = bill.items.filter(i => i.ironed).length;
+      const isCompleted = ironedCount === totalItems;
+      const diff = getDaysDiff(bill.deliveryDate);
+
+      let cardClass = 'bill-card', tagClass = 'delivery-tag', statusLabel = `ഡെലിവറി: ${bill.deliveryDate}`;
+      if (isCompleted) { cardClass += ' completed'; tagClass += ' done'; statusLabel = `✅ റെഡി (${bill.deliveryDate})`; }
+      else if (diff <= 0) { cardClass += ' urgent'; tagClass += ' urgent'; statusLabel = diff === 0 ? `🔥 ഇന്ന് ഡെലിവറി (${bill.deliveryDate})` : `🚨 ഡേറ്റ് കഴിഞ്ഞു (${bill.deliveryDate})`; }
+      else if (diff === 1) { cardClass += ' tomorrow'; tagClass += ' tomorrow'; statusLabel = `⚠️ നാളെ ഡെലിവറി (${bill.deliveryDate})`; }
+
+      const itemsHtml = bill.items.map((item, idx) => `
+        <div class="status-item-row ${item.ironed ? 'ironed-done' : ''}">
+          <div class="item-left">
+            <span>${item.ironed ? '✅' : '⏳'}</span>
+            <span class="item-name">${item.label}</span>
+            <span class="item-stage-pill ${item.ironed ? 'done' : ''}">${getItemStage(item)}</span>
+          </div>
+          <div class="item-workers">
+            <span class="w-chip">✂️ ${item.cutter || '-'}</span>
+            <span class="w-chip">🧵 ${item.tailor || '-'}</span>
+            <span class="w-chip">🔘 ${item.buttonWorker || '-'} ${item.buttonTime ? `(${item.buttonTime})` : ''}</span>
+            <span class="w-chip">🔥 ${item.ironer || '-'} ${item.ironTime ? `(${item.ironTime})` : ''}</span>
+            <button type="button" class="btn-icon-del" onclick="deleteSingleItemFromBill('${bill.id}', ${idx})">✕</button>
+          </div>
+        </div>
+      `).join('');
+
+      const card = document.createElement('div');
+      card.className = cardClass;
+      card.innerHTML = `
+        <div class="bill-header"><span class="bill-no">Bill #${bill.billNo}</span><span class="${tagClass}">${statusLabel}</span></div>
+        <div class="status-item-list">${itemsHtml}</div>
+        <div class="bill-footer">
+          <span>അയേണിംഗ്: <strong>${ironedCount} / ${totalItems}</strong> പൂർത്തിയായി</span>
+          <button type="button" class="btn-delete-bill" onclick="deleteBill('${bill.id}')">🗑️ ബിൽ ഡിലീറ്റ്</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+</script>
+
+</body>
+</html>
 
