@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zibas Tailors - Production & Ironing Tracker</title>
+  <title>Zibas Tailors - Production & Customer Tracking</title>
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#1e3a8a">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3050/3050253.png">
@@ -12,9 +12,11 @@
       --primary: #1e3a8a;
       --primary-light: #3b82f6;
       --teal: #0f766e;
+      --teal-bg: #f0fdfa;
       --purple: #6d28d9;
       --orange: #c2410c;
       --orange-bg: #fff7ed;
+      --whatsapp: #16a34a;
       --danger: #dc2626;
       --danger-bg: #fef2f2;
       --warning: #d97706;
@@ -155,11 +157,11 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px;
     }
 
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
     @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
 
     label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.86rem; }
-    input[type="text"], input[type="number"], input[type="date"], select {
+    input[type="text"], input[type="tel"], input[type="number"], input[type="date"], select {
       width: 100%; padding: 9px 11px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.95rem; background: white;
     }
 
@@ -220,7 +222,6 @@
       width: 100%; padding: 13px; background: var(--success); color: white;
       border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer;
     }
-    .btn-submit:hover { background: #15803d; }
 
     .assign-row {
       border: 1px solid #e5e7eb; background: #f9fafb; border-radius: 8px; padding: 12px; margin-bottom: 10px;
@@ -232,19 +233,50 @@
       background: #e0e7ff; padding: 6px 10px; border-radius: 6px; text-align: center;
     }
 
+    /* WORKER PROFILE CARDS WITH PHOTO AVATAR */
     .worker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 14px; margin-top: 12px; }
     .worker-card {
       background: #faf5ff; border: 2px solid #d8b4fe; border-radius: 12px; padding: 18px 12px;
       text-align: center; cursor: pointer; transition: 0.2s; position: relative;
     }
     .worker-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+    
     .worker-card .card-del-btn {
       position: absolute; top: 8px; right: 8px; background: #fee2e2; color: var(--danger);
-      border: 1px solid #fca5a5; border-radius: 50%; width: 24px; height: 24px; font-size: 0.75rem; font-weight: bold; cursor: pointer; line-height: 1; z-index: 2;
+      border: 1px solid #fca5a5; border-radius: 50%; width: 25px; height: 25px; font-size: 0.75rem; font-weight: bold; cursor: pointer; line-height: 1; z-index: 2;
     }
-    .worker-card .w-icon { font-size: 2rem; margin-bottom: 6px; display: block; }
+    .worker-card .card-photo-btn {
+      position: absolute; top: 8px; left: 8px; background: #e0f2fe; color: #0369a1;
+      border: 1px solid #7dd3fc; border-radius: 50%; width: 26px; height: 26px; font-size: 0.8rem; cursor: pointer; line-height: 1; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .avatar-circle {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      margin: 0 auto 8px;
+      object-fit: cover;
+      border: 3px solid white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      display: block;
+      background: white;
+    }
+    .avatar-fallback {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      margin: 0 auto 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      background: white;
+      border: 2px solid #e5e7eb;
+    }
+
     .worker-card .w-name {
-      font-size: 1.25rem; font-weight: 900; color: var(--purple); display: block; text-transform: uppercase; letter-spacing: 0.6px;
+      font-size: 1.2rem; font-weight: 900; color: var(--purple); display: block; text-transform: uppercase; letter-spacing: 0.5px;
     }
     .worker-card .w-count {
       display: inline-block; margin-top: 8px; font-size: 0.8rem; background: white;
@@ -252,8 +284,16 @@
     }
 
     .worker-card.ironer-card { background: var(--orange-bg); border-color: #fdba74; }
-    .worker-card.ironer-card .w-name { color: var(--orange); font-size: 1.35rem; }
+    .worker-card.ironer-card .w-name { color: var(--orange); font-size: 1.28rem; }
     .worker-card.ironer-card .w-count { border-color: #fed7aa; }
+
+    .worker-card.cutter-card { background: var(--teal-bg); border-color: #5eead4; }
+    .worker-card.cutter-card .w-name { color: var(--teal); font-size: 1.25rem; }
+    .worker-card.cutter-card .w-count { border-color: #99f6e4; }
+
+    .profile-header-avatar {
+      width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary);
+    }
 
     .btn-back {
       background: #e5e7eb; color: #1f2937; border: none; padding: 8px 14px;
@@ -262,18 +302,20 @@
 
     .assign-box-purple { background: #faf5ff; border: 1px solid #d8b4fe; border-radius: 8px; padding: 14px; margin: 14px 0 20px; }
     .assign-box-orange { background: var(--orange-bg); border: 1px solid #fdba74; border-radius: 8px; padding: 14px; margin: 14px 0 20px; }
+    .assign-box-teal { background: var(--teal-bg); border: 1px solid #5eead4; border-radius: 8px; padding: 14px; margin: 14px 0 20px; }
 
     .found-item-row {
       display: grid; grid-template-columns: auto 1fr 1.2fr; gap: 10px; align-items: center;
       background: white; border: 1px solid #e5e7eb; padding: 10px; border-radius: 7px; margin-bottom: 8px;
     }
-    .found-item-row.iron-row { grid-template-columns: auto 1fr auto; }
+    .found-item-row.iron-row, .found-item-row.cut-row { grid-template-columns: auto 1fr auto; }
     @media (max-width: 600px) {
       .found-item-row { grid-template-columns: auto 1fr; }
       .found-item-row select { grid-column: 1 / -1; }
     }
     .found-item-row input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--purple); cursor: pointer; }
     .found-item-row.iron-row input[type="checkbox"] { accent-color: var(--orange); }
+    .found-item-row.cut-row input[type="checkbox"] { accent-color: var(--teal); }
 
     .stats-filter-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; margin-bottom: 14px; }
     .total-counter-banner {
@@ -286,6 +328,7 @@
       border-radius: 7px; padding: 10px 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
     }
     .history-card.iron-history { border-left-color: var(--orange); }
+    .history-card.cut-history { border-left-color: var(--teal); }
     .history-right { display: flex; align-items: center; gap: 8px; }
     .history-time { font-size: 0.78rem; background: #f3f4f6; color: #374151; padding: 4px 9px; border-radius: 5px; font-weight: 600; }
 
@@ -312,6 +355,7 @@
       border-bottom: 1px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 6px;
     }
     .bill-no { font-size: 1.18rem; font-weight: 800; color: var(--primary); }
+    .cust-sub { font-size: 0.82rem; color: #4b5563; margin-top: 2px; }
     
     .delivery-tag { font-size: 0.82rem; padding: 3px 9px; border-radius: 6px; font-weight: 600; background: #e5e7eb; }
     .delivery-tag.urgent { background: #fee2e2; color: #b91c1c; }
@@ -334,12 +378,36 @@
     .w-chip { background: white; border: 1px solid #cbd5e1; padding: 2px 7px; border-radius: 4px; color: #334155; }
 
     .bill-footer {
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
       margin-top: 10px; padding-top: 8px; border-top: 1px dashed #e5e7eb; font-size: 0.82rem; color: #6b7280;
+    }
+    .footer-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+    .btn-wa-share {
+      background: #dcfce7; border: 1px solid #86efac; color: #15803d;
+      padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 700;
     }
     .btn-delete-bill {
       background: #fee2e2; border: 1px solid #fca5a5; color: var(--danger);
       padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 700;
+    }
+
+    /* CUSTOMER PUBLIC TRACKING VIEW */
+    .customer-view-box {
+      max-width: 560px;
+      margin: 24px auto;
+      padding: 0 14px;
+    }
+    .cust-progress-bar {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .cust-progress-fill {
+      height: 100%;
+      background: var(--success);
+      transition: width 0.4s ease;
     }
   </style>
 </head>
@@ -349,6 +417,9 @@
   <div class="spinner"></div>
   <span id="loaderText">Google Sheet-മായി ബന്ധിപ്പിക്കുന്നു...</span>
 </div>
+
+<!-- Hidden File Input for Staff Profile Photo Upload -->
+<input type="file" id="staffPhotoInput" accept="image/*" style="display:none;" onchange="handleStaffPhotoSelected(event)">
 
 <div id="manageModal" class="modal-overlay">
   <div class="modal-box">
@@ -362,14 +433,18 @@
 
 <header>
   <h1>ZIBAS TAILORS</h1>
-  <p>കട്ടിംഗ് ➔ തയ്യൽ ➔ ബട്ടൺ ➔ അയേണിംഗ് ➔ ഡെലിവറി സ്റ്റാറ്റസ്</p>
-  <div class="header-actions">
+  <p id="headerSubtitle">കട്ടിംഗ് ➔ തയ്യൽ ➔ ബട്ടൺ ➔ അയേണിംഗ് ➔ ഡെലിവറി സ്റ്റാറ്റസ്</p>
+  <div class="header-actions" id="shopHeaderActions">
     <button class="sync-btn" onclick="openManageModal()">⚙️ സ്റ്റാഫ് ഡിലീറ്റ്</button>
     <button class="sync-btn" onclick="loadAllData()">🔄 Sync</button>
   </div>
 </header>
 
-<div class="container">
+<!-- CUSTOMER PUBLIC STATUS VIEW (Shown ONLY when opened via ?bill=XXXX link) -->
+<div id="customerPublicView" class="customer-view-box" style="display:none;"></div>
+
+<!-- MAIN SHOP ADMIN VIEW -->
+<div id="shopMainContainer" class="container">
 
   <div id="alertSection" class="alert-section">
     <h3>⚠️ ഡെലിവറി അടുത്ത / തീരാനുള്ള ബില്ലുകൾ (Delivery Tomorrow / Due):</h3>
@@ -381,14 +456,14 @@
     <button class="tab-btn" onclick="switchTab('ironingTab', this)">🔥 അയേണിംഗ്</button>
     <button class="tab-btn" onclick="switchTab('entryTab', this)">➕ പുതിയ ബിൽ</button>
     <button class="tab-btn" onclick="switchTab('cuttingTab', this)">✂️ കട്ടിംഗ്</button>
-    <button class="tab-btn" onclick="switchTab('buttonTab', this)">🔘 ബട്ടൺ & തയ്യൽ</button>
+    <button class="tab-btn" onclick="switchTab('buttonTab', this)">🔘 ബട്ടൺ & ചെക്ക്</button>
   </div>
 
   <!-- TAB 1: STATUS -->
   <div id="statusTab" class="card">
     <div style="margin-bottom: 12px;">
-      <label>ബിൽ നമ്പർ സെർച്ച് ചെയ്യുക (Search Bill Status):</label>
-      <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="renderBills()">
+      <label>ബിൽ നമ്പർ / കസ്റ്റമർ പേര് സെർച്ച് ചെയ്യുക:</label>
+      <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ അല്ലെങ്കിൽ പേര് ടൈപ്പ് ചെയ്യുക..." onkeyup="renderBills()">
     </div>
     <div class="filter-pills">
       <button class="pill active" onclick="setFilter('all', this)">എല്ലാം (All)</button>
@@ -406,7 +481,7 @@
         <h3 style="margin:0; color: var(--orange);">🔥 അയേണിംഗ് വിഭാഗം (Ironing Staff)</h3>
         <button type="button" class="btn-add-staff" style="background:var(--orange);" onclick="promptNewStaff('Ironer')">+ പുതിയ അയേണിംഗ് സ്റ്റാഫ്</button>
       </div>
-      <p style="font-size:0.88rem; color:#4b5563; margin-top:0;">നിങ്ങളുടെ പേരിൽ ക്ലിക്ക് ചെയ്ത് പ്രൊഫൈലിൽ കയറുക:</p>
+      <p style="font-size:0.85rem; color:#4b5563; margin-top:0;">പ്രൊഫൈലിൽ കയറാൻ പേരിൽ ക്ലിക്ക് ചെയ്യുക (ഫോട്ടോ മാറ്റാൻ മുകളിലെ 📷 അമർത്തുക):</p>
       <div id="ironersGrid" class="worker-grid"></div>
     </div>
 
@@ -414,8 +489,10 @@
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid #e5e7eb; padding-bottom:10px;">
         <div style="display:flex; align-items:center; gap:10px;">
           <button type="button" class="btn-back" onclick="closeIronerDetail()">⬅️ തിരികെ</button>
+          <span id="selectedIronerAvatar"></span>
           <h2 id="selectedIronerTitle" style="margin:0; color:var(--orange); text-transform:uppercase;"></h2>
         </div>
+        <button type="button" class="btn-add-staff" style="background:#0369a1;" onclick="triggerPhotoUpload('Ironer', selectedIroner)">📷 ഫോട്ടോ മാറ്റുക</button>
       </div>
 
       <div class="assign-box-orange">
@@ -454,7 +531,7 @@
     </div>
   </div>
 
-  <!-- TAB 3: NEW BILL (SAVE BUTTON RIGHT BELOW DATE & STAYS ON SAME TAB) -->
+  <!-- TAB 3: NEW BILL (WITH CUSTOMER NAME & WHATSAPP NUMBER) -->
   <div id="entryTab" class="card" style="display: none;">
     <h3 style="margin-top:0; color: var(--primary);">1. പുതിയ ബിൽ ചേർക്കുക</h3>
     <div class="form-row">
@@ -468,7 +545,17 @@
       </div>
     </div>
 
-    <!-- Save button placed directly under Bill Number & Date for fast entry without scrolling -->
+    <div class="form-row">
+      <div>
+        <label>കസ്റ്റമറുടെ പേര് (Customer Name - Optional)</label>
+        <input type="text" id="customerName" placeholder="ഉദാ: അൻവർ">
+      </div>
+      <div>
+        <label>വാട്സാപ്പ് നമ്പർ (WhatsApp Number - Optional)</label>
+        <input type="tel" id="customerPhone" placeholder="ഉദാ: 9847012345">
+      </div>
+    </div>
+
     <button class="btn-submit" style="margin-bottom: 18px;" onclick="saveBill()">💾 ബിൽ സേവ് ചെയ്യുക</button>
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px; border-top: 1px solid #e5e7eb; padding-top: 14px;">
@@ -489,48 +576,59 @@
     </div>
   </div>
 
-  <!-- TAB 4: CUTTING -->
+  <!-- TAB 4: CUTTING (WORKER PROFILES WITH PHOTO + ASSIGNMENT) -->
   <div id="cuttingTab" class="card" style="display: none;">
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-      <h3 style="margin:0; color: var(--primary);">2. കട്ടിംഗ് അസൈൻ ചെയ്യുക (ഓരോ ഐറ്റത്തിനും)</h3>
-      <div style="display:flex; gap:6px;">
-        <button type="button" class="btn-add-staff" onclick="promptNewStaff('Cutter')">+ പുതിയ കട്ടർ</button>
-        <button type="button" class="btn-manage-del" onclick="openManageModal()">🗑️ കട്ടറെ ഡിലീറ്റ്</button>
-      </div>
-    </div>
-
-    <div style="margin-bottom: 8px;">
-      <label>ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (Search Bill Number) *</label>
-      <input type="text" id="cuttingBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForCutting()">
-    </div>
-
-    <div id="pendingCuttingChips" class="quick-chips-bar"></div>
-    <div id="cuttingSelectedBillHeader" style="display:none; font-weight:700; color:var(--primary); margin:10px 0; font-size:1rem;"></div>
-
-    <div id="cuttingQuickApply" class="staff-bar" style="display:none;">
-      <span style="font-size:0.85rem; font-weight:600;">എല്ലാ ഐറ്റത്തിനും ഒരേ കട്ടറെ നൽകാൻ:</span>
-      <div style="display:flex; gap:6px;">
-        <select id="bulkCutterSelect" style="width:auto; padding:6px;"></select>
-        <button type="button" class="btn-add-staff" style="background:var(--primary);" onclick="applyBulkCutter()">Apply All</button>
-      </div>
-    </div>
-
-    <div id="cuttingItemsContainer"></div>
-    <button id="btnSaveCutting" class="btn-submit" style="background: var(--primary); display:none;" onclick="submitCuttingItems()">✂️ കട്ടിംഗ് വിവരങ്ങൾ സേവ് ചെയ്യുക</button>
-  </div>
-
-  <!-- TAB 5: BUTTON & TAILOR -->
-  <div id="buttonTab" class="card" style="display: none;">
-    <div id="buttonWorkerListView">
+    
+    <!-- VIEW A: LIST OF CUTTERS WITH PHOTO -->
+    <div id="cutterListView">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-        <h3 style="margin:0; color: var(--purple);">🔘 ബട്ടൺ വെക്കുന്ന ആളുകൾ (Button Workers)</h3>
-        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-          <button type="button" class="btn-add-staff" onclick="promptNewStaff('Tailor')">+ പുതിയ തയ്യൽക്കാരൻ</button>
-          <button type="button" class="btn-add-staff" style="background:var(--purple);" onclick="promptNewStaff('Button')">+ പുതിയ ബട്ടൺ വർക്കർ</button>
+        <h3 style="margin:0; color: var(--teal);">✂️ കട്ടിംഗ് വിഭാഗം (Cutters)</h3>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-add-staff" onclick="promptNewStaff('Cutter')">+ പുതിയ കട്ടർ</button>
           <button type="button" class="btn-manage-del" onclick="openManageModal()">🗑️ ഡിലീറ്റ്</button>
         </div>
       </div>
-      <p style="font-size:0.85rem; color:#4b5563; margin-top:0;">ബട്ടൺ വെക്കാൻ കൊടുക്കുന്നതിനും ഇതുവരെ കൊടുത്തവ കാണുന്നതിനും താഴെ ആളുടെ പേരിൽ ക്ലിക്ക് ചെയ്യുക:</p>
+      <p style="font-size:0.85rem; color:#4b5563; margin-top:0;">കട്ടറുടെ പ്രൊഫൈലിൽ കയറാൻ പേരിൽ ക്ലിക്ക് ചെയ്യുക (ഫോട്ടോ മാറ്റാൻ 📷 അമർത്തുക):</p>
+      
+      <div id="pendingCuttingChips" class="quick-chips-bar"></div>
+      <div id="cuttersGrid" class="worker-grid"></div>
+    </div>
+
+    <!-- VIEW B: SELECTED CUTTER PROFILE -->
+    <div id="cutterDetailView" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid #e5e7eb; padding-bottom:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button type="button" class="btn-back" onclick="closeCutterDetail()">⬅️ തിരികെ</button>
+          <span id="selectedCutterAvatar"></span>
+          <h3 id="selectedCutterTitle" style="margin:0; color:var(--teal); text-transform:uppercase;"></h3>
+        </div>
+        <button type="button" class="btn-add-staff" style="background:#0369a1;" onclick="triggerPhotoUpload('Cutter', selectedCutter)">📷 ഫോട്ടോ മാറ്റുക</button>
+      </div>
+
+      <div class="assign-box-teal">
+        <label style="color:var(--teal); font-size:0.95rem; margin-bottom:8px;">➕ കട്ട് ചെയ്യാൻ ബിൽ നമ്പർ നൽകുക:</label>
+        <input type="text" id="cutTabBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForCutter()">
+        <div id="cutTabFoundBillArea" style="margin-top:12px;"></div>
+      </div>
+
+      <h4 style="margin:0 0 10px 0; color:#374151;">📋 ഈ കട്ടർക്ക് നൽകിയ ഐറ്റംസ്:</h4>
+      <div id="cutterHistoryList"></div>
+    </div>
+
+  </div>
+
+  <!-- TAB 5: BUTTON & CHECKING WORKER LIST -> PROFILE DETAIL WITH PHOTO -->
+  <div id="buttonTab" class="card" style="display: none;">
+    <div id="buttonWorkerListView">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+        <h3 style="margin:0; color: var(--purple);">🔘 ബട്ടൺ & ചെക്കിംഗ് വിഭാഗം</h3>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button type="button" class="btn-add-staff" onclick="promptNewStaff('Tailor')">+ പുതിയ തയ്യൽക്കാരൻ</button>
+          <button type="button" class="btn-add-staff" style="background:var(--purple);" onclick="promptNewStaff('Button')">+ പുതിയ ബട്ടൺ/ചെക്കിംഗ് സ്റ്റാഫ്</button>
+          <button type="button" class="btn-manage-del" onclick="openManageModal()">🗑️ ഡിലീറ്റ്</button>
+        </div>
+      </div>
+      <p style="font-size:0.85rem; color:#4b5563; margin-top:0;">പ്രൊഫൈലിൽ കയറാൻ പേരിൽ ക്ലിക്ക് ചെയ്യുക (ഫോട്ടോ മാറ്റാൻ 📷 അമർത്തുക):</p>
       <div id="buttonWorkersGrid" class="worker-grid"></div>
     </div>
 
@@ -538,21 +636,22 @@
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid #e5e7eb; padding-bottom:10px;">
         <div style="display:flex; align-items:center; gap:10px;">
           <button type="button" class="btn-back" onclick="closeButtonWorkerDetail()">⬅️ തിരികെ</button>
+          <span id="selectedButtonWorkerAvatar"></span>
           <h3 id="selectedButtonWorkerTitle" style="margin:0; color:var(--purple); text-transform:uppercase;"></h3>
         </div>
-        <div style="display:flex; gap:6px;">
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button type="button" class="btn-add-staff" style="background:#0369a1;" onclick="triggerPhotoUpload('Button', selectedButtonWorker)">📷 ഫോട്ടോ മാറ്റുക</button>
           <button type="button" class="btn-add-staff" onclick="promptNewStaff('Tailor')">+ പുതിയ തയ്യൽക്കാരൻ</button>
-          <button type="button" class="btn-manage-del" onclick="openManageModal()">🗑️ ഡിലീറ്റ്</button>
         </div>
       </div>
 
       <div class="assign-box-purple">
-        <label style="color:var(--purple); font-size:0.95rem; margin-bottom:8px;">➕ പുതിയ ബിൽ ബട്ടൺ വെക്കാൻ കൊടുക്കുക:</label>
+        <label style="color:var(--purple); font-size:0.95rem; margin-bottom:8px;">➕ പുതിയ ബിൽ ബട്ടൺ / ചെക്കിംഗിന് കൊടുക്കുക:</label>
         <input type="text" id="btnTabBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForButtonWorker()">
         <div id="btnTabFoundBillArea" style="margin-top:12px;"></div>
       </div>
 
-      <h4 style="margin:0 0 10px 0; color:#374151;">📋 ഇതുവരെ ബട്ടൺ വെക്കാൻ കൊടുത്തവ (സമയസഹിതം):</h4>
+      <h4 style="margin:0 0 10px 0; color:#374151;">📋 ഇതുവരെ ബട്ടൺ / ചെക്കിംഗിന് കൊടുത്തവ (സമയസഹിതം):</h4>
       <div id="buttonWorkerHistoryList"></div>
     </div>
   </div>
@@ -565,12 +664,18 @@
 
   let bills = [];
   let staff = { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [] };
+  let staffPhotos = {};
   let currentFilter = 'all';
   let manualCustomItems = [];
   let selectedButtonWorker = null;
   let selectedIroner = null;
+  let selectedCutter = null;
   let ironerDateFilter = 'thisWeek';
-  let activeCuttingBillId = null;
+  let pendingPhotoTarget = null; // { role, name }
+
+  // Check if opened as a Customer Tracking Link (?bill=1045)
+  const urlParams = new URLSearchParams(window.location.search);
+  const customerQueryBill = urlParams.get('bill');
 
   const DEFAULT_ITEM_TYPES = [
     { key: 'Shirt', label: 'ഷർട്ട് (Shirt)' },
@@ -582,6 +687,16 @@
   ];
 
   window.onload = () => {
+    if (customerQueryBill) {
+      // Customer Tracking Mode
+      document.getElementById('shopMainContainer').style.display = 'none';
+      document.getElementById('shopHeaderActions').style.display = 'none';
+      document.getElementById('headerSubtitle').innerText = 'Order Live Status Tracking';
+      document.getElementById('customerPublicView').style.display = 'block';
+      loadAllData();
+      return;
+    }
+
     const defaultDate = new Date();
     defaultDate.setDate(defaultDate.getDate() + 3);
     document.getElementById('deliveryDate').valueAsDate = defaultDate;
@@ -611,6 +726,7 @@
         const data = await response.json();
         bills = data.bills || [];
         staff = data.staff || { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [] };
+        staffPhotos = data.staffPhotos || {};
       } else {
         response = await fetch(API_URL, {
           method: 'POST',
@@ -621,9 +737,14 @@
         if (!resJson.success) throw new Error(resJson.error || 'Server Error');
         bills = resJson.data.bills || [];
         staff = resJson.data.staff || { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [] };
+        staffPhotos = resJson.data.staffPhotos || {};
       }
       hideLoader();
-      refreshAllActiveViews();
+      if (customerQueryBill) {
+        renderCustomerPublicView(customerQueryBill);
+      } else {
+        refreshAllActiveViews();
+      }
       return true;
     } catch (err) {
       hideLoader();
@@ -633,7 +754,139 @@
   }
 
   function loadAllData() {
-    callApi(null, 'Google Sheet-ൽ നിന്ന് ഡാറ്റ എടുക്കുന്നു...');
+    callApi(null, 'വിവരങ്ങൾ ലോഡ് ചെയ്യുന്നു...');
+  }
+
+  // --- CUSTOMER PUBLIC TRACKING VIEW ---
+  function renderCustomerPublicView(billNoParam) {
+    const container = document.getElementById('customerPublicView');
+    const bill = bills.find(b => b.billNo.toLowerCase() === billNoParam.trim().toLowerCase());
+
+    if (!bill) {
+      container.innerHTML = `
+        <div class="card" style="text-align:center; padding:30px;">
+          <h3 style="color:var(--danger); margin-top:0;">ബിൽ നമ്പർ #${billNoParam} കണ്ടെത്തിയില്ല</h3>
+          <p style="color:#4b5563;">ദയവായി ബിൽ നമ്പർ പരിശോധിക്കുക അല്ലെങ്കിൽ Zibas Tailors-മായി ബന്ധപ്പെടുക.</p>
+          <button class="btn-submit" style="background:var(--primary); margin-top:10px;" onclick="loadAllData()">🔄 വീണ്ടും പരിശോധിക്കുക</button>
+        </div>
+      `;
+      return;
+    }
+
+    const totalItems = bill.items.length;
+    const readyCount = bill.items.filter(i => i.ironed).length;
+    const progressPercent = totalItems > 0 ? Math.round((readyCount / totalItems) * 100) : 0;
+    const isAllReady = readyCount === totalItems && totalItems > 0;
+
+    const itemsHtml = bill.items.map(item => {
+      let statusText = 'ഓർഡർ സ്വീകരിച്ചു (Order Received)';
+      let badgeStyle = 'background:#e5e7eb; color:#374151;';
+      let icon = '⏳';
+
+      if (item.ironed) {
+        statusText = 'തയ്യാറായി (Ready for Delivery)';
+        badgeStyle = 'background:#16a34a; color:white;';
+        icon = '✅';
+      } else if (item.buttonWorker || item.tailor) {
+        statusText = 'ഫിനിഷിംഗ് & അയേണിംഗ് (Finishing & Ironing)';
+        badgeStyle = 'background:#fef3c7; color:#b45309;';
+        icon = '🔥';
+      } else if (item.cutter) {
+        statusText = 'തയ്യൽ നടക്കുന്നു (Cutting & Stitching)';
+        badgeStyle = 'background:#dbeafe; color:#1e40af;';
+        icon = '🧵';
+      }
+
+      return `
+        <div class="status-item-row ${item.ironed ? 'ironed-done' : ''}" style="padding:12px;">
+          <div class="item-left">
+            <span style="font-size:1.2rem;">${icon}</span>
+            <span class="item-name" style="font-size:1.05rem;">${item.label}</span>
+          </div>
+          <span class="item-stage-pill" style="${badgeStyle} font-size:0.8rem; padding:4px 10px;">${statusText}</span>
+        </div>
+      `;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid #e5e7eb; padding-bottom:12px; margin-bottom:12px;">
+          <div>
+            <div style="font-size:1.3rem; font-weight:900; color:var(--primary);">Bill #${bill.billNo}</div>
+            ${bill.customerName ? `<div style="font-size:0.95rem; font-weight:600; color:#374151; margin-top:2px;">👤 ${bill.customerName}</div>` : ''}
+          </div>
+          <div style="text-align:right;">
+            <span class="delivery-tag ${isAllReady ? 'done' : ''}" style="font-size:0.88rem;">
+              ${isAllReady ? '✅ ഡെലിവറിക്ക് തയ്യാറാണ്' : `📅 ഡെലിവറി: ${bill.deliveryDate}`}
+            </span>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:700; color:#374151;">
+          <span>നിലവിലെ പുരോഗതി (Progress)</span>
+          <span>${readyCount} / ${totalItems} പൂർത്തിയായി (${progressPercent}%)</span>
+        </div>
+        <div class="cust-progress-bar">
+          <div class="cust-progress-fill" style="width:${progressPercent}%;"></div>
+        </div>
+
+        <div class="status-item-list" style="margin-top:14px;">
+          ${itemsHtml}
+        </div>
+
+        <button class="btn-submit" style="background:var(--primary); margin-top:16px;" onclick="loadAllData()">🔄 സ്റ്റാറ്റസ് പുതുക്കുക (Refresh)</button>
+      </div>
+    `;
+  }
+
+  // --- PROFILE PHOTO HELPER & COMPRESSION ---
+  function getAvatarHtml(role, name, fallbackEmoji, isSmall) {
+    const photo = staffPhotos[`${role}:${name}`];
+    if (photo) {
+      return `<img src="${photo}" class="${isSmall ? 'profile-header-avatar' : 'avatar-circle'}" alt="${name}">`;
+    }
+    if (isSmall) return '';
+    return `<div class="avatar-fallback">${fallbackEmoji}</div>`;
+  }
+
+  function triggerPhotoUpload(role, name, event) {
+    if (event) event.stopPropagation();
+    pendingPhotoTarget = { role, name };
+    const input = document.getElementById('staffPhotoInput');
+    input.value = '';
+    input.click();
+  }
+
+  function handleStaffPhotoSelected(event) {
+    const file = event.target.files[0];
+    if (!file || !pendingPhotoTarget) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = async function() {
+        // Resize & compress image to 160x160 JPEG so it fits cleanly in Google Sheet cell
+        const canvas = document.createElement('canvas');
+        const size = 160;
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        // Center crop square
+        const minSide = Math.min(img.width, img.height);
+        const sx = (img.width - minSide) / 2;
+        const sy = (img.height - minSide) / 2;
+        ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, size, size);
+
+        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.72);
+        const { role, name } = pendingPhotoTarget;
+        pendingPhotoTarget = null;
+
+        await callApi({ action: 'updateStaffPhoto', role, name, photo: compressedBase64 }, 'പ്രൊഫൈൽ ഫോട്ടോ സേവ് ചെയ്യുന്നു...');
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 
   function refreshAllActiveViews() {
@@ -645,8 +898,8 @@
       else renderIronersList();
     }
     if (document.getElementById('cuttingTab').style.display === 'block') {
-      renderPendingCuttingChips();
-      if (activeCuttingBillId) renderCuttingItemsForm(activeCuttingBillId);
+      if (selectedCutter) renderCutterDetail();
+      else renderCuttersList();
     }
     if (document.getElementById('buttonTab').style.display === 'block') {
       if (selectedButtonWorker) renderButtonWorkerDetail();
@@ -668,7 +921,12 @@
       document.getElementById('ironerDetailView').style.display = 'none';
       renderIronersList();
     }
-    if (tabId === 'cuttingTab') setupCuttingTab();
+    if (tabId === 'cuttingTab') {
+      selectedCutter = null;
+      document.getElementById('cutterListView').style.display = 'block';
+      document.getElementById('cutterDetailView').style.display = 'none';
+      renderCuttersList();
+    }
     if (tabId === 'buttonTab') {
       selectedButtonWorker = null;
       document.getElementById('buttonWorkerListView').style.display = 'block';
@@ -691,7 +949,7 @@
     const categories = [
       { role: 'Cutter', title: '✂️ കട്ടർമാർ (Cutters)' },
       { role: 'Tailor', title: '🧵 തയ്യൽക്കാർ (Tailors)' },
-      { role: 'Button', title: '🔘 ബട്ടൺ വർക്കർമാർ (Button Workers)' },
+      { role: 'Button', title: '🔘 ബട്ടൺ & ചെക്കിംഗ് സ്റ്റാഫ് (Button / Check)' },
       { role: 'Ironer', title: '🔥 അയേണിംഗ് സ്റ്റാഫുകൾ (Ironers)' },
       { role: 'ItemType', title: '👕 പുതിയതായി ചേർത്ത സ്ഥിരം ഐറ്റംസ് (Custom Items)' }
     ];
@@ -716,6 +974,7 @@
     if (!confirm(`"${name}" എന്ന പേര് ഡിലീറ്റ് ചെയ്യണമെന്ന് ഉറപ്പാണോ?`)) return;
     if (selectedIroner === name) selectedIroner = null;
     if (selectedButtonWorker === name) selectedButtonWorker = null;
+    if (selectedCutter === name) selectedCutter = null;
     callApi({ action: 'deleteStaff', role, name }, 'ഡിലീറ്റ് ചെയ്യുന്നു...');
   }
 
@@ -755,13 +1014,13 @@
     const roleNames = {
       Cutter: 'കട്ടറുടെ പേര് (Cutter Name)',
       Tailor: 'തയ്യൽക്കാരന്റെ പേര് (Tailor Name)',
-      Button: 'ബട്ടൺ വെക്കുന്ന ആളുടെ പേര്',
+      Button: 'ബട്ടൺ / ചെക്കിംഗ് സ്റ്റാഫിന്റെ പേര്',
       Ironer: 'അയേണിംഗ് സ്റ്റാഫിന്റെ പേര്',
       ItemType: 'പുതിയ സ്ഥിരം ഐറ്റത്തിന്റെ പേര് (ഉദാ: Safari, Suit)'
     };
     const name = prompt(`${roleNames[role]} നൽകുക:`);
     if (!name || !name.trim()) return;
-    callApi({ action: 'addStaff', role, name: name.trim() }, 'സേവ് ചെയ്യുന്നു...');
+    callApi({ action: 'addStaff', role, name: name.trim(), photo: '' }, 'സേവ് ചെയ്യുന്നു...');
   }
 
   function formatCurrentDateTime() {
@@ -776,7 +1035,7 @@
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
   }
 
-  // --- IRONING ---
+  // --- IRONING PROFILES ---
   function renderIronersList() {
     const grid = document.getElementById('ironersGrid');
     const ironers = staff.Ironer || [];
@@ -792,8 +1051,9 @@
       const safeName = name.replace(/'/g, "\\'");
       return `
         <div class="worker-card ironer-card" onclick="openIronerDetail('${safeName}')">
-          <button type="button" class="card-del-btn" onclick="deleteStaffMember('Ironer', '${safeName}', event)">✕</button>
-          <span class="w-icon">🔥</span>
+          <button type="button" class="card-photo-btn" title="ഫോട്ടോ ചേർക്കുക / മാറ്റുക" onclick="triggerPhotoUpload('Ironer', '${safeName}', event)">📷</button>
+          <button type="button" class="card-del-btn" title="ഡിലീറ്റ്" onclick="deleteStaffMember('Ironer', '${safeName}', event)">✕</button>
+          ${getAvatarHtml('Ironer', name, '🔥', false)}
           <span class="w-name">${name.toUpperCase()}</span>
           <span class="w-count">ഈ ആഴ്ച: ${weeklyCount} എണ്ണം</span>
         </div>
@@ -806,7 +1066,8 @@
     ironerDateFilter = 'thisWeek';
     document.getElementById('ironerListView').style.display = 'none';
     document.getElementById('ironerDetailView').style.display = 'block';
-    document.getElementById('selectedIronerTitle').innerText = `🔥 ${ironerName.toUpperCase()}`;
+    document.getElementById('selectedIronerTitle').innerText = ironerName.toUpperCase();
+    document.getElementById('selectedIronerAvatar').innerHTML = getAvatarHtml('Ironer', ironerName, '🔥', true);
     document.getElementById('ironTabBillSearch').value = '';
     document.getElementById('ironTabFoundBillArea').innerHTML = '';
     const pills = document.querySelectorAll('.orange-pill');
@@ -951,6 +1212,7 @@
   }
 
   function renderIronerDetail() {
+    document.getElementById('selectedIronerAvatar').innerHTML = getAvatarHtml('Ironer', selectedIroner, '🔥', true);
     const historyContainer = document.getElementById('ironerHistoryList');
     const titles = { thisWeek: 'ഈ ആഴ്ച ആകെ അയൺ ചെയ്തത്:', today: 'ഇന്ന് ആകെ അയൺ ചെയ്തത്:', lastWeek: 'കഴിഞ്ഞ ആഴ്ച ആകെ അയൺ ചെയ്തത്:', all: 'ഇതുവരെ ആകെ അയൺ ചെയ്തത്:', custom: 'തിരഞ്ഞെടുത്ത ദിവസങ്ങളിൽ:' };
     document.getElementById('ironerFilterLabel').innerText = titles[ironerDateFilter] || 'ആകെ എണ്ണം:';
@@ -981,7 +1243,7 @@
     `).join('');
   }
 
-  // --- NEW BILL (STAYS ON NEW BILL TAB AFTER SAVING) ---
+  // --- NEW BILL ---
   function updateCount(itemKey, delta) {
     const input = document.getElementById('count-' + itemKey);
     if (!input) return;
@@ -1018,6 +1280,9 @@
     const billNoInput = document.getElementById('billNo');
     const billNo = billNoInput.value.trim();
     const deliveryDate = document.getElementById('deliveryDate').value;
+    const customerName = document.getElementById('customerName').value.trim();
+    const customerPhone = document.getElementById('customerPhone').value.trim();
+
     if (!billNo || !deliveryDate) return alert('ബിൽ നമ്പറും ഡെലിവറി ഡേറ്റും നൽകുക!');
 
     const itemsList = [];
@@ -1025,20 +1290,22 @@
     allTypes.forEach(t => {
       const count = parseInt(document.getElementById('count-' + t.key)?.value) || 0;
       for (let i = 1; i <= count; i++) {
-        itemsList.push({ label: count > 1 ? `${t.key} #${i}` : t.key, cutter: '', tailor: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false });
+        itemsList.push({ label: count > 1 ? `${t.key} #${i}` : t.key, cutter: '', cutTime: '', tailor: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false });
       }
     });
     manualCustomItems.forEach(mItem => {
       for (let i = 1; i <= mItem.count; i++) {
-        itemsList.push({ label: mItem.count > 1 ? `${mItem.name} #${i}` : mItem.name, cutter: '', tailor: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false });
+        itemsList.push({ label: mItem.count > 1 ? `${mItem.name} #${i}` : mItem.name, cutter: '', cutTime: '', tailor: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false });
       }
     });
 
     if (itemsList.length === 0) return alert('കുറഞ്ഞത് ഒരു ഐറ്റം എങ്കിലും തിരഞ്ഞെടുക്കുക!');
 
-    const ok = await callApi({ action: 'addBill', billData: { billNo, deliveryDate, items: itemsList } }, 'ബിൽ സേവ് ചെയ്യുന്നു...');
+    const ok = await callApi({ action: 'addBill', billData: { billNo, deliveryDate, customerName, customerPhone, items: itemsList } }, 'ബിൽ സേവ് ചെയ്യുന്നു...');
     if (ok) {
       billNoInput.value = '';
+      document.getElementById('customerName').value = '';
+      document.getElementById('customerPhone').value = '';
       allTypes.forEach(t => { const inp = document.getElementById('count-' + t.key); if (inp) inp.value = 0; });
       manualCustomItems = [];
       renderManualCustomChips();
@@ -1047,92 +1314,150 @@
     }
   }
 
-  // --- CUTTING ---
-  function setupCuttingTab() {
-    activeCuttingBillId = null;
-    document.getElementById('cuttingBillSearch').value = '';
-    document.getElementById('cuttingSelectedBillHeader').style.display = 'none';
-    document.getElementById('cuttingQuickApply').style.display = 'none';
-    document.getElementById('cuttingItemsContainer').innerHTML = '';
-    document.getElementById('btnSaveCutting').style.display = 'none';
-    renderPendingCuttingChips();
-  }
-
-  function renderPendingCuttingChips() {
+  // --- CUTTERS PROFILES & ASSIGNMENT ---
+  function renderCuttersList() {
+    const grid = document.getElementById('cuttersGrid');
     const chipsDiv = document.getElementById('pendingCuttingChips');
     const unassigned = bills.filter(b => b.items.some(it => !it.cutter));
+
     if (unassigned.length === 0) {
       chipsDiv.innerHTML = '<span style="font-size:0.82rem; color:#16a34a;">✅ എല്ലാ ബില്ലുകൾക്കും കട്ടർമാരെ അസൈൻ ചെയ്തിട്ടുണ്ട്.</span>';
+    } else {
+      chipsDiv.innerHTML = `<span style="font-size:0.8rem; color:#4b5563; font-weight:600;">കട്ടിംഗ് ബാക്കിയുള്ള ബില്ലുകൾ:</span>` +
+        unassigned.slice(0, 15).map(b => `<span class="bill-chip">#${b.billNo} (${b.items.filter(i=>!i.cutter).length})</span>`).join('');
+    }
+
+    const cutters = staff.Cutter || [];
+    if (cutters.length === 0) {
+      grid.innerHTML = `<p style="color:#6b7280; grid-column:1/-1;">കട്ടർമാരുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
       return;
     }
-    chipsDiv.innerHTML = `<span style="font-size:0.8rem; color:#4b5563; font-weight:600;">കട്ടിംഗ് ബാക്കിയുള്ളവ:</span>` +
-      unassigned.slice(0, 15).map(b => `<span class="bill-chip" onclick="selectCuttingBillFromChip('${b.billNo}')">#${b.billNo} (${b.items.length})</span>`).join('');
-  }
 
-  function selectCuttingBillFromChip(billNo) {
-    document.getElementById('cuttingBillSearch').value = billNo;
-    searchBillForCutting();
-  }
-
-  function searchBillForCutting() {
-    const query = document.getElementById('cuttingBillSearch').value.trim().toLowerCase();
-    const headerDiv = document.getElementById('cuttingSelectedBillHeader');
-    const quickBar = document.getElementById('cuttingQuickApply');
-    const container = document.getElementById('cuttingItemsContainer');
-    const saveBtn = document.getElementById('btnSaveCutting');
-
-    if (!query) { setupCuttingTab(); return; }
-    let matched = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
-    if (!matched) {
-      activeCuttingBillId = null;
-      headerDiv.style.display = 'block';
-      headerDiv.innerHTML = `<span style="color:#dc2626; font-size:0.88rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</span>`;
-      quickBar.style.display = 'none'; container.innerHTML = ''; saveBtn.style.display = 'none';
-      return;
-    }
-    renderCuttingItemsForm(matched.id);
-  }
-
-  function renderCuttingItemsForm(billId) {
-    const bill = bills.find(b => b.id === billId);
-    if (!bill) return;
-    activeCuttingBillId = bill.id;
-    const headerDiv = document.getElementById('cuttingSelectedBillHeader');
-    headerDiv.style.display = 'block';
-    headerDiv.innerHTML = `Bill #${bill.billNo} <span style="font-weight:normal; font-size:0.85rem; color:#4b5563;">(ഡെലിവറി: ${bill.deliveryDate})</span>`;
-
-    document.getElementById('bulkCutterSelect').innerHTML = '<option value="">-- കട്ടർ --</option>' + staff.Cutter.map(c => `<option value="${c}">${c}</option>`).join('');
-    document.getElementById('cuttingQuickApply').style.display = 'flex';
-    document.getElementById('btnSaveCutting').style.display = 'block';
-
-    document.getElementById('cuttingItemsContainer').innerHTML = bill.items.map((item, idx) => {
-      const options = '<option value="">-- കട്ടറെ ഒഴിവാക്കുക / തിരഞ്ഞെടുക്കുക --</option>' + staff.Cutter.map(c => `<option value="${c}" ${item.cutter === c ? 'selected' : ''}>${c}</option>`).join('');
-      return `<div class="assign-row"><div class="item-badge">${item.label}</div><div><label>കട്ടർ (Cutter):</label><select class="item-cutter-select" data-idx="${idx}">${options}</select></div></div>`;
+    grid.innerHTML = cutters.map(name => {
+      let totalCut = 0;
+      bills.forEach(b => b.items.forEach(it => { if (it.cutter === name) totalCut++; }));
+      const safeName = name.replace(/'/g, "\\'");
+      return `
+        <div class="worker-card cutter-card" onclick="openCutterDetail('${safeName}')">
+          <button type="button" class="card-photo-btn" title="ഫോട്ടോ ചേർക്കുക / മാറ്റുക" onclick="triggerPhotoUpload('Cutter', '${safeName}', event)">📷</button>
+          <button type="button" class="card-del-btn" title="ഡിലീറ്റ്" onclick="deleteStaffMember('Cutter', '${safeName}', event)">✕</button>
+          ${getAvatarHtml('Cutter', name, '✂️', false)}
+          <span class="w-name">${name.toUpperCase()}</span>
+          <span class="w-count">ആകെ നൽകിയത്: ${totalCut} എണ്ണം</span>
+        </div>
+      `;
     }).join('');
   }
 
-  function applyBulkCutter() {
-    const val = document.getElementById('bulkCutterSelect').value;
-    if (val) document.querySelectorAll('.item-cutter-select').forEach(sel => sel.value = val);
+  function openCutterDetail(cutterName) {
+    selectedCutter = cutterName;
+    document.getElementById('cutterListView').style.display = 'none';
+    document.getElementById('cutterDetailView').style.display = 'block';
+    document.getElementById('selectedCutterTitle').innerText = cutterName.toUpperCase();
+    document.getElementById('selectedCutterAvatar').innerHTML = getAvatarHtml('Cutter', cutterName, '✂️', true);
+    document.getElementById('cutTabBillSearch').value = '';
+    document.getElementById('cutTabFoundBillArea').innerHTML = '';
+    renderCutterDetail();
   }
 
-  async function submitCuttingItems() {
-    if (!activeCuttingBillId) return;
-    const bill = bills.find(b => b.id === activeCuttingBillId);
-    document.querySelectorAll('.item-cutter-select').forEach(sel => {
-      bill.items[parseInt(sel.getAttribute('data-idx'))].cutter = sel.value;
+  function closeCutterDetail() {
+    selectedCutter = null;
+    document.getElementById('cutterDetailView').style.display = 'none';
+    document.getElementById('cutterListView').style.display = 'block';
+    renderCuttersList();
+  }
+
+  function searchBillForCutter() {
+    const query = document.getElementById('cutTabBillSearch').value.trim().toLowerCase();
+    const area = document.getElementById('cutTabFoundBillArea');
+    area.innerHTML = '';
+    if (!query) return;
+
+    let matched = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
+    if (!matched) {
+      area.innerHTML = `<p style="color:#dc2626; font-size:0.85rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      return;
+    }
+
+    let rowsHtml = `<div style="font-weight:700; color:var(--primary); margin-bottom:8px;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
+    matched.items.forEach((item, idx) => {
+      const isHere = item.cutter === selectedCutter;
+      const note = (item.cutter && !isHere) ? `<small style="color:#d97706;">(നിലവിൽ: ${item.cutter})</small>` : (isHere ? `<small style="color:#16a34a;">(നൽകിക്കഴിഞ്ഞു)</small>` : '');
+      rowsHtml += `
+        <div class="found-item-row cut-row">
+          <input type="checkbox" class="cut-assign-check" data-idx="${idx}" ${isHere || !item.cutter ? 'checked' : ''}>
+          <div><strong>${item.label}</strong> ${note}</div>
+          <span style="font-size:0.78rem; color:#6b7280;">✂️</span>
+        </div>
+      `;
     });
-    await callApi({ action: 'updateBillItems', billId: activeCuttingBillId, updatedItemsJson: JSON.stringify(bill.items) }, 'കട്ടിംഗ് സേവ് ചെയ്യുന്നു...');
-    alert(`Bill #${bill.billNo}-ലെ കട്ടിംഗ് വിവരങ്ങൾ സേവ് ചെയ്തു!`);
-    setupCuttingTab();
+    rowsHtml += `<button type="button" class="btn-submit" style="background:var(--teal); margin-top:8px;" onclick="saveAssignedCutItems('${matched.id}')">✅ ${selectedCutter.toUpperCase()}-ക്ക് കട്ട് ചെയ്യാൻ നൽകുക (Save)</button>`;
+    area.innerHTML = rowsHtml;
   }
 
-  // --- BUTTON WORKER ---
+  async function saveAssignedCutItems(billId) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill) return;
+    const nowTime = formatCurrentDateTime();
+
+    document.querySelectorAll('.cut-assign-check').forEach(cb => {
+      const idx = parseInt(cb.getAttribute('data-idx'));
+      if (cb.checked) {
+        if (bill.items[idx].cutter !== selectedCutter || !bill.items[idx].cutTime) bill.items[idx].cutTime = nowTime;
+        bill.items[idx].cutter = selectedCutter;
+      } else if (bill.items[idx].cutter === selectedCutter) {
+        bill.items[idx].cutter = '';
+        bill.items[idx].cutTime = '';
+      }
+    });
+
+    document.getElementById('cutTabBillSearch').value = '';
+    document.getElementById('cutTabFoundBillArea').innerHTML = '';
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'കട്ടിംഗ് സേവ് ചെയ്യുന്നു...');
+  }
+
+  async function removeCutEntry(billId, itemIdx) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill || !confirm(`Bill #${bill.billNo} (${bill.items[itemIdx].label})-ന്റെ കട്ടിംഗ് എൻട്രി ഡിലീറ്റ് ചെയ്യണമോ?`)) return;
+    bill.items[itemIdx].cutter = '';
+    bill.items[itemIdx].cutTime = '';
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'ഡിലീറ്റ് ചെയ്യുന്നു...');
+  }
+
+  function renderCutterDetail() {
+    document.getElementById('selectedCutterAvatar').innerHTML = getAvatarHtml('Cutter', selectedCutter, '✂️', true);
+    const historyContainer = document.getElementById('cutterHistoryList');
+    const items = [];
+    bills.forEach(bill => bill.items.forEach((item, idx) => {
+      if (item.cutter === selectedCutter) {
+        items.push({ billId: bill.id, itemIdx: idx, billNo: bill.billNo, deliveryDate: bill.deliveryDate, label: item.label, cutTime: item.cutTime || '' });
+      }
+    }));
+
+    if (items.length === 0) {
+      historyContainer.innerHTML = `<p style="color:#6b7280; font-size:0.9rem;">${selectedCutter}-ക്ക് ഇതുവരെ ബില്ലുകൾ ഒന്നും നൽകിയിട്ടില്ല.</p>`;
+      return;
+    }
+    historyContainer.innerHTML = items.map(h => `
+      <div class="history-card cut-history">
+        <div>
+          <strong style="color:var(--primary); font-size:1rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          <div style="font-size:0.8rem; color:#4b5563;">ഡെലിവറി: ${h.deliveryDate}</div>
+        </div>
+        <div class="history-right">
+          ${h.cutTime ? `<span class="history-time">🕒 ${h.cutTime}</span>` : ''}
+          <button type="button" class="btn-icon-del" onclick="removeCutEntry('${h.billId}', ${h.itemIdx})">🗑️</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // --- BUTTON / CHECKING WORKER PROFILES ---
   function renderButtonWorkersList() {
     const grid = document.getElementById('buttonWorkersGrid');
     const workers = staff.Button || [];
     if (workers.length === 0) {
-      grid.innerHTML = `<p style="color:#6b7280; grid-column:1/-1;">ബട്ടൺ വെക്കുന്ന ആളുകളുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
+      grid.innerHTML = `<p style="color:#6b7280; grid-column:1/-1;">ബട്ടൺ / ചെക്കിംഗ് സ്റ്റാഫുകളുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
       return;
     }
     grid.innerHTML = workers.map(wName => {
@@ -1141,8 +1466,9 @@
       const safeName = wName.replace(/'/g, "\\'");
       return `
         <div class="worker-card" onclick="openButtonWorkerDetail('${safeName}')">
-          <button type="button" class="card-del-btn" onclick="deleteStaffMember('Button', '${safeName}', event)">✕</button>
-          <span class="w-icon">🔘</span>
+          <button type="button" class="card-photo-btn" title="ഫോട്ടോ ചേർക്കുക / മാറ്റുക" onclick="triggerPhotoUpload('Button', '${safeName}', event)">📷</button>
+          <button type="button" class="card-del-btn" title="ഡിലീറ്റ്" onclick="deleteStaffMember('Button', '${safeName}', event)">✕</button>
+          ${getAvatarHtml('Button', wName, '🔘', false)}
           <span class="w-name">${wName.toUpperCase()}</span>
           <span class="w-count">ആകെ കൊടുത്തത്: ${total} ഐറ്റംസ്</span>
         </div>
@@ -1154,7 +1480,8 @@
     selectedButtonWorker = workerName;
     document.getElementById('buttonWorkerListView').style.display = 'none';
     document.getElementById('buttonWorkerDetailView').style.display = 'block';
-    document.getElementById('selectedButtonWorkerTitle').innerText = `🔘 ${workerName.toUpperCase()}`;
+    document.getElementById('selectedButtonWorkerTitle').innerText = workerName.toUpperCase();
+    document.getElementById('selectedButtonWorkerAvatar').innerHTML = getAvatarHtml('Button', workerName, '🔘', true);
     document.getElementById('btnTabBillSearch').value = '';
     document.getElementById('btnTabFoundBillArea').innerHTML = '';
     renderButtonWorkerDetail();
@@ -1192,7 +1519,7 @@
         </div>
       `;
     });
-    rowsHtml += `<button type="button" class="btn-submit" style="background:var(--purple); margin-top:8px;" onclick="saveAssignedButtonItems('${matched.id}')">✅ ${selectedButtonWorker}-ക്ക് ബട്ടൺ വെക്കാൻ കൊടുക്കുക (Save)</button>`;
+    rowsHtml += `<button type="button" class="btn-submit" style="background:var(--purple); margin-top:8px;" onclick="saveAssignedButtonItems('${matched.id}')">✅ ${selectedButtonWorker}-ക്ക് ബട്ടൺ / ചെക്കിംഗിന് കൊടുക്കുക (Save)</button>`;
     area.innerHTML = rowsHtml;
   }
 
@@ -1223,13 +1550,14 @@
 
   async function removeButtonEntry(billId, itemIdx) {
     const bill = bills.find(b => b.id === billId);
-    if (!bill || !confirm(`Bill #${bill.billNo} (${bill.items[itemIdx].label})-ന്റെ ബട്ടൺ എൻട്രി ഡിലീറ്റ് ചെയ്യണമോ?`)) return;
+    if (!bill || !confirm(`Bill #${bill.billNo} (${bill.items[itemIdx].label})-ന്റെ എൻട്രി ഡിലീറ്റ് ചെയ്യണമോ?`)) return;
     bill.items[itemIdx].buttonWorker = '';
     bill.items[itemIdx].buttonTime = '';
     await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'ഡിലീറ്റ് ചെയ്യുന്നു...');
   }
 
   function renderButtonWorkerDetail() {
+    document.getElementById('selectedButtonWorkerAvatar').innerHTML = getAvatarHtml('Button', selectedButtonWorker, '🔘', true);
     const historyContainer = document.getElementById('buttonWorkerHistoryList');
     const items = [];
     bills.forEach(bill => bill.items.forEach((item, idx) => {
@@ -1239,7 +1567,7 @@
     }));
 
     if (items.length === 0) {
-      historyContainer.innerHTML = `<p style="color:#6b7280; font-size:0.9rem;">${selectedButtonWorker}-ക്ക് ഇതുവരെ ബട്ടൺ വെക്കാൻ ഐറ്റംസ് ഒന്നും കൊടുത്തിട്ടില്ല.</p>`;
+      historyContainer.innerHTML = `<p style="color:#6b7280; font-size:0.9rem;">${selectedButtonWorker}-ക്ക് ഇതുവരെ ഐറ്റംസ് ഒന്നും കൊടുത്തിട്ടില്ല.</p>`;
       return;
     }
     historyContainer.innerHTML = items.map(h => `
@@ -1257,7 +1585,27 @@
     `).join('');
   }
 
-  // --- STATUS PAGE ---
+  // --- STATUS PAGE & WHATSAPP CUSTOMER LINK SHARE ---
+  function shareBillViaWhatsApp(billId) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill) return;
+
+    const baseUrl = window.location.origin + window.location.pathname;
+    const trackingLink = `${baseUrl}?bill=${encodeURIComponent(bill.billNo)}`;
+
+    const greetName = bill.customerName ? `പ്രിയ ${bill.customerName},` : 'നമസ്കാരം,';
+    const msg = `${greetName}\n*Zibas Tailors*-ലെ നിങ്ങളുടെ *Bill #${bill.billNo}*-ന്റെ നിലവിലെ സ്റ്റാറ്റസ് താഴെ കാണുന്ന ലിങ്കിൽ ക്ലിക്ക് ചെയ്ത് പരിശോധിക്കാവുന്നതാണ്:\n\n${trackingLink}`;
+
+    let phone = (bill.customerPhone || '').replace(/\D/g, '');
+    if (phone.length === 10) phone = '91' + phone; // Add India country code if 10 digits
+
+    const waUrl = phone 
+      ? `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
+      : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+
+    window.open(waUrl, '_blank');
+  }
+
   function getItemStage(item) {
     if (item.ironed) return 'Ready';
     if (item.buttonWorker || item.tailor) return 'Buttoning / Ironing';
@@ -1327,7 +1675,10 @@
     alertSection.style.display = hasAlerts ? 'block' : 'none';
 
     const filteredBills = bills.filter(bill => {
-      if (!bill.billNo.toLowerCase().includes(search)) return false;
+      const matchBill = bill.billNo.toLowerCase().includes(search);
+      const matchCust = (bill.customerName || '').toLowerCase().includes(search) || (bill.customerPhone || '').includes(search);
+      if (!matchBill && !matchCust) return false;
+
       const pendingCount = bill.items.filter(i => !i.ironed).length;
       const diff = getDaysDiff(bill.deliveryDate);
       if (currentFilter === 'pending') return pendingCount > 0;
@@ -1369,14 +1720,27 @@
         </div>
       `).join('');
 
+      const custLine = (bill.customerName || bill.customerPhone)
+        ? `<div class="cust-sub">👤 ${bill.customerName || ''} ${bill.customerPhone ? `| 📞 ${bill.customerPhone}` : ''}</div>`
+        : '';
+
       const card = document.createElement('div');
       card.className = cardClass;
       card.innerHTML = `
-        <div class="bill-header"><span class="bill-no">Bill #${bill.billNo}</span><span class="${tagClass}">${statusLabel}</span></div>
+        <div class="bill-header">
+          <div>
+            <span class="bill-no">Bill #${bill.billNo}</span>
+            ${custLine}
+          </div>
+          <span class="${tagClass}">${statusLabel}</span>
+        </div>
         <div class="status-item-list">${itemsHtml}</div>
         <div class="bill-footer">
           <span>അയേണിംഗ്: <strong>${ironedCount} / ${totalItems}</strong> പൂർത്തിയായി</span>
-          <button type="button" class="btn-delete-bill" onclick="deleteBill('${bill.id}')">🗑️ ബിൽ ഡിലീറ്റ്</button>
+          <div class="footer-btns">
+            <button type="button" class="btn-wa-share" onclick="shareBillViaWhatsApp('${bill.id}')">📲 WhatsApp Status Link</button>
+            <button type="button" class="btn-delete-bill" onclick="deleteBill('${bill.id}')">🗑️ ബിൽ ഡിലീറ്റ്</button>
+          </div>
         </div>
       `;
       container.appendChild(card);
@@ -1386,4 +1750,3 @@
 
 </body>
 </html>
-
