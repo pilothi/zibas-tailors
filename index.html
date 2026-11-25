@@ -2,401 +2,634 @@
 <html lang="ml">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Zibas Tailors - Production & Customer Tracking</title>
   <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#1e3a8a">
+  <meta name="theme-color" content="#0f172a">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3050/3050253.png">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Noto+Sans+Malayalam:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1e3a8a;
-      --primary-light: #3b82f6;
-      --teal: #0f766e;
-      --teal-bg: #f0fdfa;
-      --indigo: #4338ca;
-      --indigo-bg: #eef2ff;
-      --purple: #6d28d9;
-      --orange: #c2410c;
-      --orange-bg: #fff7ed;
-      --danger: #dc2626;
-      --danger-bg: #fef2f2;
+      --primary: #1d4ed8;
+      --primary-dark: #0f172a;
+      --primary-soft: #eff6ff;
+      --teal: #0d9488;
+      --teal-soft: #f0fdfa;
+      --indigo: #4f46e5;
+      --indigo-soft: #eef2ff;
+      --purple: #7c3aed;
+      --purple-soft: #f5f3ff;
+      --orange: #ea580c;
+      --orange-soft: #fff7ed;
+      --danger: #e11d48;
+      --danger-soft: #fff1f2;
       --warning: #d97706;
-      --warning-bg: #fffbeb;
+      --warning-soft: #fffbeb;
       --success: #16a34a;
-      --success-bg: #f0fdf4;
-      --bg: #f3f4f6;
+      --success-soft: #f0fdf4;
+      --bg: #f1f5f9;
       --card: #ffffff;
-      --text: #1f2937;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
     }
 
-    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { margin: 0; padding: 0; background-color: var(--bg); color: var(--text); }
+    * {
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Malayalam', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
+    body {
+      margin: 0;
+      padding: 0 0 92px 0;
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* Sticky Glass App Header */
     header {
-      background: var(--primary);
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
       color: white;
-      padding: 15px 20px;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      position: relative;
+      padding: 14px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
-    header h1 { margin: 0; font-size: 1.35rem; letter-spacing: 0.5px; }
-    header p { margin: 4px 0 0; font-size: 0.8rem; opacity: 0.85; }
+    .brand-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.12rem;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+    }
+    header p {
+      margin: 1px 0 0;
+      font-size: 0.72rem;
+      opacity: 0.8;
+    }
 
     .header-actions {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
       display: flex;
       gap: 6px;
     }
-    .sync-btn {
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.4);
+    .icon-pill-btn {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
       color: white;
-      padding: 6px 10px;
-      border-radius: 6px;
+      padding: 7px 11px;
+      border-radius: 20px;
       cursor: pointer;
-      font-size: 0.78rem;
-      font-weight: 600;
+      font-size: 0.76rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: 0.15s;
     }
-    @media (max-width: 600px) {
-      .header-actions { position: static; transform: none; justify-content: center; margin-top: 8px; }
+    .icon-pill-btn:active { transform: scale(0.95); }
+
+    /* Bottom Mobile App Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      align-items: center;
+      padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+      z-index: 800;
+      box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.06);
     }
 
+    .nav-item {
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 5px 2px;
+      color: var(--muted);
+      font-size: 0.68rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: 0.15s;
+    }
+    .nav-item .nav-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+      transition: transform 0.15s;
+    }
+    .nav-item.active {
+      color: var(--primary);
+    }
+    .nav-item.active .nav-icon {
+      transform: translateY(-2px);
+    }
+    .nav-item.add-fab {
+      position: relative;
+    }
+    .fab-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 800;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+      margin-top: -14px;
+      border: 3px solid white;
+    }
+    .nav-item.add-fab.active .fab-circle {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4);
+    }
+
+    /* Loader */
     #loader {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(255,255,255,0.82);
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(4px);
       z-index: 9999;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      font-weight: bold;
-      color: var(--primary);
+      padding: 20px;
+    }
+    .loader-card {
+      background: white;
+      padding: 22px 28px;
+      border-radius: 18px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      font-weight: 700;
+      color: var(--primary-dark);
+      font-size: 0.92rem;
     }
     .spinner {
-      border: 4px solid #e5e7eb;
-      border-top: 4px solid var(--primary);
+      border: 3.5px solid #e2e8f0;
+      border-top: 3.5px solid var(--primary);
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      animation: spin 0.8s linear infinite;
-      margin-bottom: 10px;
+      width: 34px;
+      height: 34px;
+      animation: spin 0.75s linear infinite;
+      margin: 0 auto 12px;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+    /* Modal */
     .modal-overlay {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5);
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(3px);
       z-index: 9000;
       justify-content: center;
-      align-items: center;
-      padding: 15px;
+      align-items: flex-end;
+    }
+    @media (min-width: 600px) {
+      .modal-overlay { align-items: center; padding: 15px; }
     }
     .modal-box {
       background: white;
-      border-radius: 12px;
-      max-width: 520px;
+      border-radius: 22px 22px 0 0;
+      max-width: 540px;
       width: 100%;
       max-height: 85vh;
       overflow-y: auto;
       padding: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+      animation: slideUp 0.22s ease-out;
     }
-    .manage-group { margin-bottom: 14px; border-bottom: 1px solid #f3f4f6; padding-bottom: 10px; }
-    .manage-group h4 { margin: 0 0 8px 0; font-size: 0.9rem; color: var(--primary); }
-    .manage-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    @media (min-width: 600px) {
+      .modal-box { border-radius: 18px; }
+    }
+    @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .manage-group { margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .manage-group h4 { margin: 0 0 8px 0; font-size: 0.88rem; color: var(--primary-dark); }
+    .manage-tags { display: flex; flex-wrap: wrap; gap: 7px; }
     .manage-tag {
-      background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 20px;
-      font-size: 0.83rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
+      background: var(--bg); border: 1px solid var(--border); padding: 6px 11px; border-radius: 20px;
+      font-size: 0.82rem; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;
     }
     .manage-tag button {
       background: var(--danger); color: white; border: none; border-radius: 50%;
-      width: 18px; height: 18px; font-size: 0.7rem; cursor: pointer; line-height: 1;
+      width: 19px; height: 19px; font-size: 0.7rem; cursor: pointer; line-height: 1;
     }
 
-    .container { max-width: 980px; margin: 18px auto; padding: 0 12px; }
+    .container {
+      max-width: 820px;
+      margin: 14px auto;
+      padding: 0 12px;
+    }
 
+    /* Alert Banner */
     .alert-section {
-      background: var(--danger-bg);
-      border: 1px solid #fca5a5;
-      border-left: 5px solid var(--danger);
-      border-radius: 8px;
-      padding: 12px 15px;
-      margin-bottom: 18px;
+      background: var(--danger-soft);
+      border: 1px solid #fecdd3;
+      border-left: 4px solid var(--danger);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
       display: none;
     }
-    .alert-section h3 { margin: 0 0 8px 0; color: var(--danger); font-size: 0.95rem; }
-    .alert-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .alert-section h3 { margin: 0 0 8px 0; color: var(--danger); font-size: 0.86rem; font-weight: 800; }
+    .alert-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
     .alert-badge {
-      background: white; border: 1px solid #f87171; color: #991b1b;
-      padding: 5px 10px; border-radius: 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+      background: white; border: 1px solid #fda4af; color: #be123c;
+      padding: 6px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer; white-space: nowrap;
     }
 
-    /* 6 Workflow Navigation Tabs */
-    .tabs {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
+    .section-card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      margin-bottom: 16px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
       gap: 6px;
-      margin-bottom: 15px;
-    }
-    @media (max-width: 820px) { .tabs { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 450px) { .tabs { grid-template-columns: repeat(2, 1fr); } }
-
-    .tab-btn {
-      padding: 11px 6px; border: none; border-radius: 8px; font-size: 0.84rem;
-      font-weight: 700; cursor: pointer; background: #e5e7eb; color: #374151; text-align: center;
-    }
-    .tab-btn.active { background: var(--primary); color: white; }
-
-    .card {
-      background: var(--card); border-radius: 10px; padding: 18px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px;
     }
 
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    @media (max-width: 520px) { .form-row { grid-template-columns: 1fr; gap: 10px; } }
 
-    label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.86rem; }
+    label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.82rem; color: #334155; }
     input[type="text"], input[type="tel"], input[type="number"], input[type="date"], select {
-      width: 100%; padding: 9px 11px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.95rem; background: white;
+      width: 100%;
+      padding: 11px 13px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-size: 0.95rem;
+      background: #f8fafc;
+      color: var(--text);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: white;
     }
 
-    .btn-add-staff {
-      background: var(--teal); color: white; border: none; border-radius: 6px;
-      padding: 7px 12px; font-weight: 600; cursor: pointer; font-size: 0.82rem; white-space: nowrap;
+    .search-input-wrap {
+      position: relative;
+      margin-bottom: 12px;
     }
-    .btn-manage-del {
-      background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5; border-radius: 6px;
-      padding: 7px 10px; font-weight: 700; cursor: pointer; font-size: 0.8rem; white-space: nowrap;
+    .search-input-wrap input {
+      padding-left: 38px;
+      border-radius: 14px;
+      background: white;
+    }
+    .search-input-wrap::before {
+      content: '🔍';
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      opacity: 0.65;
     }
 
-    .quick-chips-bar { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 14px; align-items: center; }
+    .btn-pill {
+      background: var(--teal); color: white; border: none; border-radius: 20px;
+      padding: 7px 13px; font-weight: 700; cursor: pointer; font-size: 0.78rem; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .btn-pill:active { transform: scale(0.96); }
+    .btn-pill.danger-soft {
+      background: var(--danger-soft); color: var(--danger); border: 1px solid #fecdd3;
+    }
+
+    .quick-chips-bar { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 12px; align-items: center; }
     .bill-chip {
-      background: #eff6ff; border: 1px solid #93c5fd; color: #1e40af;
-      padding: 5px 11px; border-radius: 16px; font-size: 0.82rem; font-weight: 700; cursor: pointer;
+      background: var(--primary-soft); border: 1px solid #bfdbfe; color: var(--primary);
+      padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 800; cursor: pointer; white-space: nowrap;
     }
 
-    .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
+    /* Item Counter Grid */
+    .items-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+    @media (min-width: 640px) { .items-grid { grid-template-columns: repeat(3, 1fr); } }
+
     .item-box {
-      border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px; text-align: center; background: #f9fafb; position: relative;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 8px;
+      text-align: center;
+      background: #f8fafc;
+      position: relative;
     }
     .item-box .del-custom-box {
-      position: absolute; top: 4px; right: 4px; background: #fee2e2; color: var(--danger);
-      border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 0.7rem; font-weight: bold; cursor: pointer; line-height: 1;
+      position: absolute; top: 5px; right: 5px; background: var(--danger-soft); color: var(--danger);
+      border: none; border-radius: 50%; width: 21px; height: 21px; font-size: 0.7rem; font-weight: bold; cursor: pointer;
     }
-    .item-box span.title { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; }
+    .item-box span.title { display: block; font-weight: 700; margin-bottom: 9px; font-size: 0.88rem; color: var(--text); }
     .counter { display: flex; align-items: center; justify-content: center; gap: 8px; }
     .counter button {
-      width: 32px; height: 32px; border: none; border-radius: 6px;
-      background: var(--primary-light); color: white; font-size: 1.1rem; font-weight: bold; cursor: pointer;
+      width: 34px; height: 34px; border: none; border-radius: 10px;
+      background: var(--primary); color: white; font-size: 1.15rem; font-weight: 800; cursor: pointer;
     }
-    .counter button.minus { background: #9ca3af; }
+    .counter button:active { transform: scale(0.92); }
+    .counter button.minus { background: #cbd5e1; color: #334155; }
     .counter input {
-      width: 42px; text-align: center; font-size: 1.05rem; font-weight: bold;
-      border: 1px solid #d1d5db; border-radius: 4px; padding: 4px;
+      width: 42px; text-align: center; font-size: 1.05rem; font-weight: 800;
+      border: none; background: transparent; padding: 2px;
     }
 
     .manual-item-box {
-      background: #f0f9ff; border: 1px dashed #7dd3fc; border-radius: 8px; padding: 12px; margin-bottom: 10px;
+      background: #f0f9ff; border: 1.5px dashed #7dd3fc; border-radius: 14px; padding: 12px; margin-bottom: 8px;
     }
-    .manual-row { display: grid; grid-template-columns: 1fr 90px auto; gap: 8px; align-items: center; }
-    @media (max-width: 500px) { .manual-row { grid-template-columns: 1fr 75px auto; } }
+    .manual-row { display: grid; grid-template-columns: 1fr 72px auto; gap: 8px; align-items: center; }
     .custom-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
     .custom-chip {
       background: white; border: 1px solid #38bdf8; color: #0369a1;
-      padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 11px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;
     }
     .custom-chip button {
-      background: #ef4444; color: white; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; cursor: pointer; line-height: 1;
+      background: var(--danger); color: white; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 0.68rem; cursor: pointer;
     }
 
-    .btn-submit {
-      width: 100%; padding: 13px; background: var(--success); color: white;
-      border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer;
+    .btn-primary-full {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+      transition: transform 0.12s;
+    }
+    .btn-primary-full:active { transform: scale(0.98); }
+
+    /* WORKER PROFILE CARDS - 2 COLUMN MOBILE GRID */
+    .worker-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+    @media (min-width: 640px) {
+      .worker-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
-    /* WORKER PROFILE CARDS WITH PHOTO AVATAR */
-    .worker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 14px; margin-top: 12px; }
     .worker-card {
-      background: #faf5ff; border: 2px solid #d8b4fe; border-radius: 12px; padding: 18px 12px;
-      text-align: center; cursor: pointer; transition: 0.2s; position: relative;
+      background: var(--purple-soft);
+      border: 1.5px solid #ddd6fe;
+      border-radius: 16px;
+      padding: 16px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.18s;
+      position: relative;
+      box-shadow: var(--shadow-sm);
     }
-    .worker-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+    .worker-card:active { transform: scale(0.97); }
     
     .worker-card .card-del-btn {
-      position: absolute; top: 8px; right: 8px; background: #fee2e2; color: var(--danger);
-      border: 1px solid #fca5a5; border-radius: 50%; width: 25px; height: 25px; font-size: 0.75rem; font-weight: bold; cursor: pointer; line-height: 1; z-index: 2;
+      position: absolute; top: 8px; right: 8px; background: white; color: var(--danger);
+      border: 1px solid #fecdd3; border-radius: 50%; width: 25px; height: 25px; font-size: 0.72rem; font-weight: 800; cursor: pointer; z-index: 2;
     }
     .worker-card .card-photo-btn {
-      position: absolute; top: 8px; left: 8px; background: #e0f2fe; color: #0369a1;
-      border: 1px solid #7dd3fc; border-radius: 50%; width: 26px; height: 26px; font-size: 0.8rem; cursor: pointer; line-height: 1; z-index: 2;
+      position: absolute; top: 8px; left: 8px; background: white; color: #0284c7;
+      border: 1px solid #bae6fd; border-radius: 50%; width: 26px; height: 26px; font-size: 0.78rem; cursor: pointer; z-index: 2;
       display: flex; align-items: center; justify-content: center;
     }
 
     .avatar-circle {
-      width: 68px; height: 68px; border-radius: 50%; margin: 0 auto 8px; object-fit: cover;
-      border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.15); display: block; background: white;
+      width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 8px; object-fit: cover;
+      border: 3px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.12); display: block; background: white;
     }
     .avatar-fallback {
-      width: 68px; height: 68px; border-radius: 50%; margin: 0 auto 8px; display: flex;
-      align-items: center; justify-content: center; font-size: 1.9rem; background: white; border: 2px solid #e5e7eb;
+      width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 8px; display: flex;
+      align-items: center; justify-content: center; font-size: 1.8rem; background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
 
     .worker-card .w-name {
-      font-size: 1.2rem; font-weight: 900; color: var(--purple); display: block; text-transform: uppercase; letter-spacing: 0.5px;
+      font-size: 1.05rem; font-weight: 800; color: var(--purple); display: block; text-transform: uppercase; letter-spacing: 0.4px;
+      word-break: break-word;
     }
     .worker-card .w-count {
-      display: inline-block; margin-top: 8px; font-size: 0.8rem; background: white;
-      color: #4b5563; padding: 4px 10px; border-radius: 12px; border: 1px solid #e9d5ff; font-weight: 600;
+      display: inline-block; margin-top: 6px; font-size: 0.74rem; background: white;
+      color: #475569; padding: 4px 9px; border-radius: 20px; font-weight: 700;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
-    .worker-card.ironer-card { background: var(--orange-bg); border-color: #fdba74; }
-    .worker-card.ironer-card .w-name { color: var(--orange); font-size: 1.28rem; }
-    .worker-card.ironer-card .w-count { border-color: #fed7aa; }
+    .worker-card.ironer-card { background: var(--orange-soft); border-color: #fed7aa; }
+    .worker-card.ironer-card .w-name { color: var(--orange); font-size: 1.15rem; }
 
-    .worker-card.cutter-card { background: var(--teal-bg); border-color: #5eead4; }
-    .worker-card.cutter-card .w-name { color: var(--teal); font-size: 1.25rem; }
-    .worker-card.cutter-card .w-count { border-color: #99f6e4; }
+    .worker-card.cutter-card { background: var(--teal-soft); border-color: #99f6e4; }
+    .worker-card.cutter-card .w-name { color: var(--teal); }
 
-    .worker-card.tailor-card { background: var(--indigo-bg); border-color: #a5b4fc; }
-    .worker-card.tailor-card .w-name { color: var(--indigo); font-size: 1.25rem; }
-    .worker-card.tailor-card .w-count { border-color: #c7d2fe; }
+    .worker-card.tailor-card { background: var(--indigo-soft); border-color: #c7d2fe; }
+    .worker-card.tailor-card .w-name { color: var(--indigo); }
 
     .profile-header-avatar {
-      width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary);
+      width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
     .btn-back {
-      background: #e5e7eb; color: #1f2937; border: none; padding: 8px 14px;
-      border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.88rem;
+      background: #f1f5f9; color: #1e293b; border: 1px solid var(--border); padding: 7px 12px;
+      border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 0.82rem;
     }
 
-    .assign-box-purple { background: #faf5ff; border: 1px solid #d8b4fe; border-radius: 8px; padding: 14px; margin: 14px 0 20px; }
-    .assign-box-orange { background: var(--orange-bg); border: 1px solid #fdba74; border-radius: 8px; padding: 14px; margin: 14px 0 20px; }
-    .assign-box-teal { background: var(--teal-bg); border: 1px solid #5eead4; border-radius: 8px; padding: 14px; margin: 14px 0 20px; }
-    .assign-box-indigo { background: var(--indigo-bg); border: 1px solid #a5b4fc; border-radius: 8px; padding: 14px; margin: 14px 0 20px; }
+    .assign-box-purple { background: var(--purple-soft); border: 1.5px solid #ddd6fe; border-radius: 14px; padding: 14px; margin: 12px 0 18px; }
+    .assign-box-orange { background: var(--orange-soft); border: 1.5px solid #fed7aa; border-radius: 14px; padding: 14px; margin: 12px 0 18px; }
+    .assign-box-teal { background: var(--teal-soft); border: 1.5px solid #99f6e4; border-radius: 14px; padding: 14px; margin: 12px 0 18px; }
+    .assign-box-indigo { background: var(--indigo-soft); border: 1.5px solid #c7d2fe; border-radius: 14px; padding: 14px; margin: 12px 0 18px; }
 
     .found-item-row {
-      display: grid; grid-template-columns: auto 1fr 1.2fr; gap: 10px; align-items: center;
-      background: white; border: 1px solid #e5e7eb; padding: 10px; border-radius: 7px; margin-bottom: 8px;
+      display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center;
+      background: white; border: 1px solid var(--border); padding: 11px; border-radius: 12px; margin-bottom: 8px;
+    }
+    .found-item-row select { grid-column: 1 / -1; margin-top: 4px; }
+    @media (min-width: 600px) {
+      .found-item-row { grid-template-columns: auto 1fr 1.2fr; }
+      .found-item-row select { grid-column: auto; margin-top: 0; }
     }
     .found-item-row.iron-row, .found-item-row.cut-row, .found-item-row.tailor-row { grid-template-columns: auto 1fr auto; }
-    @media (max-width: 600px) {
-      .found-item-row { grid-template-columns: auto 1fr; }
-      .found-item-row select { grid-column: 1 / -1; }
-    }
+
     .found-item-row input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--purple); cursor: pointer; }
     .found-item-row.iron-row input[type="checkbox"] { accent-color: var(--orange); }
     .found-item-row.cut-row input[type="checkbox"] { accent-color: var(--teal); }
     .found-item-row.tailor-row input[type="checkbox"] { accent-color: var(--indigo); }
 
-    .stats-filter-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; margin-bottom: 14px; }
+    .stats-filter-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-bottom: 14px; }
     .total-counter-banner {
-      background: var(--orange); color: white; padding: 10px 14px; border-radius: 8px;
-      font-size: 1rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; margin-top: 10px;
+      background: linear-gradient(135deg, #ea580c, #c2410c); color: white; padding: 12px 14px; border-radius: 12px;
+      font-size: 0.92rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; margin-top: 10px;
     }
 
     .history-card {
-      border: 1px solid #e5e7eb; border-left: 4px solid var(--purple); background: #ffffff;
-      border-radius: 7px; padding: 10px 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+      border: 1px solid var(--border); border-left: 4px solid var(--purple); background: white;
+      border-radius: 12px; padding: 11px 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
     }
     .history-card.iron-history { border-left-color: var(--orange); }
     .history-card.cut-history { border-left-color: var(--teal); }
     .history-card.tailor-history { border-left-color: var(--indigo); }
-    .history-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .history-time { font-size: 0.78rem; background: #f3f4f6; color: #374151; padding: 4px 9px; border-radius: 5px; font-weight: 600; }
+    .history-right { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .history-time { font-size: 0.74rem; background: #f1f5f9; color: #475569; padding: 4px 8px; border-radius: 8px; font-weight: 700; }
 
     .btn-stitch-done {
-      background: #fef3c7; color: #b45309; border: 1px solid #fcd34d;
-      padding: 5px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+      background: var(--warning-soft); color: #b45309; border: 1px solid #fde68a;
+      padding: 6px 10px; border-radius: 20px; font-size: 0.76rem; font-weight: 800; cursor: pointer;
     }
     .btn-stitch-done.completed {
-      background: #dcfce7; color: #15803d; border-color: #86efac;
+      background: var(--success-soft); color: #15803d; border-color: #bbf7d0;
     }
 
     .btn-icon-del {
-      background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5;
-      border-radius: 6px; padding: 4px 8px; font-size: 0.8rem; font-weight: bold; cursor: pointer;
+      background: var(--danger-soft); color: var(--danger); border: 1px solid #fecdd3;
+      border-radius: 8px; padding: 5px 8px; font-size: 0.78rem; font-weight: 800; cursor: pointer;
     }
 
-    .filter-pills { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+    /* Horizontal Scrollable Filter Pills */
+    .filter-pills {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 12px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .filter-pills::-webkit-scrollbar { display: none; }
+
     .pill {
-      padding: 6px 12px; border-radius: 20px; border: 1px solid #d1d5db;
-      background: white; cursor: pointer; font-size: 0.82rem; font-weight: 600;
+      padding: 7px 14px; border-radius: 20px; border: 1px solid var(--border);
+      background: white; cursor: pointer; font-size: 0.8rem; font-weight: 700; white-space: nowrap; color: #475569;
     }
     .pill.active { background: var(--primary); color: white; border-color: var(--primary); }
     .pill.orange-pill.active { background: var(--orange); border-color: var(--orange); }
 
-    .bill-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px; margin-bottom: 14px; background: white; }
-    .bill-card.urgent { border-left: 5px solid var(--danger); background: #fffafa; }
-    .bill-card.tomorrow { border-left: 5px solid var(--warning); background: #fffdf5; }
-    .bill-card.completed { border-left: 5px solid var(--success); background: var(--success-bg); }
+    /* Bill Status Cards */
+    .bill-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: white;
+      box-shadow: var(--shadow-sm);
+    }
+    .bill-card.urgent { border-left: 5px solid var(--danger); background: #fffafb; }
+    .bill-card.tomorrow { border-left: 5px solid var(--warning); background: #fffdf7; }
+    .bill-card.completed { border-left: 5px solid var(--success); background: #f7fef9; }
 
     .bill-header {
-      display: flex; justify-content: space-between; align-items: center;
-      border-bottom: 1px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 10px; flex-wrap: wrap; gap: 6px;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 10px; gap: 8px;
     }
-    .bill-no { font-size: 1.18rem; font-weight: 800; color: var(--primary); }
-    .cust-sub { font-size: 0.82rem; color: #4b5563; margin-top: 2px; }
+    .bill-no { font-size: 1.15rem; font-weight: 800; color: var(--primary-dark); }
+    .cust-sub { font-size: 0.8rem; color: var(--muted); margin-top: 2px; font-weight: 600; }
     
-    .delivery-tag { font-size: 0.82rem; padding: 3px 9px; border-radius: 6px; font-weight: 600; background: #e5e7eb; }
-    .delivery-tag.urgent { background: #fee2e2; color: #b91c1c; }
-    .delivery-tag.tomorrow { background: #fef3c7; color: #b45309; }
-    .delivery-tag.done { background: #dcfce7; color: #15803d; }
+    .delivery-tag { font-size: 0.76rem; padding: 4px 10px; border-radius: 20px; font-weight: 700; background: #f1f5f9; color: #334155; white-space: nowrap; }
+    .delivery-tag.urgent { background: var(--danger-soft); color: var(--danger); }
+    .delivery-tag.tomorrow { background: var(--warning-soft); color: var(--warning); }
+    .delivery-tag.done { background: var(--success-soft); color: var(--success); }
 
     .status-item-list { display: flex; flex-direction: column; gap: 8px; }
     .status-item-row {
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
-      padding: 9px 12px; border: 1px solid #e5e7eb; border-radius: 7px; background: #f8fafc;
+      padding: 10px 12px; border: 1px solid #f1f5f9; border-radius: 12px; background: #f8fafc;
     }
-    .status-item-row.ironed-done { background: #dcfce7; border-color: #86efac; }
+    .status-item-row.ironed-done { background: var(--success-soft); border-color: #bbf7d0; }
     .item-left { display: flex; align-items: center; gap: 8px; }
-    .item-name { font-weight: 700; font-size: 0.95rem; }
+    .item-name { font-weight: 800; font-size: 0.92rem; }
     .item-stage-pill {
-      font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; font-weight: 700; background: #e0e7ff; color: #1e40af;
+      font-size: 0.72rem; padding: 3px 9px; border-radius: 20px; font-weight: 800; background: var(--primary-soft); color: var(--primary);
     }
-    .item-stage-pill.done { background: #16a34a; color: white; }
-    .item-workers { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.78rem; align-items: center; }
-    .w-chip { background: white; border: 1px solid #cbd5e1; padding: 2px 7px; border-radius: 4px; color: #334155; }
+    .item-stage-pill.done { background: var(--success); color: white; }
+    .item-workers { display: flex; flex-wrap: wrap; gap: 5px; font-size: 0.74rem; align-items: center; }
+    .w-chip { background: white; border: 1px solid var(--border); padding: 3px 8px; border-radius: 8px; color: #334155; font-weight: 600; }
 
     .bill-footer {
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
-      margin-top: 10px; padding-top: 8px; border-top: 1px dashed #e5e7eb; font-size: 0.82rem; color: #6b7280;
+      margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--border); font-size: 0.8rem; color: var(--muted); font-weight: 600;
     }
     .footer-btns { display: flex; gap: 6px; flex-wrap: wrap; }
     .btn-wa-share {
-      background: #dcfce7; border: 1px solid #86efac; color: #15803d;
-      padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 700;
+      background: var(--success-soft); border: 1px solid #bbf7d0; color: #15803d;
+      padding: 6px 11px; border-radius: 20px; cursor: pointer; font-size: 0.78rem; font-weight: 800;
     }
     .btn-delete-bill {
-      background: #fee2e2; border: 1px solid #fca5a5; color: var(--danger);
-      padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 700;
+      background: var(--danger-soft); border: 1px solid #fecdd3; color: var(--danger);
+      padding: 6px 11px; border-radius: 20px; cursor: pointer; font-size: 0.78rem; font-weight: 800;
     }
 
-    .customer-view-box { max-width: 560px; margin: 24px auto; padding: 0 14px; }
-    .cust-progress-bar { height: 10px; background: #e5e7eb; border-radius: 10px; overflow: hidden; margin: 12px 0; }
+    .customer-view-box { max-width: 520px; margin: 20px auto; padding: 0 14px; }
+    .cust-progress-bar { height: 10px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin: 12px 0; }
     .cust-progress-fill { height: 100%; background: var(--success); transition: width 0.4s ease; }
   </style>
 </head>
 <body>
 
 <div id="loader">
-  <div class="spinner"></div>
-  <span id="loaderText">Google Sheet-മായി ബന്ധിപ്പിക്കുന്നു...</span>
+  <div class="loader-card">
+    <div class="spinner"></div>
+    <span id="loaderText">ലോഡ് ചെയ്യുന്നു...</span>
+  </div>
 </div>
 
 <input type="file" id="staffPhotoInput" accept="image/*" style="display:none;" onchange="handleStaffPhotoSelected(event)">
 
-<div id="manageModal" class="modal-overlay">
+<div id="manageModal" class="modal-overlay" onclick="if(event.target===this) closeManageModal()">
   <div class="modal-box">
-    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e5e7eb; padding-bottom:10px; margin-bottom:14px;">
-      <h3 style="margin:0; color:var(--danger);">🗑️ സ്റ്റാഫുകളെയും ഐറ്റംസുകളെയും ഡിലീറ്റ് ചെയ്യുക</h3>
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px; margin-bottom:14px;">
+      <h3 style="margin:0; color:var(--danger); font-size:1rem;">🗑️ സ്റ്റാഫുകളെയും ഐറ്റംസുകളെയും ഡിലീറ്റ് ചെയ്യുക</h3>
       <button type="button" class="btn-back" onclick="closeManageModal()">✕</button>
     </div>
     <div id="manageModalBody"></div>
@@ -404,11 +637,16 @@
 </div>
 
 <header>
-  <h1>ZIBAS TAILORS</h1>
-  <p id="headerSubtitle">കട്ടിംഗ് ➔ സ്റ്റിച്ചിംഗ് ➔ ബട്ടൺ ➔ അയേണിംഗ് ➔ ഡെലിവറി</p>
+  <div class="brand-area">
+    <div class="brand-logo">✂️</div>
+    <div>
+      <h1>ZIBAS TAILORS</h1>
+      <p id="headerSubtitle">Production & Delivery Tracker</p>
+    </div>
+  </div>
   <div class="header-actions" id="shopHeaderActions">
-    <button class="sync-btn" onclick="openManageModal()">⚙️ സ്റ്റാഫ് ഡിലീറ്റ്</button>
-    <button class="sync-btn" onclick="loadAllData()">🔄 Sync</button>
+    <button class="icon-pill-btn" onclick="openManageModal()">⚙️ ഡിലീറ്റ്</button>
+    <button class="icon-pill-btn" onclick="loadAllData()">🔄 Sync</button>
   </div>
 </header>
 
@@ -419,25 +657,14 @@
 <div id="shopMainContainer" class="container">
 
   <div id="alertSection" class="alert-section">
-    <h3>⚠️ ഡെലിവറി അടുത്ത / തീരാനുള്ള ബില്ലുകൾ (Delivery Tomorrow / Due):</h3>
+    <h3>⚠️ ഡെലിവറി അടുത്ത / തീരാനുള്ള ബില്ലുകൾ:</h3>
     <div id="alertList" class="alert-list"></div>
   </div>
 
-  <!-- 6 Separate Tabs -->
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('statusTab', this)">📊 സ്റ്റാറ്റസ്</button>
-    <button class="tab-btn" onclick="switchTab('ironingTab', this)">🔥 അയേണിംഗ്</button>
-    <button class="tab-btn" onclick="switchTab('entryTab', this)">➕ പുതിയ ബിൽ</button>
-    <button class="tab-btn" onclick="switchTab('cuttingTab', this)">✂️ കട്ടിംഗ്</button>
-    <button class="tab-btn" onclick="switchTab('stitchingTab', this)">🧵 സ്റ്റിച്ചിംഗ്</button>
-    <button class="tab-btn" onclick="switchTab('buttonTab', this)">🔘 ബട്ടൺ & ചെക്ക്</button>
-  </div>
-
   <!-- TAB 1: STATUS -->
-  <div id="statusTab" class="card">
-    <div style="margin-bottom: 12px;">
-      <label>ബിൽ നമ്പർ / കസ്റ്റമർ പേര് സെർച്ച് ചെയ്യുക:</label>
-      <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ അല്ലെങ്കിൽ പേര് ടൈപ്പ് ചെയ്യുക..." onkeyup="renderBills()">
+  <div id="statusTab">
+    <div class="search-input-wrap">
+      <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ / കസ്റ്റമർ പേര് സെർച്ച് ചെയ്യുക..." onkeyup="renderBills()">
     </div>
     <div class="filter-pills">
       <button class="pill active" onclick="setFilter('all', this)">എല്ലാം (All)</button>
@@ -449,56 +676,54 @@
   </div>
 
   <!-- TAB 2: IRONING -->
-  <div id="ironingTab" class="card" style="display: none;">
+  <div id="ironingTab" class="section-card" style="display: none;">
     <div id="ironerListView">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-        <h3 style="margin:0; color: var(--orange);">🔥 അയേണിംഗ് വിഭാഗം (Ironing Staff)</h3>
-        <button type="button" class="btn-add-staff" style="background:var(--orange);" onclick="promptNewStaff('Ironer')">+ പുതിയ അയേണിംഗ് സ്റ്റാഫ്</button>
+      <div class="section-header">
+        <h3 class="section-title" style="color: var(--orange);">🔥 അയേണിംഗ് വിഭാഗം</h3>
+        <button type="button" class="btn-pill" style="background:var(--orange);" onclick="promptNewStaff('Ironer')">+ പുതിയ സ്റ്റാഫ്</button>
       </div>
-      <p style="font-size:0.85rem; color:#4b5563; margin-top:0;">പ്രൊഫൈലിൽ കയറാൻ പേരിൽ ക്ലിക്ക് ചെയ്യുക (ഫോട്ടോ മാറ്റാൻ മുകളിലെ 📷 അമർത്തുക):</p>
       <div id="ironersGrid" class="worker-grid"></div>
     </div>
 
     <div id="ironerDetailView" style="display:none;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid #e5e7eb; padding-bottom:10px;">
+      <div class="section-header" style="border-bottom:1px solid var(--border); padding-bottom:10px;">
         <div style="display:flex; align-items:center; gap:10px;">
-          <button type="button" class="btn-back" onclick="closeIronerDetail()">⬅️ തിരികെ</button>
+          <button type="button" class="btn-back" onclick="closeIronerDetail()">⬅️</button>
           <span id="selectedIronerAvatar"></span>
-          <h2 id="selectedIronerTitle" style="margin:0; color:var(--orange); text-transform:uppercase;"></h2>
+          <h3 id="selectedIronerTitle" style="margin:0; color:var(--orange); text-transform:uppercase; font-size:1.1rem;"></h3>
         </div>
-        <button type="button" class="btn-add-staff" style="background:#0369a1;" onclick="triggerPhotoUpload('Ironer', selectedIroner)">📷 ഫോട്ടോ മാറ്റുക</button>
+        <button type="button" class="btn-pill" style="background:#0284c7;" onclick="triggerPhotoUpload('Ironer', selectedIroner)">📷 ഫോട്ടോ</button>
       </div>
 
       <div class="assign-box-orange">
-        <label style="color:var(--orange); font-size:0.95rem; margin-bottom:8px;">➕ അയൺ ചെയ്ത ബിൽ നമ്പർ ചേർക്കുക:</label>
+        <label style="color:var(--orange);">➕ അയൺ ചെയ്ത ബിൽ നമ്പർ ചേർക്കുക:</label>
         <input type="text" id="ironTabBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForIroner()">
-        <div id="ironTabFoundBillArea" style="margin-top:12px;"></div>
+        <div id="ironTabFoundBillArea" style="margin-top:10px;"></div>
       </div>
 
-      <h4 style="margin:0 0 8px 0; color:#374151;">📊 അയൺ ചെയ്തവയുടെ കണക്ക് (Filter & History):</h4>
       <div class="stats-filter-box">
         <div class="filter-pills" style="margin-bottom:8px;">
-          <button type="button" class="pill orange-pill active" onclick="setIronerFilter('thisWeek', this)">ഈ ആഴ്ച (This Week)</button>
-          <button type="button" class="pill orange-pill" onclick="setIronerFilter('today', this)">ഇന്ന് (Today)</button>
-          <button type="button" class="pill orange-pill" onclick="setIronerFilter('lastWeek', this)">കഴിഞ്ഞ ആഴ്ച (Last Week)</button>
-          <button type="button" class="pill orange-pill" onclick="setIronerFilter('all', this)">എല്ലാം (All Time)</button>
-          <button type="button" class="pill orange-pill" onclick="setIronerFilter('custom', this)">📅 തീയതി തിരഞ്ഞെടുക്കുക</button>
+          <button type="button" class="pill orange-pill active" onclick="setIronerFilter('thisWeek', this)">ഈ ആഴ്ച</button>
+          <button type="button" class="pill orange-pill" onclick="setIronerFilter('today', this)">ഇന്ന്</button>
+          <button type="button" class="pill orange-pill" onclick="setIronerFilter('lastWeek', this)">കഴിഞ്ഞ ആഴ്ച</button>
+          <button type="button" class="pill orange-pill" onclick="setIronerFilter('all', this)">എല്ലാം</button>
+          <button type="button" class="pill orange-pill" onclick="setIronerFilter('custom', this)">📅 തീയതി</button>
         </div>
 
         <div id="ironerCustomDateRow" class="form-row" style="display:none; margin-top:10px; margin-bottom:0;">
           <div>
-            <label>മുതൽ (From Date):</label>
+            <label>മുതൽ (From):</label>
             <input type="date" id="ironFilterFrom" onchange="renderIronerDetail()">
           </div>
           <div>
-            <label>വരെ (To Date):</label>
+            <label>വരെ (To):</label>
             <input type="date" id="ironFilterTo" onchange="renderIronerDetail()">
           </div>
         </div>
 
         <div class="total-counter-banner">
           <span id="ironerFilterLabel">ഈ ആഴ്ച ആകെ അയൺ ചെയ്തത്:</span>
-          <span id="ironerTotalCount" style="font-size:1.3rem;">0 എണ്ണം</span>
+          <span id="ironerTotalCount" style="font-size:1.2rem;">0 എണ്ണം</span>
         </div>
       </div>
       <div id="ironerHistoryList"></div>
@@ -506,8 +731,10 @@
   </div>
 
   <!-- TAB 3: NEW BILL -->
-  <div id="entryTab" class="card" style="display: none;">
-    <h3 style="margin-top:0; color: var(--primary);">1. പുതിയ ബിൽ ചേർക്കുക</h3>
+  <div id="entryTab" class="section-card" style="display: none;">
+    <div class="section-header">
+      <h3 class="section-title" style="color: var(--primary);">➕ പുതിയ ബിൽ ചേർക്കുക</h3>
+    </div>
     <div class="form-row">
       <div>
         <label>ബിൽ നമ്പർ (Bill Number) *</label>
@@ -521,150 +748,158 @@
 
     <div class="form-row">
       <div>
-        <label>കസ്റ്റമറുടെ പേര് (Customer Name - Optional)</label>
+        <label>കസ്റ്റമറുടെ പേര് (Optional)</label>
         <input type="text" id="customerName" placeholder="ഉദാ: അൻവർ">
       </div>
       <div>
-        <label>വാട്സാപ്പ് നമ്പർ (WhatsApp Number - Optional)</label>
+        <label>വാട്സാപ്പ് നമ്പർ (Optional)</label>
         <input type="tel" id="customerPhone" placeholder="ഉദാ: 9847012345">
       </div>
     </div>
 
-    <button class="btn-submit" style="margin-bottom: 18px;" onclick="saveBill()">💾 ബിൽ സേവ് ചെയ്യുക</button>
+    <button class="btn-primary-full" style="margin-bottom: 18px;" onclick="saveBill()">💾 ബിൽ സേവ് ചെയ്യുക</button>
 
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:6px; border-top: 1px solid #e5e7eb; padding-top: 14px;">
-      <label style="margin:0;">ഐറ്റംസിന്റെ എണ്ണം തിരഞ്ഞെടുക്കുക:</label>
-      <button type="button" class="btn-add-staff" onclick="promptNewStaff('ItemType')">+ പുതിയ സ്ഥിരം ഐറ്റം</button>
+    <div class="section-header" style="border-top: 1px solid var(--border); padding-top: 14px; margin-bottom: 10px;">
+      <label style="margin:0;">ഐറ്റംസിന്റെ എണ്ണം:</label>
+      <button type="button" class="btn-pill" onclick="promptNewStaff('ItemType')">+ പുതിയ സ്ഥിരം ഐറ്റം</button>
     </div>
 
     <div id="itemsGrid" class="items-grid"></div>
 
     <div class="manual-item-box">
-      <label style="color: #0369a1; margin-bottom: 8px;">✍️ മറ്റ് ഐറ്റംസ് മാനുവൽ ആയി ചേർക്കാൻ (ഉദാ: Coat, Suit, Alteration):</label>
+      <label style="color: #0369a1; margin-bottom: 8px;">✍️ മറ്റ് ഐറ്റംസ് മാനുവൽ ആയി ചേർക്കാൻ:</label>
       <div class="manual-row">
         <input type="text" id="customItemName" placeholder="ഐറ്റത്തിന്റെ പേര്...">
-        <input type="number" id="customItemCount" value="1" min="1" placeholder="എണ്ണം">
-        <button type="button" class="btn-add-staff" style="background: var(--primary); padding: 10px 14px;" onclick="addManualCustomItem()">+ ചേർക്കുക</button>
+        <input type="number" id="customItemCount" value="1" min="1">
+        <button type="button" class="btn-pill" style="background: var(--primary); padding: 10px 14px;" onclick="addManualCustomItem()">+ ചേർക്കുക</button>
       </div>
       <div id="customItemsList" class="custom-chips"></div>
     </div>
   </div>
 
   <!-- TAB 4: CUTTING -->
-  <div id="cuttingTab" class="card" style="display: none;">
+  <div id="cuttingTab" class="section-card" style="display: none;">
     <div id="cutterListView">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-        <h3 style="margin:0; color: var(--teal);">✂️ കട്ടിംഗ് വിഭാഗം (Cutters)</h3>
-        <div style="display:flex; gap:6px;">
-          <button type="button" class="btn-add-staff" onclick="promptNewStaff('Cutter')">+ പുതിയ കട്ടർ</button>
-          <button type="button" class="btn-manage-del" onclick="openManageModal()">🗑️ ഡിലീറ്റ്</button>
-        </div>
+      <div class="section-header">
+        <h3 class="section-title" style="color: var(--teal);">✂️ കട്ടിംഗ് വിഭാഗം</h3>
+        <button type="button" class="btn-pill" onclick="promptNewStaff('Cutter')">+ പുതിയ കട്ടർ</button>
       </div>
-      <p style="font-size:0.85rem; color:#4b5563; margin-top:0;">കട്ടറുടെ പ്രൊഫൈലിൽ കയറാൻ പേരിൽ ക്ലിക്ക് ചെയ്യുക (ഫോട്ടോ മാറ്റാൻ 📷 അമർത്തുക):</p>
-      
       <div id="pendingCuttingChips" class="quick-chips-bar"></div>
       <div id="cuttersGrid" class="worker-grid"></div>
     </div>
 
     <div id="cutterDetailView" style="display:none;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid #e5e7eb; padding-bottom:10px;">
+      <div class="section-header" style="border-bottom:1px solid var(--border); padding-bottom:10px;">
         <div style="display:flex; align-items:center; gap:10px;">
-          <button type="button" class="btn-back" onclick="closeCutterDetail()">⬅️ തിരികെ</button>
+          <button type="button" class="btn-back" onclick="closeCutterDetail()">⬅️</button>
           <span id="selectedCutterAvatar"></span>
-          <h3 id="selectedCutterTitle" style="margin:0; color:var(--teal); text-transform:uppercase;"></h3>
+          <h3 id="selectedCutterTitle" style="margin:0; color:var(--teal); text-transform:uppercase; font-size:1.1rem;"></h3>
         </div>
-        <button type="button" class="btn-add-staff" style="background:#0369a1;" onclick="triggerPhotoUpload('Cutter', selectedCutter)">📷 ഫോട്ടോ മാറ്റുക</button>
+        <button type="button" class="btn-pill" style="background:#0284c7;" onclick="triggerPhotoUpload('Cutter', selectedCutter)">📷 ഫോട്ടോ</button>
       </div>
 
       <div class="assign-box-teal">
-        <label style="color:var(--teal); font-size:0.95rem; margin-bottom:8px;">➕ കട്ട് ചെയ്യാൻ ബിൽ നമ്പർ നൽകുക:</label>
+        <label style="color:var(--teal);">➕ കട്ട് ചെയ്യാൻ ബിൽ നമ്പർ നൽകുക:</label>
         <input type="text" id="cutTabBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForCutter()">
-        <div id="cutTabFoundBillArea" style="margin-top:12px;"></div>
+        <div id="cutTabFoundBillArea" style="margin-top:10px;"></div>
       </div>
 
-      <h4 style="margin:0 0 10px 0; color:#374151;">📋 ഈ കട്ടർക്ക് നൽകിയ ഐറ്റംസ്:</h4>
+      <h4 style="margin:0 0 10px 0; color:#334155; font-size:0.92rem;">📋 ഈ കട്ടർക്ക് നൽകിയ ഐറ്റംസ്:</h4>
       <div id="cutterHistoryList"></div>
     </div>
   </div>
 
-  <!-- TAB 5: STITCHING (TAILOR PROFILES: TAKEN FOR STITCHING & STITCHING COMPLETED) -->
-  <div id="stitchingTab" class="card" style="display: none;">
+  <!-- TAB 5: STITCHING -->
+  <div id="stitchingTab" class="section-card" style="display: none;">
     <div id="tailorListView">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-        <h3 style="margin:0; color: var(--indigo);">🧵 സ്റ്റിച്ചിംഗ് വിഭാഗം (Tailors)</h3>
-        <div style="display:flex; gap:6px;">
-          <button type="button" class="btn-add-staff" style="background:var(--indigo);" onclick="promptNewStaff('Tailor')">+ പുതിയ തയ്യൽക്കാരൻ</button>
-          <button type="button" class="btn-manage-del" onclick="openManageModal()">🗑️ ഡിലീറ്റ്</button>
-        </div>
+      <div class="section-header">
+        <h3 class="section-title" style="color: var(--indigo);">🧵 സ്റ്റിച്ചിംഗ് വിഭാഗം</h3>
+        <button type="button" class="btn-pill" style="background:var(--indigo);" onclick="promptNewStaff('Tailor')">+ പുതിയ തയ്യൽക്കാരൻ</button>
       </div>
-      <p style="font-size:0.85rem; color:#4b5563; margin-top:0;">തയ്യൽക്കാരന്റെ പ്രൊഫൈലിൽ കയറാൻ പേരിൽ ക്ലിക്ക് ചെയ്യുക (ഫോട്ടോ മാറ്റാൻ 📷 അമർത്തുക):</p>
-      
       <div id="tailorsGrid" class="worker-grid"></div>
     </div>
 
     <div id="tailorDetailView" style="display:none;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid #e5e7eb; padding-bottom:10px;">
+      <div class="section-header" style="border-bottom:1px solid var(--border); padding-bottom:10px;">
         <div style="display:flex; align-items:center; gap:10px;">
-          <button type="button" class="btn-back" onclick="closeTailorDetail()">⬅️ തിരികെ</button>
+          <button type="button" class="btn-back" onclick="closeTailorDetail()">⬅️</button>
           <span id="selectedTailorAvatar"></span>
-          <h3 id="selectedTailorTitle" style="margin:0; color:var(--indigo); text-transform:uppercase;"></h3>
+          <h3 id="selectedTailorTitle" style="margin:0; color:var(--indigo); text-transform:uppercase; font-size:1.1rem;"></h3>
         </div>
-        <button type="button" class="btn-add-staff" style="background:#0369a1;" onclick="triggerPhotoUpload('Tailor', selectedTailor)">📷 ഫോട്ടോ മാറ്റുക</button>
+        <button type="button" class="btn-pill" style="background:#0284c7;" onclick="triggerPhotoUpload('Tailor', selectedTailor)">📷 ഫോട്ടോ</button>
       </div>
 
-      <!-- 1. Assign Items Taken for Stitching -->
       <div class="assign-box-indigo">
-        <label style="color:var(--indigo); font-size:0.95rem; margin-bottom:8px;">➕ സ്റ്റിച്ചിംഗിനായി എടുക്കുന്ന ബിൽ നമ്പർ നൽകുക:</label>
+        <label style="color:var(--indigo);">➕ സ്റ്റിച്ചിംഗിനായി എടുക്കുന്ന ബിൽ നമ്പർ:</label>
         <input type="text" id="tailorTabBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForTailor()">
-        <div id="tailorTabFoundBillArea" style="margin-top:12px;"></div>
+        <div id="tailorTabFoundBillArea" style="margin-top:10px;"></div>
       </div>
 
-      <!-- 2. List of Items Taken by this Tailor (With Mark Completed Button) -->
-      <h4 style="margin:0 0 10px 0; color:#374151;">📋 സ്റ്റിച്ചിംഗിന് എടുത്തവ & പൂർത്തിയായവ:</h4>
+      <h4 style="margin:0 0 10px 0; color:#334155; font-size:0.92rem;">📋 സ്റ്റിച്ചിംഗിന് എടുത്തവ & പൂർത്തിയായവ:</h4>
       <div id="tailorHistoryList"></div>
     </div>
   </div>
 
   <!-- TAB 6: BUTTON & CHECKING -->
-  <div id="buttonTab" class="card" style="display: none;">
+  <div id="buttonTab" class="section-card" style="display: none;">
     <div id="buttonWorkerListView">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-        <h3 style="margin:0; color: var(--purple);">🔘 ബട്ടൺ & ചെക്കിംഗ് വിഭാഗം</h3>
-        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-          <button type="button" class="btn-add-staff" onclick="promptNewStaff('Tailor')">+ പുതിയ തയ്യൽക്കാരൻ</button>
-          <button type="button" class="btn-add-staff" style="background:var(--purple);" onclick="promptNewStaff('Button')">+ പുതിയ ബട്ടൺ/ചെക്കിംഗ് സ്റ്റാഫ്</button>
-          <button type="button" class="btn-manage-del" onclick="openManageModal()">🗑️ ഡിലീറ്റ്</button>
-        </div>
+      <div class="section-header">
+        <h3 class="section-title" style="color: var(--purple);">🔘 ബട്ടൺ & ചെക്കിംഗ്</h3>
+        <button type="button" class="btn-pill" style="background:var(--purple);" onclick="promptNewStaff('Button')">+ പുതിയ സ്റ്റാഫ്</button>
       </div>
-      <p style="font-size:0.85rem; color:#4b5563; margin-top:0;">പ്രൊഫൈലിൽ കയറാൻ പേരിൽ ക്ലിക്ക് ചെയ്യുക (ഫോട്ടോ മാറ്റാൻ 📷 അമർത്തുക):</p>
       <div id="buttonWorkersGrid" class="worker-grid"></div>
     </div>
 
     <div id="buttonWorkerDetailView" style="display:none;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid #e5e7eb; padding-bottom:10px;">
+      <div class="section-header" style="border-bottom:1px solid var(--border); padding-bottom:10px;">
         <div style="display:flex; align-items:center; gap:10px;">
-          <button type="button" class="btn-back" onclick="closeButtonWorkerDetail()">⬅️ തിരികെ</button>
+          <button type="button" class="btn-back" onclick="closeButtonWorkerDetail()">⬅️</button>
           <span id="selectedButtonWorkerAvatar"></span>
-          <h3 id="selectedButtonWorkerTitle" style="margin:0; color:var(--purple); text-transform:uppercase;"></h3>
+          <h3 id="selectedButtonWorkerTitle" style="margin:0; color:var(--purple); text-transform:uppercase; font-size:1.1rem;"></h3>
         </div>
-        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-          <button type="button" class="btn-add-staff" style="background:#0369a1;" onclick="triggerPhotoUpload('Button', selectedButtonWorker)">📷 ഫോട്ടോ മാറ്റുക</button>
-          <button type="button" class="btn-add-staff" onclick="promptNewStaff('Tailor')">+ പുതിയ തയ്യൽക്കാരൻ</button>
-        </div>
+        <button type="button" class="btn-pill" style="background:#0284c7;" onclick="triggerPhotoUpload('Button', selectedButtonWorker)">📷 ഫോട്ടോ</button>
       </div>
 
       <div class="assign-box-purple">
-        <label style="color:var(--purple); font-size:0.95rem; margin-bottom:8px;">➕ പുതിയ ബിൽ ബട്ടൺ / ചെക്കിംഗിന് കൊടുക്കുക:</label>
+        <label style="color:var(--purple);">➕ പുതിയ ബിൽ ബട്ടൺ / ചെക്കിംഗിന് കൊടുക്കുക:</label>
         <input type="text" id="btnTabBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForButtonWorker()">
-        <div id="btnTabFoundBillArea" style="margin-top:12px;"></div>
+        <div id="btnTabFoundBillArea" style="margin-top:10px;"></div>
       </div>
 
-      <h4 style="margin:0 0 10px 0; color:#374151;">📋 ഇതുവരെ ബട്ടൺ / ചെക്കിംഗിന് കൊടുത്തവ (സമയസഹിതം):</h4>
+      <h4 style="margin:0 0 10px 0; color:#334155; font-size:0.92rem;">📋 ഇതുവരെ കൊടുത്തവ (സമയസഹിതം):</h4>
       <div id="buttonWorkerHistoryList"></div>
     </div>
   </div>
 
 </div>
+
+<!-- BOTTOM MOBILE APP NAVIGATION BAR -->
+<nav class="bottom-nav" id="mobileBottomNav">
+  <button class="nav-item active" onclick="switchTab('statusTab', this)">
+    <span class="nav-icon">📊</span>
+    <span>സ്റ്റാറ്റസ്</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('ironingTab', this)">
+    <span class="nav-icon">🔥</span>
+    <span>അയേൺ</span>
+  </button>
+  <button class="nav-item add-fab" onclick="switchTab('entryTab', this)">
+    <div class="fab-circle">+</div>
+    <span>ബിൽ</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('cuttingTab', this)">
+    <span class="nav-icon">✂️</span>
+    <span>കട്ടിംഗ്</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('stitchingTab', this)">
+    <span class="nav-icon">🧵</span>
+    <span>തയ്യൽ</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('buttonTab', this)">
+    <span class="nav-icon">🔘</span>
+    <span>ബട്ടൺ</span>
+  </button>
+</nav>
 
 <script>
   // ⚠️ ഇവിടെ നിങ്ങളുടെ Google Apps Script Web App (/exec) ലിങ്ക് പേസ്റ്റ് ചെയ്യുക:
@@ -698,6 +933,8 @@
     if (customerQueryBill) {
       document.getElementById('shopMainContainer').style.display = 'none';
       document.getElementById('shopHeaderActions').style.display = 'none';
+      document.getElementById('mobileBottomNav').style.display = 'none';
+      document.body.style.paddingBottom = '20px';
       document.getElementById('headerSubtitle').innerText = 'Order Live Status Tracking';
       document.getElementById('customerPublicView').style.display = 'block';
       loadAllData();
@@ -771,10 +1008,10 @@
 
     if (!bill) {
       container.innerHTML = `
-        <div class="card" style="text-align:center; padding:30px;">
+        <div class="section-card" style="text-align:center; padding:30px;">
           <h3 style="color:var(--danger); margin-top:0;">ബിൽ നമ്പർ #${billNoParam} കണ്ടെത്തിയില്ല</h3>
-          <p style="color:#4b5563;">ദയവായി ബിൽ നമ്പർ പരിശോധിക്കുക അല്ലെങ്കിൽ Zibas Tailors-മായി ബന്ധപ്പെടുക.</p>
-          <button class="btn-submit" style="background:var(--primary); margin-top:10px;" onclick="loadAllData()">🔄 വീണ്ടും പരിശോധിക്കുക</button>
+          <p style="color:var(--muted);">ദയവായി ബിൽ നമ്പർ പരിശോധിക്കുക അല്ലെങ്കിൽ Zibas Tailors-മായി ബന്ധപ്പെടുക.</p>
+          <button class="btn-primary-full" style="background:var(--primary); margin-top:10px;" onclick="loadAllData()">🔄 വീണ്ടും പരിശോധിക്കുക</button>
         </div>
       `;
       return;
@@ -786,24 +1023,24 @@
     const isAllReady = readyCount === totalItems && totalItems > 0;
 
     const itemsHtml = bill.items.map(item => {
-      let statusText = 'ഓർഡർ സ്വീകരിച്ചു (Order Received)';
-      let badgeStyle = 'background:#e5e7eb; color:#374151;';
+      let statusText = 'ഓർഡർ സ്വീകരിച്ചു';
+      let badgeStyle = 'background:#f1f5f9; color:#475569;';
       let icon = '⏳';
 
       if (item.ironed) {
-        statusText = 'തയ്യാറായി (Ready for Delivery)';
+        statusText = 'തയ്യാറായി (Ready)';
         badgeStyle = 'background:#16a34a; color:white;';
         icon = '✅';
       } else if (item.buttonWorker || item.stitchDone) {
-        statusText = 'തയ്യൽ പൂർത്തിയായി / ഫിനിഷിംഗ് (Stitched & Finishing)';
+        statusText = 'തയ്യൽ പൂർത്തിയായി';
         badgeStyle = 'background:#fef3c7; color:#b45309;';
         icon = '🔥';
       } else if (item.tailor) {
-        statusText = 'തയ്യൽ നടക്കുന്നു (Stitching in Progress)';
+        statusText = 'തയ്യൽ നടക്കുന്നു';
         badgeStyle = 'background:#e0e7ff; color:#3730a3;';
         icon = '🧵';
       } else if (item.cutter) {
-        statusText = 'കട്ടിംഗ് കഴിഞ്ഞു (Cutting Done)';
+        statusText = 'കട്ടിംഗ് കഴിഞ്ഞു';
         badgeStyle = 'background:#ccfbf1; color:#0f766e;';
         icon = '✂️';
       }
@@ -812,30 +1049,28 @@
         <div class="status-item-row ${item.ironed ? 'ironed-done' : ''}" style="padding:12px;">
           <div class="item-left">
             <span style="font-size:1.2rem;">${icon}</span>
-            <span class="item-name" style="font-size:1.05rem;">${item.label}</span>
+            <span class="item-name" style="font-size:1rem;">${item.label}</span>
           </div>
-          <span class="item-stage-pill" style="${badgeStyle} font-size:0.8rem; padding:4px 10px;">${statusText}</span>
+          <span class="item-stage-pill" style="${badgeStyle} font-size:0.78rem; padding:4px 10px;">${statusText}</span>
         </div>
       `;
     }).join('');
 
     container.innerHTML = `
-      <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid #e5e7eb; padding-bottom:12px; margin-bottom:12px;">
+      <div class="section-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:12px;">
           <div>
-            <div style="font-size:1.3rem; font-weight:900; color:var(--primary);">Bill #${bill.billNo}</div>
-            ${bill.customerName ? `<div style="font-size:0.95rem; font-weight:600; color:#374151; margin-top:2px;">👤 ${bill.customerName}</div>` : ''}
+            <div style="font-size:1.3rem; font-weight:800; color:var(--primary-dark);">Bill #${bill.billNo}</div>
+            ${bill.customerName ? `<div style="font-size:0.9rem; font-weight:700; color:#475569; margin-top:2px;">👤 ${bill.customerName}</div>` : ''}
           </div>
-          <div style="text-align:right;">
-            <span class="delivery-tag ${isAllReady ? 'done' : ''}" style="font-size:0.88rem;">
-              ${isAllReady ? '✅ ഡെലിവറിക്ക് തയ്യാറാണ്' : `📅 ഡെലിവറി: ${bill.deliveryDate}`}
-            </span>
-          </div>
+          <span class="delivery-tag ${isAllReady ? 'done' : ''}">
+            ${isAllReady ? '✅ ഡെലിവറിക്ക് തയ്യാറാണ്' : `📅 ഡെലിവറി: ${bill.deliveryDate}`}
+          </span>
         </div>
 
-        <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:700; color:#374151;">
-          <span>നിലവിലെ പുരോഗതി (Progress)</span>
-          <span>${readyCount} / ${totalItems} പൂർത്തിയായി (${progressPercent}%)</span>
+        <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-weight:700; color:#334155;">
+          <span>നിലവിലെ പുരോഗതി</span>
+          <span>${readyCount} / ${totalItems} (${progressPercent}%)</span>
         </div>
         <div class="cust-progress-bar">
           <div class="cust-progress-fill" style="width:${progressPercent}%;"></div>
@@ -845,12 +1080,12 @@
           ${itemsHtml}
         </div>
 
-        <button class="btn-submit" style="background:var(--primary); margin-top:16px;" onclick="loadAllData()">🔄 സ്റ്റാറ്റസ് പുതുക്കുക (Refresh)</button>
+        <button class="btn-primary-full" style="background:var(--primary); margin-top:16px;" onclick="loadAllData()">🔄 സ്റ്റാറ്റസ് പുതുക്കുക</button>
       </div>
     `;
   }
 
-  // --- PROFILE PHOTO HELPER & COMPRESSION ---
+  // --- PROFILE PHOTO HELPER ---
   function getAvatarHtml(role, name, fallbackEmoji, isSmall) {
     const photo = staffPhotos[`${role}:${name}`];
     if (photo) {
@@ -924,8 +1159,9 @@
     ['statusTab', 'ironingTab', 'entryTab', 'cuttingTab', 'stitchingTab', 'buttonTab'].forEach(id => {
       document.getElementById(id).style.display = id === tabId ? 'block' : 'none';
     });
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (tabId === 'statusTab') renderBills();
     if (tabId === 'ironingTab') {
@@ -968,15 +1204,15 @@
     const categories = [
       { role: 'Cutter', title: '✂️ കട്ടർമാർ (Cutters)' },
       { role: 'Tailor', title: '🧵 തയ്യൽക്കാർ (Tailors)' },
-      { role: 'Button', title: '🔘 ബട്ടൺ & ചെക്കിംഗ് സ്റ്റാഫ് (Button / Check)' },
-      { role: 'Ironer', title: '🔥 അയേണിംഗ് സ്റ്റാഫുകൾ (Ironers)' },
-      { role: 'ItemType', title: '👕 പുതിയതായി ചേർത്ത സ്ഥിരം ഐറ്റംസ് (Custom Items)' }
+      { role: 'Button', title: '🔘 ബട്ടൺ & ചെക്കിംഗ് സ്റ്റാഫ്' },
+      { role: 'Ironer', title: '🔥 അയേണിംഗ് സ്റ്റാഫുകൾ' },
+      { role: 'ItemType', title: '👕 പുതിയ സ്ഥിരം ഐറ്റംസ്' }
     ];
 
     body.innerHTML = categories.map(cat => {
       const list = staff[cat.role] || [];
       const tagsHtml = list.length === 0 
-        ? '<span style="font-size:0.8rem; color:#9ca3af;">പേരുകൾ ഒന്നും ഇല്ല</span>'
+        ? '<span style="font-size:0.8rem; color:#94a3b8;">പേരുകൾ ഒന്നും ഇല്ല</span>'
         : list.map(name => `
             <span class="manage-tag">
               ${name}
@@ -1060,7 +1296,7 @@
     const grid = document.getElementById('ironersGrid');
     const ironers = staff.Ironer || [];
     if (ironers.length === 0) {
-      grid.innerHTML = `<p style="color:#6b7280; grid-column:1/-1;">അയേണിംഗ് സ്റ്റാഫുകളുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
+      grid.innerHTML = `<p style="color:var(--muted); grid-column:1/-1;">അയേണിംഗ് സ്റ്റാഫുകളുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
       return;
     }
     grid.innerHTML = ironers.map(name => {
@@ -1071,11 +1307,11 @@
       const safeName = name.replace(/'/g, "\\'");
       return `
         <div class="worker-card ironer-card" onclick="openIronerDetail('${safeName}')">
-          <button type="button" class="card-photo-btn" title="ഫോട്ടോ ചേർക്കുക / മാറ്റുക" onclick="triggerPhotoUpload('Ironer', '${safeName}', event)">📷</button>
-          <button type="button" class="card-del-btn" title="ഡിലീറ്റ്" onclick="deleteStaffMember('Ironer', '${safeName}', event)">✕</button>
+          <button type="button" class="card-photo-btn" onclick="triggerPhotoUpload('Ironer', '${safeName}', event)">📷</button>
+          <button type="button" class="card-del-btn" onclick="deleteStaffMember('Ironer', '${safeName}', event)">✕</button>
           ${getAvatarHtml('Ironer', name, '🔥', false)}
           <span class="w-name">${name.toUpperCase()}</span>
-          <span class="w-count">ഈ ആഴ്ച: ${weeklyCount} എണ്ണം</span>
+          <span class="w-count">ഈ ആഴ്ച: ${weeklyCount}</span>
         </div>
       `;
     }).join('');
@@ -1112,24 +1348,24 @@
 
     let matchedBill = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
     if (!matchedBill) {
-      area.innerHTML = `<p style="color:#dc2626; font-size:0.85rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      area.innerHTML = `<p style="color:var(--danger); font-size:0.84rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
       return;
     }
 
-    let rowsHtml = `<div style="font-weight:700; color:var(--primary); margin-bottom:8px;">Bill #${matchedBill.billNo} (ഡെലിവറി: ${matchedBill.deliveryDate})</div>`;
+    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matchedBill.billNo} (ഡെലിവറി: ${matchedBill.deliveryDate})</div>`;
     matchedBill.items.forEach((item, idx) => {
       const isCurrent = item.ironed && item.ironer === selectedIroner;
       const isOther = item.ironed && item.ironer !== selectedIroner;
-      let note = isCurrent ? `<small style="color:#16a34a;">(ചെയ്തു കഴിഞ്ഞു: ${item.ironTime || ''})</small>` : (isOther ? `<small style="color:#d97706;">(നിലവിൽ: ${item.ironer})</small>` : '');
+      let note = isCurrent ? `<small style="color:var(--success); font-weight:700;">(${item.ironTime || ''})</small>` : (isOther ? `<small style="color:var(--warning); font-weight:700;">(${item.ironer})</small>` : '');
       rowsHtml += `
         <div class="found-item-row iron-row">
           <input type="checkbox" class="iron-assign-check" data-idx="${idx}" ${isCurrent ? 'checked' : ''}>
           <div><strong>${item.label}</strong> ${note}</div>
-          <span style="font-size:0.78rem; color:#6b7280;">${item.tailor ? '🧵 ' + item.tailor : ''}</span>
+          <span style="font-size:0.75rem; color:var(--muted);">${item.tailor ? '🧵 ' + item.tailor : ''}</span>
         </div>
       `;
     });
-    rowsHtml += `<button type="button" class="btn-submit" style="background:var(--orange); margin-top:8px;" onclick="saveAssignedIronItems('${matchedBill.id}')">✅ അയൺ ചെയ്തവ സേവ് ചെയ്യുക (${selectedIroner.toUpperCase()})</button>`;
+    rowsHtml += `<button type="button" class="btn-primary-full" style="background:var(--orange); margin-top:8px;" onclick="saveAssignedIronItems('${matchedBill.id}')">✅ സേവ് ചെയ്യുക (${selectedIroner.toUpperCase()})</button>`;
     area.innerHTML = rowsHtml;
   }
 
@@ -1234,7 +1470,7 @@
   function renderIronerDetail() {
     document.getElementById('selectedIronerAvatar').innerHTML = getAvatarHtml('Ironer', selectedIroner, '🔥', true);
     const historyContainer = document.getElementById('ironerHistoryList');
-    const titles = { thisWeek: 'ഈ ആഴ്ച ആകെ അയൺ ചെയ്തത്:', today: 'ഇന്ന് ആകെ അയൺ ചെയ്തത്:', lastWeek: 'കഴിഞ്ഞ ആഴ്ച ആകെ അയൺ ചെയ്തത്:', all: 'ഇതുവരെ ആകെ അയൺ ചെയ്തത്:', custom: 'തിരഞ്ഞെടുത്ത ദിവസങ്ങളിൽ:' };
+    const titles = { thisWeek: 'ഈ ആഴ്ച അയൺ ചെയ്തത്:', today: 'ഇന്ന് അയൺ ചെയ്തത്:', lastWeek: 'കഴിഞ്ഞ ആഴ്ച:', all: 'ആകെ അയൺ ചെയ്തത്:', custom: 'തിരഞ്ഞെടുത്ത ദിവസങ്ങളിൽ:' };
     document.getElementById('ironerFilterLabel').innerText = titles[ironerDateFilter] || 'ആകെ എണ്ണം:';
 
     const matchedItems = [];
@@ -1246,14 +1482,14 @@
 
     document.getElementById('ironerTotalCount').innerText = `${matchedItems.length} എണ്ണം`;
     if (matchedItems.length === 0) {
-      historyContainer.innerHTML = `<p style="color:#6b7280; font-size:0.9rem;">ഈ കാലയളവിൽ അയൺ ചെയ്ത ഐറ്റംസ് ഒന്നും കണ്ടെത്തിയില്ല.</p>`;
+      historyContainer.innerHTML = `<p style="color:var(--muted); font-size:0.86rem; text-align:center;">ഈ കാലയളവിൽ ഐറ്റംസ് ഒന്നും കണ്ടെത്തിയില്ല.</p>`;
       return;
     }
     historyContainer.innerHTML = matchedItems.map(h => `
       <div class="history-card iron-history">
         <div>
-          <strong style="color:var(--primary); font-size:1rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
-          ${h.tailor ? `<div style="font-size:0.8rem; color:#4b5563;">🧵 തയ്ച്ചത്: ${h.tailor}</div>` : ''}
+          <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          ${h.tailor ? `<div style="font-size:0.78rem; color:var(--muted);">🧵 തയ്ച്ചത്: ${h.tailor}</div>` : ''}
         </div>
         <div class="history-right">
           <span class="history-time">🕒 ${h.ironTime}</span>
@@ -1334,22 +1570,22 @@
     }
   }
 
-  // --- CUTTERS PROFILES & ASSIGNMENT ---
+  // --- CUTTERS PROFILES ---
   function renderCuttersList() {
     const grid = document.getElementById('cuttersGrid');
     const chipsDiv = document.getElementById('pendingCuttingChips');
     const unassigned = bills.filter(b => b.items.some(it => !it.cutter));
 
     if (unassigned.length === 0) {
-      chipsDiv.innerHTML = '<span style="font-size:0.82rem; color:#16a34a;">✅ എല്ലാ ബില്ലുകൾക്കും കട്ടർമാരെ അസൈൻ ചെയ്തിട്ടുണ്ട്.</span>';
+      chipsDiv.innerHTML = '<span style="font-size:0.78rem; color:var(--success); font-weight:700;">✅ എല്ലാ ബില്ലുകൾക്കും കട്ടർമാരെ അസൈൻ ചെയ്തിട്ടുണ്ട്.</span>';
     } else {
-      chipsDiv.innerHTML = `<span style="font-size:0.8rem; color:#4b5563; font-weight:600;">കട്ടിംഗ് ബാക്കിയുള്ള ബില്ലുകൾ:</span>` +
+      chipsDiv.innerHTML = `<span style="font-size:0.78rem; color:var(--muted); font-weight:700; white-space:nowrap;">ബാക്കിയുള്ളവ:</span>` +
         unassigned.slice(0, 15).map(b => `<span class="bill-chip">#${b.billNo} (${b.items.filter(i=>!i.cutter).length})</span>`).join('');
     }
 
     const cutters = staff.Cutter || [];
     if (cutters.length === 0) {
-      grid.innerHTML = `<p style="color:#6b7280; grid-column:1/-1;">കട്ടർമാരുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
+      grid.innerHTML = `<p style="color:var(--muted); grid-column:1/-1;">കട്ടർമാരുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
       return;
     }
 
@@ -1359,11 +1595,11 @@
       const safeName = name.replace(/'/g, "\\'");
       return `
         <div class="worker-card cutter-card" onclick="openCutterDetail('${safeName}')">
-          <button type="button" class="card-photo-btn" title="ഫോട്ടോ ചേർക്കുക / മാറ്റുക" onclick="triggerPhotoUpload('Cutter', '${safeName}', event)">📷</button>
-          <button type="button" class="card-del-btn" title="ഡിലീറ്റ്" onclick="deleteStaffMember('Cutter', '${safeName}', event)">✕</button>
+          <button type="button" class="card-photo-btn" onclick="triggerPhotoUpload('Cutter', '${safeName}', event)">📷</button>
+          <button type="button" class="card-del-btn" onclick="deleteStaffMember('Cutter', '${safeName}', event)">✕</button>
           ${getAvatarHtml('Cutter', name, '✂️', false)}
           <span class="w-name">${name.toUpperCase()}</span>
-          <span class="w-count">ആകെ നൽകിയത്: ${totalCut} എണ്ണം</span>
+          <span class="w-count">ആകെ: ${totalCut} എണ്ണം</span>
         </div>
       `;
     }).join('');
@@ -1395,23 +1631,23 @@
 
     let matched = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
     if (!matched) {
-      area.innerHTML = `<p style="color:#dc2626; font-size:0.85rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      area.innerHTML = `<p style="color:var(--danger); font-size:0.84rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
       return;
     }
 
-    let rowsHtml = `<div style="font-weight:700; color:var(--primary); margin-bottom:8px;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
+    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
     matched.items.forEach((item, idx) => {
       const isHere = item.cutter === selectedCutter;
-      const note = (item.cutter && !isHere) ? `<small style="color:#d97706;">(നിലവിൽ: ${item.cutter})</small>` : (isHere ? `<small style="color:#16a34a;">(നൽകിക്കഴിഞ്ഞു)</small>` : '');
+      const note = (item.cutter && !isHere) ? `<small style="color:var(--warning); font-weight:700;">(${item.cutter})</small>` : (isHere ? `<small style="color:var(--success); font-weight:700;">(നൽകിക്കഴിഞ്ഞു)</small>` : '');
       rowsHtml += `
         <div class="found-item-row cut-row">
           <input type="checkbox" class="cut-assign-check" data-idx="${idx}" ${isHere || !item.cutter ? 'checked' : ''}>
           <div><strong>${item.label}</strong> ${note}</div>
-          <span style="font-size:0.78rem; color:#6b7280;">✂️</span>
+          <span style="font-size:0.75rem; color:var(--muted);">✂️</span>
         </div>
       `;
     });
-    rowsHtml += `<button type="button" class="btn-submit" style="background:var(--teal); margin-top:8px;" onclick="saveAssignedCutItems('${matched.id}')">✅ ${selectedCutter.toUpperCase()}-ക്ക് കട്ട് ചെയ്യാൻ നൽകുക (Save)</button>`;
+    rowsHtml += `<button type="button" class="btn-primary-full" style="background:var(--teal); margin-top:8px;" onclick="saveAssignedCutItems('${matched.id}')">✅ കട്ട് ചെയ്യാൻ നൽകുക (${selectedCutter.toUpperCase()})</button>`;
     area.innerHTML = rowsHtml;
   }
 
@@ -1455,14 +1691,14 @@
     }));
 
     if (items.length === 0) {
-      historyContainer.innerHTML = `<p style="color:#6b7280; font-size:0.9rem;">${selectedCutter}-ക്ക് ഇതുവരെ ബില്ലുകൾ ഒന്നും നൽകിയിട്ടില്ല.</p>`;
+      historyContainer.innerHTML = `<p style="color:var(--muted); font-size:0.86rem; text-align:center;">ബില്ലുകൾ ഒന്നും നൽകിയിട്ടില്ല.</p>`;
       return;
     }
     historyContainer.innerHTML = items.map(h => `
       <div class="history-card cut-history">
         <div>
-          <strong style="color:var(--primary); font-size:1rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
-          <div style="font-size:0.8rem; color:#4b5563;">ഡെലിവറി: ${h.deliveryDate}</div>
+          <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          <div style="font-size:0.78rem; color:var(--muted);">ഡെലിവറി: ${h.deliveryDate}</div>
         </div>
         <div class="history-right">
           ${h.cutTime ? `<span class="history-time">🕒 ${h.cutTime}</span>` : ''}
@@ -1472,12 +1708,12 @@
     `).join('');
   }
 
-  // --- STITCHING / TAILOR PROFILES (TAKEN & COMPLETED) ---
+  // --- STITCHING / TAILOR PROFILES ---
   function renderTailorsList() {
     const grid = document.getElementById('tailorsGrid');
     const tailors = staff.Tailor || [];
     if (tailors.length === 0) {
-      grid.innerHTML = `<p style="color:#6b7280; grid-column:1/-1;">തയ്യൽക്കാരുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
+      grid.innerHTML = `<p style="color:var(--muted); grid-column:1/-1;">തയ്യൽക്കാരുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
       return;
     }
 
@@ -1493,11 +1729,11 @@
       const safeName = name.replace(/'/g, "\\'");
       return `
         <div class="worker-card tailor-card" onclick="openTailorDetail('${safeName}')">
-          <button type="button" class="card-photo-btn" title="ഫോട്ടോ ചേർക്കുക / മാറ്റുക" onclick="triggerPhotoUpload('Tailor', '${safeName}', event)">📷</button>
-          <button type="button" class="card-del-btn" title="ഡിലീറ്റ്" onclick="deleteStaffMember('Tailor', '${safeName}', event)">✕</button>
+          <button type="button" class="card-photo-btn" onclick="triggerPhotoUpload('Tailor', '${safeName}', event)">📷</button>
+          <button type="button" class="card-del-btn" onclick="deleteStaffMember('Tailor', '${safeName}', event)">✕</button>
           ${getAvatarHtml('Tailor', name, '🧵', false)}
           <span class="w-name">${name.toUpperCase()}</span>
-          <span class="w-count">തയ്ക്കാനുള്ളത്: ${pendingCount} | പൂർത്തിയായത്: ${doneCount}</span>
+          <span class="w-count">ബാക്കി: ${pendingCount} | തീർന്നത്: ${doneCount}</span>
         </div>
       `;
     }).join('');
@@ -1529,23 +1765,23 @@
 
     let matched = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
     if (!matched) {
-      area.innerHTML = `<p style="color:#dc2626; font-size:0.85rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      area.innerHTML = `<p style="color:var(--danger); font-size:0.84rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
       return;
     }
 
-    let rowsHtml = `<div style="font-weight:700; color:var(--primary); margin-bottom:8px;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
+    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
     matched.items.forEach((item, idx) => {
       const isHere = item.tailor === selectedTailor;
-      const note = (item.tailor && !isHere) ? `<small style="color:#d97706;">(നിലവിൽ: ${item.tailor})</small>` : (isHere ? `<small style="color:#16a34a;">(എടുത്തു കഴിഞ്ഞു)</small>` : '');
+      const note = (item.tailor && !isHere) ? `<small style="color:var(--warning); font-weight:700;">(${item.tailor})</small>` : (isHere ? `<small style="color:var(--success); font-weight:700;">(എടുത്തു കഴിഞ്ഞു)</small>` : '');
       rowsHtml += `
         <div class="found-item-row tailor-row">
           <input type="checkbox" class="tailor-assign-check" data-idx="${idx}" ${isHere ? 'checked' : ''}>
           <div><strong>${item.label}</strong> ${note}</div>
-          <span style="font-size:0.78rem; color:#6b7280;">${item.cutter ? '✂️ ' + item.cutter : ''}</span>
+          <span style="font-size:0.75rem; color:var(--muted);">${item.cutter ? '✂️ ' + item.cutter : ''}</span>
         </div>
       `;
     });
-    rowsHtml += `<button type="button" class="btn-submit" style="background:var(--indigo); margin-top:8px;" onclick="saveAssignedTailorItems('${matched.id}')">🧵 സ്റ്റിച്ചിംഗിനായി എടുത്തു എന്ന് സേവ് ചെയ്യുക</button>`;
+    rowsHtml += `<button type="button" class="btn-primary-full" style="background:var(--indigo); margin-top:8px;" onclick="saveAssignedTailorItems('${matched.id}')">🧵 സ്റ്റിച്ചിംഗിനായി എടുത്തു എന്ന് സേവ് ചെയ്യുക</button>`;
     area.innerHTML = rowsHtml;
   }
 
@@ -1572,7 +1808,7 @@
 
     document.getElementById('tailorTabBillSearch').value = '';
     document.getElementById('tailorTabFoundBillArea').innerHTML = '';
-    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'സ്റ്റിച്ചിംഗ് വിവരങ്ങൾ സേവ് ചെയ്യുന്നു...');
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'സ്റ്റിച്ചിംഗ് സേവ് ചെയ്യുന്നു...');
   }
 
   async function toggleStitchingCompleted(billId, itemIdx) {
@@ -1611,28 +1847,27 @@
           deliveryDate: bill.deliveryDate,
           label: item.label,
           stitchTime: item.stitchTime || '',
-          stitchDone: isCompleted,
-          stitchDoneTime: item.stitchDoneTime || ''
+          stitchDone: isCompleted
         });
       }
     }));
 
     if (items.length === 0) {
-      historyContainer.innerHTML = `<p style="color:#6b7280; font-size:0.9rem;">${selectedTailor}-ക്ക് ഇതുവരെ സ്റ്റിച്ചിംഗിന് ഐറ്റംസ് ഒന്നും നൽകിയിട്ടില്ല.</p>`;
+      historyContainer.innerHTML = `<p style="color:var(--muted); font-size:0.86rem; text-align:center;">സ്റ്റിച്ചിംഗിന് ഐറ്റംസ് ഒന്നും നൽകിയിട്ടില്ല.</p>`;
       return;
     }
 
     historyContainer.innerHTML = items.map(h => `
       <div class="history-card tailor-history" style="${h.stitchDone ? 'background:#f0fdf4;' : ''}">
         <div>
-          <strong style="color:var(--primary); font-size:1rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
-          <div style="font-size:0.8rem; color:#4b5563; margin-top:3px;">
-            ഡെലിവറി: ${h.deliveryDate} ${h.stitchTime ? `| എടുത്തത്: ${h.stitchTime}` : ''}
+          <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          <div style="font-size:0.78rem; color:var(--muted); margin-top:2px;">
+            ഡെലിവറി: ${h.deliveryDate} ${h.stitchTime ? `| ${h.stitchTime}` : ''}
           </div>
         </div>
         <div class="history-right">
           <button type="button" class="btn-stitch-done ${h.stitchDone ? 'completed' : ''}" onclick="toggleStitchingCompleted('${h.billId}', ${h.itemIdx})">
-            ${h.stitchDone ? '✅ തയ്യൽ പൂർത്തിയായി' : '⏳ തയ്യൽ പൂർത്തിയായി എന്ന് മാറ്റുക'}
+            ${h.stitchDone ? '✅ തയ്യൽ പൂർത്തിയായി' : '⏳ പൂർത്തിയായി എന്ന് മാറ്റുക'}
           </button>
           <button type="button" class="btn-icon-del" onclick="removeTailorEntry('${h.billId}', ${h.itemIdx})">🗑️</button>
         </div>
@@ -1645,7 +1880,7 @@
     const grid = document.getElementById('buttonWorkersGrid');
     const workers = staff.Button || [];
     if (workers.length === 0) {
-      grid.innerHTML = `<p style="color:#6b7280; grid-column:1/-1;">ബട്ടൺ / ചെക്കിംഗ് സ്റ്റാഫുകളുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
+      grid.innerHTML = `<p style="color:var(--muted); grid-column:1/-1;">ബട്ടൺ / ചെക്കിംഗ് സ്റ്റാഫുകളുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
       return;
     }
     grid.innerHTML = workers.map(wName => {
@@ -1654,11 +1889,11 @@
       const safeName = wName.replace(/'/g, "\\'");
       return `
         <div class="worker-card" onclick="openButtonWorkerDetail('${safeName}')">
-          <button type="button" class="card-photo-btn" title="ഫോട്ടോ ചേർക്കുക / മാറ്റുക" onclick="triggerPhotoUpload('Button', '${safeName}', event)">📷</button>
-          <button type="button" class="card-del-btn" title="ഡിലീറ്റ്" onclick="deleteStaffMember('Button', '${safeName}', event)">✕</button>
+          <button type="button" class="card-photo-btn" onclick="triggerPhotoUpload('Button', '${safeName}', event)">📷</button>
+          <button type="button" class="card-del-btn" onclick="deleteStaffMember('Button', '${safeName}', event)">✕</button>
           ${getAvatarHtml('Button', wName, '🔘', false)}
           <span class="w-name">${wName.toUpperCase()}</span>
-          <span class="w-count">ആകെ കൊടുത്തത്: ${total} ഐറ്റംസ്</span>
+          <span class="w-count">ആകെ: ${total} എണ്ണം</span>
         </div>
       `;
     }).join('');
@@ -1690,14 +1925,14 @@
 
     let matched = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
     if (!matched) {
-      area.innerHTML = `<p style="color:#dc2626; font-size:0.85rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      area.innerHTML = `<p style="color:var(--danger); font-size:0.84rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
       return;
     }
 
-    let rowsHtml = `<div style="font-weight:700; color:var(--primary); margin-bottom:8px;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
+    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
     matched.items.forEach((item, idx) => {
       const isHere = item.buttonWorker === selectedButtonWorker;
-      const note = (item.buttonWorker && !isHere) ? `<small style="color:#d97706;">(നിലവിൽ: ${item.buttonWorker})</small>` : (isHere ? `<small style="color:#16a34a;">(നൽകിക്കഴിഞ്ഞു: ${item.buttonTime || ''})</small>` : '');
+      const note = (item.buttonWorker && !isHere) ? `<small style="color:var(--warning); font-weight:700;">(${item.buttonWorker})</small>` : (isHere ? `<small style="color:var(--success); font-weight:700;">(${item.buttonTime || ''})</small>` : '');
       const tailorOpts = '<option value="">-- തയ്ച്ച ആൾ (Tailor) --</option>' + staff.Tailor.map(t => `<option value="${t}" ${item.tailor === t ? 'selected' : ''}>${t}</option>`).join('');
       rowsHtml += `
         <div class="found-item-row">
@@ -1707,7 +1942,7 @@
         </div>
       `;
     });
-    rowsHtml += `<button type="button" class="btn-submit" style="background:var(--purple); margin-top:8px;" onclick="saveAssignedButtonItems('${matched.id}')">✅ ${selectedButtonWorker}-ക്ക് ബട്ടൺ / ചെക്കിംഗിന് കൊടുക്കുക (Save)</button>`;
+    rowsHtml += `<button type="button" class="btn-primary-full" style="background:var(--purple); margin-top:8px;" onclick="saveAssignedButtonItems('${matched.id}')">✅ ബട്ടൺ / ചെക്കിംഗിന് കൊടുക്കുക (${selectedButtonWorker.toUpperCase()})</button>`;
     area.innerHTML = rowsHtml;
   }
 
@@ -1756,15 +1991,15 @@
     }));
 
     if (items.length === 0) {
-      historyContainer.innerHTML = `<p style="color:#6b7280; font-size:0.9rem;">${selectedButtonWorker}-ക്ക് ഇതുവരെ ഐറ്റംസ് ഒന്നും കൊടുത്തിട്ടില്ല.</p>`;
+      historyContainer.innerHTML = `<p style="color:var(--muted); font-size:0.86rem; text-align:center;">ഐറ്റംസ് ഒന്നും കൊടുത്തിട്ടില്ല.</p>`;
       return;
     }
     historyContainer.innerHTML = items.map(h => `
       <div class="history-card">
         <div>
-          <strong style="color:var(--primary); font-size:1rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
-          ${h.ironed ? '<span style="background:#dcfce7; color:#15803d; font-size:0.75rem; padding:2px 6px; border-radius:4px; margin-left:6px; font-weight:bold;">✅ Ironed</span>' : ''}
-          <div style="font-size:0.83rem; color:#4b5563;">🧵 തയ്ച്ചത്: <strong>${h.tailor || 'ചേർത്തിട്ടില്ല'}</strong> | ഡെലിവറി: ${h.deliveryDate}</div>
+          <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          ${h.ironed ? '<span style="background:var(--success-soft); color:var(--success); font-size:0.72rem; padding:2px 6px; border-radius:6px; margin-left:4px; font-weight:800;">✅ Ironed</span>' : ''}
+          <div style="font-size:0.78rem; color:var(--muted); margin-top:2px;">🧵 ${h.tailor || '-'} | ഡെലിവറി: ${h.deliveryDate}</div>
         </div>
         <div class="history-right">
           <span class="history-time">🕒 ${h.buttonTime}</span>
@@ -1774,7 +2009,7 @@
     `).join('');
   }
 
-  // --- STATUS PAGE & WHATSAPP CUSTOMER LINK SHARE ---
+  // --- STATUS PAGE & WHATSAPP SHARE ---
   function shareBillViaWhatsApp(billId) {
     const bill = bills.find(b => b.id === billId);
     if (!bill) return;
@@ -1838,7 +2073,7 @@
   function quickSearchBill(billNo) {
     document.getElementById('searchInput').value = billNo;
     setFilter('all', document.querySelectorAll('#statusTab .pill')[0]);
-    switchTab('statusTab', document.querySelectorAll('.tab-btn')[0]);
+    switchTab('statusTab', document.querySelectorAll('.nav-item')[0]);
   }
 
   function renderBills() {
@@ -1855,10 +2090,10 @@
       const diff = getDaysDiff(bill.deliveryDate);
       if (pendingCount > 0 && diff <= 1) {
         hasAlerts = true;
-        let statusText = diff === 1 ? 'നാളെ ഡെലിവറി' : (diff === 0 ? 'ഇന്ന് ഡെലിവറി' : 'ഡേറ്റ് കഴിഞ്ഞു');
+        let statusText = diff === 1 ? 'നാളെ' : (diff === 0 ? 'ഇന്ന്' : 'കഴിഞ്ഞു');
         const badge = document.createElement('div');
         badge.className = 'alert-badge';
-        badge.innerHTML = `Bill #${bill.billNo} (${pendingCount} ബാക്കി) - ${statusText}`;
+        badge.innerHTML = `#${bill.billNo} (${pendingCount}) • ${statusText}`;
         badge.onclick = () => quickSearchBill(bill.billNo);
         alertList.appendChild(badge);
       }
@@ -1879,7 +2114,7 @@
     });
 
     if (filteredBills.length === 0) {
-      container.innerHTML = `<p style="text-align:center; color:#6b7280; padding:20px;">ബില്ലുകൾ ഒന്നും കണ്ടെത്തിയില്ല.</p>`;
+      container.innerHTML = `<div class="section-card" style="text-align:center; color:var(--muted); padding:30px;">ബില്ലുകൾ ഒന്നും കണ്ടെത്തിയില്ല.</div>`;
       return;
     }
 
@@ -1889,10 +2124,10 @@
       const isCompleted = ironedCount === totalItems;
       const diff = getDaysDiff(bill.deliveryDate);
 
-      let cardClass = 'bill-card', tagClass = 'delivery-tag', statusLabel = `ഡെലിവറി: ${bill.deliveryDate}`;
+      let cardClass = 'bill-card', tagClass = 'delivery-tag', statusLabel = `📅 ${bill.deliveryDate}`;
       if (isCompleted) { cardClass += ' completed'; tagClass += ' done'; statusLabel = `✅ റെഡി (${bill.deliveryDate})`; }
-      else if (diff <= 0) { cardClass += ' urgent'; tagClass += ' urgent'; statusLabel = diff === 0 ? `🔥 ഇന്ന് ഡെലിവറി (${bill.deliveryDate})` : `🚨 ഡേറ്റ് കഴിഞ്ഞു (${bill.deliveryDate})`; }
-      else if (diff === 1) { cardClass += ' tomorrow'; tagClass += ' tomorrow'; statusLabel = `⚠️ നാളെ ഡെലിവറി (${bill.deliveryDate})`; }
+      else if (diff <= 0) { cardClass += ' urgent'; tagClass += ' urgent'; statusLabel = diff === 0 ? `🔥 ഇന്ന് (${bill.deliveryDate})` : `🚨 കഴിഞ്ഞു (${bill.deliveryDate})`; }
+      else if (diff === 1) { cardClass += ' tomorrow'; tagClass += ' tomorrow'; statusLabel = `⚠️ നാളെ (${bill.deliveryDate})`; }
 
       const itemsHtml = bill.items.map((item, idx) => `
         <div class="status-item-row ${item.ironed ? 'ironed-done' : ''}">
@@ -1904,15 +2139,15 @@
           <div class="item-workers">
             <span class="w-chip">✂️ ${item.cutter || '-'}</span>
             <span class="w-chip">🧵 ${item.tailor || '-'} ${item.stitchDone ? '✅' : ''}</span>
-            <span class="w-chip">🔘 ${item.buttonWorker || '-'} ${item.buttonTime ? `(${item.buttonTime})` : ''}</span>
-            <span class="w-chip">🔥 ${item.ironer || '-'} ${item.ironTime ? `(${item.ironTime})` : ''}</span>
+            <span class="w-chip">🔘 ${item.buttonWorker || '-'}</span>
+            <span class="w-chip">🔥 ${item.ironer || '-'}</span>
             <button type="button" class="btn-icon-del" onclick="deleteSingleItemFromBill('${bill.id}', ${idx})">✕</button>
           </div>
         </div>
       `).join('');
 
       const custLine = (bill.customerName || bill.customerPhone)
-        ? `<div class="cust-sub">👤 ${bill.customerName || ''} ${bill.customerPhone ? `| 📞 ${bill.customerPhone}` : ''}</div>`
+        ? `<div class="cust-sub">👤 ${bill.customerName || ''} ${bill.customerPhone ? `• ${bill.customerPhone}` : ''}</div>`
         : '';
 
       const card = document.createElement('div');
@@ -1920,17 +2155,17 @@
       card.innerHTML = `
         <div class="bill-header">
           <div>
-            <span class="bill-no">Bill #${bill.billNo}</span>
+            <div class="bill-no">Bill #${bill.billNo}</div>
             ${custLine}
           </div>
           <span class="${tagClass}">${statusLabel}</span>
         </div>
         <div class="status-item-list">${itemsHtml}</div>
         <div class="bill-footer">
-          <span>അയേണിംഗ്: <strong>${ironedCount} / ${totalItems}</strong> പൂർത്തിയായി</span>
+          <span><strong>${ironedCount}/${totalItems}</strong> Ready</span>
           <div class="footer-btns">
-            <button type="button" class="btn-wa-share" onclick="shareBillViaWhatsApp('${bill.id}')">📲 WhatsApp Status Link</button>
-            <button type="button" class="btn-delete-bill" onclick="deleteBill('${bill.id}')">🗑️ ബിൽ ഡിലീറ്റ്</button>
+            <button type="button" class="btn-wa-share" onclick="shareBillViaWhatsApp('${bill.id}')">📲 WhatsApp</button>
+            <button type="button" class="btn-delete-bill" onclick="deleteBill('${bill.id}')">🗑️ ഡിലീറ്റ്</button>
           </div>
         </div>
       `;
