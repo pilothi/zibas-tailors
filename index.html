@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Zibas Tailors - Production, Storage & Delivery Tracker</title>
+  <title>Zibas Tailors - Production, Shelf & Delivery Tracker</title>
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#0f172a">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3050/3050253.png">
@@ -21,6 +21,8 @@
       --purple-soft: #f5f3ff;
       --orange: #ea580c;
       --orange-soft: #fff7ed;
+      --amber: #b45309;
+      --amber-soft: #fffbeb;
       --danger: #e11d48;
       --danger-soft: #fff1f2;
       --warning: #d97706;
@@ -82,34 +84,35 @@
     }
     .icon-pill-btn:active { transform: scale(0.95); }
 
+    /* Bottom Navigation Bar - 7 Tabs optimized for mobile thumb reach */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0;
-      background: rgba(255, 255, 255, 0.96);
+      background: rgba(255, 255, 255, 0.97);
       backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border-top: 1px solid var(--border);
-      display: grid; grid-template-columns: repeat(6, 1fr); align-items: center;
-      padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+      display: grid; grid-template-columns: repeat(7, 1fr); align-items: center;
+      padding: 6px 2px calc(6px + env(safe-area-inset-bottom));
       z-index: 800; box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.06);
     }
 
     .nav-item {
       background: none; border: none; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 3px; padding: 5px 2px; color: var(--muted); font-size: 0.68rem; font-weight: 700; cursor: pointer;
-      border-radius: 12px; transition: 0.15s;
+      gap: 2px; padding: 4px 1px; color: var(--muted); font-size: 0.62rem; font-weight: 700; cursor: pointer;
+      border-radius: 10px; transition: 0.15s; white-space: nowrap;
     }
-    .nav-item .nav-icon { font-size: 1.25rem; line-height: 1; transition: transform 0.15s; }
+    .nav-item .nav-icon { font-size: 1.18rem; line-height: 1; transition: transform 0.15s; }
     .nav-item.active { color: var(--primary); }
     .nav-item.active .nav-icon { transform: translateY(-2px); }
     .nav-item.add-fab { position: relative; }
     .fab-circle {
-      width: 44px; height: 44px; border-radius: 50%;
+      width: 40px; height: 40px; border-radius: 50%;
       background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white;
-      display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 800;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4); margin-top: -14px; border: 3px solid white;
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4); margin-top: -12px; border: 2.5px solid white;
     }
     .nav-item.add-fab.active .fab-circle {
       background: linear-gradient(135deg, #16a34a, #15803d);
-      box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4);
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
     }
 
     #loader {
@@ -150,7 +153,6 @@
       width: 19px; height: 19px; font-size: 0.7rem; cursor: pointer; line-height: 1;
     }
 
-    /* Storage Location Quick Buttons in Modal */
     .loc-preset-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -158,21 +160,21 @@
       margin-bottom: 12px;
     }
     .loc-choice-btn {
-      padding: 10px 8px;
+      padding: 11px 8px;
       border: 1.5px solid var(--border);
       background: #f8fafc;
       border-radius: 12px;
-      font-size: 0.84rem;
-      font-weight: 700;
+      font-size: 0.85rem;
+      font-weight: 800;
       color: var(--text);
       cursor: pointer;
       text-align: center;
       transition: 0.15s;
     }
     .loc-choice-btn.selected {
-      background: var(--teal-soft);
-      border-color: var(--teal);
-      color: var(--teal);
+      background: var(--amber-soft);
+      border-color: var(--amber);
+      color: var(--amber);
     }
 
     .container { max-width: 820px; margin: 14px auto; padding: 0 12px; }
@@ -191,9 +193,7 @@
       background: white; border: 1px solid #fda4af; color: #be123c;
       padding: 6px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer; white-space: nowrap;
     }
-    .alert-section.late-alert .alert-badge {
-      border-color: #fcd34d; color: #b45309;
-    }
+    .alert-section.late-alert .alert-badge { border-color: #fcd34d; color: #b45309; }
 
     .section-card {
       background: var(--card); border-radius: 18px; padding: 16px;
@@ -331,6 +331,9 @@
     .worker-card.tailor-card { background: var(--indigo-soft); border-color: #c7d2fe; }
     .worker-card.tailor-card .w-name { color: var(--indigo); }
 
+    .worker-card.shelf-card { background: var(--amber-soft); border-color: #fcd34d; }
+    .worker-card.shelf-card .w-name { color: var(--amber); font-size: 1.12rem; }
+
     .profile-header-avatar {
       width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
@@ -344,6 +347,7 @@
     .assign-box-orange { background: var(--orange-soft); border: 1.5px solid #fed7aa; border-radius: 14px; padding: 14px; margin: 12px 0 18px; }
     .assign-box-teal { background: var(--teal-soft); border: 1.5px solid #99f6e4; border-radius: 14px; padding: 14px; margin: 12px 0 18px; }
     .assign-box-indigo { background: var(--indigo-soft); border: 1.5px solid #c7d2fe; border-radius: 14px; padding: 14px; margin: 12px 0 18px; }
+    .assign-box-amber { background: var(--amber-soft); border: 1.5px solid #fcd34d; border-radius: 14px; padding: 14px; margin: 12px 0 18px; }
 
     .found-item-row {
       display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center;
@@ -359,12 +363,13 @@
       .found-item-row.iron-row { grid-template-columns: auto 1fr; }
       .found-item-row.iron-row select { grid-column: 1 / -1; }
     }
-    .found-item-row.cut-row, .found-item-row.tailor-row { grid-template-columns: auto 1fr auto; }
+    .found-item-row.cut-row, .found-item-row.tailor-row, .found-item-row.shelf-row { grid-template-columns: auto 1fr auto; }
 
     .found-item-row input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--purple); cursor: pointer; }
     .found-item-row.iron-row input[type="checkbox"] { accent-color: var(--orange); }
     .found-item-row.cut-row input[type="checkbox"] { accent-color: var(--teal); }
     .found-item-row.tailor-row input[type="checkbox"] { accent-color: var(--indigo); }
+    .found-item-row.shelf-row input[type="checkbox"] { accent-color: var(--amber); }
 
     .stats-filter-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-bottom: 14px; }
     .total-counter-banner {
@@ -379,6 +384,7 @@
     .history-card.iron-history { border-left-color: var(--orange); }
     .history-card.cut-history { border-left-color: var(--teal); }
     .history-card.tailor-history { border-left-color: var(--indigo); }
+    .history-card.shelf-history { border-left-color: var(--amber); }
     .history-right { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
     .history-time { font-size: 0.74rem; background: #f1f5f9; color: #475569; padding: 4px 8px; border-radius: 8px; font-weight: 700; }
 
@@ -409,38 +415,16 @@
     .pill.uncollected-pill.active { background: #d97706; color: white; border-color: #d97706; }
     .pill.orange-pill.active { background: var(--orange); border-color: var(--orange); }
 
-    /* Sub-filter bar for Uncollected Aging (3d, 7d, 30d, Custom) */
     .uncollected-sub-bar {
-      background: #fffbeb;
-      border: 1.5px solid #fde68a;
-      border-radius: 14px;
-      padding: 12px;
-      margin-bottom: 14px;
-      display: none;
+      background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 14px; padding: 12px; margin-bottom: 14px; display: none;
     }
-    .sub-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
+    .sub-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
     .sub-pill {
-      padding: 5px 12px;
-      border-radius: 16px;
-      border: 1px solid #fcd34d;
-      background: white;
-      color: #92400e;
-      font-size: 0.78rem;
-      font-weight: 800;
-      cursor: pointer;
+      padding: 5px 12px; border-radius: 16px; border: 1px solid #fcd34d;
+      background: white; color: #92400e; font-size: 0.78rem; font-weight: 800; cursor: pointer;
     }
-    .sub-pill.active {
-      background: #b45309;
-      color: white;
-      border-color: #b45309;
-    }
+    .sub-pill.active { background: #b45309; color: white; border-color: #b45309; }
 
-    /* Bill Status Cards */
     .bill-card {
       border: 1px solid var(--border); border-radius: 16px; padding: 14px;
       margin-bottom: 12px; background: white; box-shadow: var(--shadow-sm);
@@ -492,25 +476,12 @@
     .item-stage-pill.done { background: var(--success); color: white; }
     .item-stage-pill.delivered-pill { background: var(--delivered); color: white; }
 
-    /* Storage Location Badge & Button */
     .loc-chip-btn {
-      background: #f0fdfa;
-      border: 1.5px solid #5eead4;
-      color: #0f766e;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.74rem;
-      font-weight: 800;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+      background: var(--amber-soft); border: 1.5px solid #fcd34d; color: var(--amber);
+      padding: 4px 10px; border-radius: 20px; font-size: 0.74rem; font-weight: 800; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 4px;
     }
-    .loc-chip-btn.empty {
-      background: white;
-      border-color: #cbd5e1;
-      color: #64748b;
-    }
+    .loc-chip-btn.empty { background: white; border-color: #cbd5e1; color: #64748b; }
 
     .item-workers { display: flex; flex-wrap: wrap; gap: 5px; font-size: 0.74rem; align-items: center; }
     .w-chip { background: white; border: 1px solid var(--border); padding: 3px 8px; border-radius: 8px; color: #334155; font-weight: 600; }
@@ -562,41 +533,34 @@
 
 <input type="file" id="staffPhotoInput" accept="image/*" style="display:none;" onchange="handleStaffPhotoSelected(event)">
 
-<!-- STORAGE LOCATION MODAL (Shelf, Rack, Left/Right Hanger, Showcase Box) -->
+<!-- QUICK SEND TO SHELF / BOX MODAL (Used from Status Tab) -->
 <div id="locationModal" class="modal-overlay" onclick="if(event.target===this) closeLocationModal()">
   <div class="modal-box">
     <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px; margin-bottom:14px;">
-      <h3 id="locModalTitle" style="margin:0; color:var(--teal); font-size:1rem;">📍 തുണി വെച്ച സ്ഥലം (Storage Location)</h3>
+      <h3 id="locModalTitle" style="margin:0; color:var(--amber); font-size:1rem;">🗄️ ഷെൽഫ് / ബോക്സിലേക്ക് മാറ്റുക</h3>
       <button type="button" class="btn-back" onclick="closeLocationModal()">✕</button>
     </div>
 
-    <label>സ്ഥലം തിരഞ്ഞെടുക്കുക:</label>
-    <div class="loc-preset-grid">
-      <button type="button" class="loc-choice-btn" onclick="selectLocPreset('Shelf', this)">🗄️ Shelf (ഷെൽഫ്)</button>
-      <button type="button" class="loc-choice-btn" onclick="selectLocPreset('Rack', this)">🪜 Rack (റാക്ക്)</button>
-      <button type="button" class="loc-choice-btn" onclick="selectLocPreset('Left Side Hanger', this)">⬅️ Left Side Hanger</button>
-      <button type="button" class="loc-choice-btn" onclick="selectLocPreset('Right Side Hanger', this)">➡️ Right Side Hanger</button>
-      <button type="button" class="loc-choice-btn" onclick="selectLocPreset('Showcase Box', this)">📦 Showcase Box</button>
-      <button type="button" class="loc-choice-btn" onclick="selectLocPreset('Counter', this)">🏪 Counter</button>
-    </div>
+    <label>നിലവിലുള്ള ഷെൽഫുകൾ / ബോക്സുകൾ തിരഞ്ഞെടുക്കുക:</label>
+    <div id="modalShelvesGrid" class="loc-preset-grid"></div>
 
     <div style="margin-bottom:14px;">
-      <label>കൃത്യമായ നമ്പർ / വിശദാംശം (ഉദാ: Shelf 2, Rack A, Box 4):</label>
-      <input type="text" id="locCustomDetailInput" placeholder="ഉദാ: Rack 3 / Left Hanger...">
+      <label>അല്ലെങ്കിൽ പുതിയ പേര് / നമ്പർ നൽകുക (ഉദാ: Shelf 3, Box 2):</label>
+      <input type="text" id="locCustomDetailInput" placeholder="ഷെൽഫ് അല്ലെങ്കിൽ ബോക്സിന്റെ പേര്...">
     </div>
 
     <div style="display:flex; gap:8px;">
-      <button type="button" class="btn-primary-full" style="background:var(--teal);" onclick="saveItemLocation()">💾 സ്ഥലം സേവ് ചെയ്യുക</button>
+      <button type="button" class="btn-primary-full" style="background:var(--amber);" onclick="saveItemLocation()">💾 ഷെൽഫിലേക്ക് സേവ് ചെയ്യുക</button>
       <button type="button" class="btn-back" style="padding:0 16px;" onclick="clearItemLocation()">Clear</button>
     </div>
   </div>
 </div>
 
-<!-- MANAGE / DELETE STAFF MODAL -->
+<!-- MANAGE / DELETE MODAL -->
 <div id="manageModal" class="modal-overlay" onclick="if(event.target===this) closeManageModal()">
   <div class="modal-box">
     <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px; margin-bottom:14px;">
-      <h3 style="margin:0; color:var(--danger); font-size:1rem;">🗑️ സ്റ്റാഫുകളെയും ഐറ്റംസുകളെയും ഡിലീറ്റ് ചെയ്യുക</h3>
+      <h3 style="margin:0; color:var(--danger); font-size:1rem;">🗑️ സ്റ്റാഫുകളെയും ഷെൽഫുകളെയും ഡിലീറ്റ് ചെയ്യുക</h3>
       <button type="button" class="btn-back" onclick="closeManageModal()">✕</button>
     </div>
     <div id="manageModalBody"></div>
@@ -608,7 +572,7 @@
     <div class="brand-logo">✂️</div>
     <div>
       <h1>ZIBAS TAILORS</h1>
-      <p id="headerSubtitle">Production, Storage & Delivery Tracker</p>
+      <p id="headerSubtitle">Production, Shelf & Delivery Tracker</p>
     </div>
   </div>
   <div class="header-actions" id="shopHeaderActions">
@@ -635,10 +599,10 @@
     <div id="late7AlertList" class="alert-list"></div>
   </div>
 
-  <!-- TAB 1: STATUS, STORAGE & UNCOLLECTED REMINDERS -->
+  <!-- TAB 1: STATUS & UNCOLLECTED -->
   <div id="statusTab">
     <div class="search-input-wrap">
-      <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ / പേര് / സ്ഥലം (Shelf, Rack) സെർച്ച് ചെയ്യുക..." onkeyup="renderBills()">
+      <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ / പേര് / ഷെൽഫ് സെർച്ച് ചെയ്യുക..." onkeyup="renderBills()">
     </div>
     <div class="filter-pills">
       <button class="pill active" onclick="setFilter('all', this)">എല്ലാം (All)</button>
@@ -649,7 +613,6 @@
       <button class="pill" onclick="setFilter('delivered', this)">✅ ഡെലിവറി കഴിഞ്ഞവ</button>
     </div>
 
-    <!-- Uncollected Aging Sub-Filter Bar (3 days, 7 days, 1 month, Custom) -->
     <div id="uncollectedSubBar" class="uncollected-sub-bar">
       <div style="font-size:0.8rem; font-weight:800; color:#92400e; margin-bottom:8px;">⏳ ഡെലിവറി ഡേറ്റ് കഴിഞ്ഞ് എത്ര ദിവസമായി കൊണ്ടുപോകാത്തവ കാണണം?</div>
       <div class="sub-pills">
@@ -688,7 +651,7 @@
       </div>
 
       <div class="assign-box-orange">
-        <label style="color:var(--orange);">➕ അയൺ ചെയ്ത ബിൽ നമ്പർ & വെച്ച സ്ഥലം ചേർക്കുക:</label>
+        <label style="color:var(--orange);">➕ അയൺ ചെയ്ത ബിൽ നമ്പർ & വെച്ച ഷെൽഫ്/ബോക്സ് ചേർക്കുക:</label>
         <input type="text" id="ironTabBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForIroner()">
         <div id="ironTabFoundBillArea" style="margin-top:10px;"></div>
       </div>
@@ -880,9 +843,46 @@
     </div>
   </div>
 
+  <!-- TAB 7: DEDICATED SHELF & BOXES MENU -->
+  <div id="shelfTab" class="section-card" style="display: none;">
+    
+    <!-- VIEW A: ALL SHELVES & BOXES GRID -->
+    <div id="shelfListView">
+      <div class="section-header">
+        <h3 class="section-title" style="color: var(--amber);">🗄️ ഷെൽഫ് & ബോക്സുകൾ (Shelf / Boxes)</h3>
+        <button type="button" class="btn-pill" style="background:var(--amber);" onclick="promptNewShelf()">+ പുതിയ ഷെൽഫ് / ബോക്സ്</button>
+      </div>
+      <p style="font-size:0.82rem; color:var(--muted); margin-top:0;">തുണികൾ വെക്കാനും ഉള്ളിലുള്ളവ കാണാനും താഴെ ഷെൽഫ് / ബോക്സിൽ ക്ലിക്ക് ചെയ്യുക:</p>
+      <div id="shelvesGrid" class="worker-grid"></div>
+    </div>
+
+    <!-- VIEW B: INSIDE SELECTED SHELF / BOX -->
+    <div id="shelfDetailView" style="display:none;">
+      <div class="section-header" style="border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button type="button" class="btn-back" onclick="closeShelfDetail()">⬅️</button>
+          <h3 id="selectedShelfTitle" style="margin:0; color:var(--amber); text-transform:uppercase; font-size:1.15rem;"></h3>
+        </div>
+        <span id="selectedShelfCountBadge" style="background:var(--amber-soft); color:var(--amber); padding:5px 12px; border-radius:20px; font-size:0.8rem; font-weight:800; border:1px solid #fcd34d;">0 എണ്ണം</span>
+      </div>
+
+      <!-- Search Bill Number to Add Items directly into this Shelf/Box -->
+      <div class="assign-box-amber">
+        <label style="color:var(--amber);">➕ ബിൽ നമ്പർ സെർച്ച് ചെയ്ത് ഈ ഷെൽഫിലേക്ക് വെക്കുക:</label>
+        <input type="text" id="shelfTabBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForShelf()">
+        <div id="shelfTabFoundBillArea" style="margin-top:10px;"></div>
+      </div>
+
+      <!-- List of Items currently stored in this Shelf/Box -->
+      <h4 style="margin:0 0 10px 0; color:#334155; font-size:0.92rem;">📦 ഈ ഷെൽഫിൽ / ബോക്സിൽ ഇപ്പോൾ ഉള്ളവ:</h4>
+      <div id="shelfItemsList"></div>
+    </div>
+
+  </div>
+
 </div>
 
-<!-- BOTTOM MOBILE APP NAVIGATION BAR -->
+<!-- BOTTOM MOBILE APP NAVIGATION BAR (WITH DEDICATED SHELF/BOX MENU) -->
 <nav class="bottom-nav" id="mobileBottomNav">
   <button class="nav-item active" onclick="switchTab('statusTab', this)">
     <span class="nav-icon">📊</span>
@@ -891,6 +891,10 @@
   <button class="nav-item" onclick="switchTab('ironingTab', this)">
     <span class="nav-icon">🔥</span>
     <span>അയേൺ</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('shelfTab', this)">
+    <span class="nav-icon">🗄️</span>
+    <span>ഷെൽഫ്</span>
   </button>
   <button class="nav-item add-fab" onclick="switchTab('entryTab', this)">
     <div class="fab-circle">+</div>
@@ -912,24 +916,25 @@
 
 <script>
   // ⚠️ ഇവിടെ നിങ്ങളുടെ Google Apps Script Web App (/exec) ലിങ്ക് പേസ്റ്റ് ചെയ്യുക:
-  const API_URL = 'https://script.google.com/macros/s/AKfycbw55tsv_nEZv0pjrtMDF3_LcKFH-LmRN7qiFt1HF0DWi8H6z1kICTeMyRxGBLRcIlQ1/exec';
+  const API_URL = 'നhttps://script.google.com/macros/s/AKfycbw55tsv_nEZv0pjrtMDF3_LcKFH-LmRN7qiFt1HF0DWi8H6z1kICTeMyRxGBLRcIlQ1/exec';
 
   let bills = [];
-  let staff = { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [] };
+  let staff = { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [], Shelf: [] };
   let staffPhotos = {};
   let currentFilter = 'all';
-  let uncollectedMinDays = 1; // 1 = any overdue, 3, 7, 30, or 'custom'
+  let uncollectedMinDays = 1;
   let manualCustomItems = [];
   let selectedButtonWorker = null;
   let selectedIroner = null;
   let selectedCutter = null;
   let selectedTailor = null;
+  let selectedShelf = null;
   let ironerDateFilter = 'thisWeek';
   let pendingPhotoTarget = null;
-  let activeLocationTarget = null; // { billId, itemIdx }
+  let activeLocationTarget = null;
 
-  const STORAGE_LOCATIONS = [
-    'Shelf', 'Rack', 'Left Side Hanger', 'Right Side Hanger', 'Showcase Box', 'Counter'
+  const DEFAULT_SHELVES = [
+    'Shelf 1', 'Shelf 2', 'Rack 1', 'Left Side Hanger', 'Right Side Hanger', 'Showcase Box'
   ];
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -984,7 +989,8 @@
         response = await fetch(API_URL);
         const data = await response.json();
         bills = data.bills || [];
-        staff = data.staff || { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [] };
+        staff = data.staff || { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [], Shelf: [] };
+        if (!staff.Shelf) staff.Shelf = [];
         staffPhotos = data.staffPhotos || {};
       } else {
         response = await fetch(API_URL, {
@@ -995,7 +1001,8 @@
         const resJson = await response.json();
         if (!resJson.success) throw new Error(resJson.error || 'Server Error');
         bills = resJson.data.bills || [];
-        staff = resJson.data.staff || { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [] };
+        staff = resJson.data.staff || { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [], Shelf: [] };
+        if (!staff.Shelf) staff.Shelf = [];
         staffPhotos = resJson.data.staffPhotos || {};
       }
       hideLoader();
@@ -1016,22 +1023,177 @@
     callApi(null, 'വിവരങ്ങൾ ലോഡ് ചെയ്യുന്നു...');
   }
 
-  // --- STORAGE LOCATION MODAL (SHELF, RACK, HANGER, SHOWCASE BOX) ---
+  function getAllShelvesList() {
+    const customShelves = staff.Shelf || [];
+    if (customShelves.length > 0) return customShelves;
+    return DEFAULT_SHELVES;
+  }
+
+  // --- DEDICATED SHELF & BOXES MENU FUNCTIONS ---
+  function promptNewShelf() {
+    const name = prompt('പുതിയ ഷെൽഫ് അല്ലെങ്കിൽ ബോക്സിന്റെ പേര് നൽകുക (ഉദാ: Shelf 3, Box 2, Left Hanger):');
+    if (!name || !name.trim()) return;
+    callApi({ action: 'addStaff', role: 'Shelf', name: name.trim(), photo: '' }, 'പുതിയ ഷെൽഫ് സേവ് ചെയ്യുന്നു...');
+  }
+
+  function renderShelvesList() {
+    const grid = document.getElementById('shelvesGrid');
+    const shelves = getAllShelvesList();
+    const isCustomMode = (staff.Shelf || []).length > 0;
+
+    grid.innerHTML = shelves.map(shelfName => {
+      let itemCount = 0;
+      bills.forEach(b => b.items.forEach(it => {
+        if (!it.delivered && (it.location || '').toLowerCase() === shelfName.toLowerCase()) itemCount++;
+      }));
+      const safeName = shelfName.replace(/'/g, "\\'");
+      const delBtn = isCustomMode
+        ? `<button type="button" class="card-del-btn" onclick="deleteStaffMember('Shelf', '${safeName}', event)">✕</button>`
+        : '';
+
+      return `
+        <div class="worker-card shelf-card" onclick="openShelfDetail('${safeName}')">
+          ${delBtn}
+          <div class="avatar-fallback">🗄️</div>
+          <span class="w-name">${shelfName.toUpperCase()}</span>
+          <span class="w-count">${itemCount} ഐറ്റംസ് ഉള്ളിൽ</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openShelfDetail(shelfName) {
+    selectedShelf = shelfName;
+    document.getElementById('shelfListView').style.display = 'none';
+    document.getElementById('shelfDetailView').style.display = 'block';
+    document.getElementById('selectedShelfTitle').innerText = `🗄️ ${shelfName.toUpperCase()}`;
+    document.getElementById('shelfTabBillSearch').value = '';
+    document.getElementById('shelfTabFoundBillArea').innerHTML = '';
+    renderShelfDetail();
+  }
+
+  function closeShelfDetail() {
+    selectedShelf = null;
+    document.getElementById('shelfDetailView').style.display = 'none';
+    document.getElementById('shelfListView').style.display = 'block';
+    renderShelvesList();
+  }
+
+  function searchBillForShelf() {
+    const query = document.getElementById('shelfTabBillSearch').value.trim().toLowerCase();
+    const area = document.getElementById('shelfTabFoundBillArea');
+    area.innerHTML = '';
+    if (!query) return;
+
+    let matched = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
+    if (!matched) {
+      area.innerHTML = `<p style="color:var(--danger); font-size:0.84rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      return;
+    }
+
+    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
+    matched.items.forEach((item, idx) => {
+      const isHere = (item.location || '').toLowerCase() === selectedShelf.toLowerCase();
+      const note = (item.location && !isHere)
+        ? `<small style="color:var(--warning); font-weight:700;">(നിലവിൽ: ${item.location})</small>`
+        : (isHere ? `<small style="color:var(--success); font-weight:700;">(ഈ ഷെൽഫിൽ ഉണ്ട്)</small>` : '');
+      const delNote = item.delivered ? ` <small style="color:var(--delivered); font-weight:800;">[Delivered]</small>` : '';
+
+      rowsHtml += `
+        <div class="found-item-row shelf-row">
+          <input type="checkbox" class="shelf-assign-check" data-idx="${idx}" ${isHere || (!item.location && !item.delivered) ? 'checked' : ''}>
+          <div><strong>${item.label}</strong> ${note}${delNote}</div>
+          <span style="font-size:0.75rem; color:var(--muted);">🗄️</span>
+        </div>
+      `;
+    });
+
+    rowsHtml += `<button type="button" class="btn-primary-full" style="background:var(--amber); margin-top:8px;" onclick="saveAssignedShelfItems('${matched.id}')">📥 ${selectedShelf.toUpperCase()}-ലേക്ക് വെക്കുക (Save)</button>`;
+    area.innerHTML = rowsHtml;
+  }
+
+  async function saveAssignedShelfItems(billId) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill) return;
+
+    document.querySelectorAll('.shelf-assign-check').forEach(cb => {
+      const idx = parseInt(cb.getAttribute('data-idx'));
+      if (cb.checked) {
+        bill.items[idx].location = selectedShelf;
+      } else if ((bill.items[idx].location || '').toLowerCase() === selectedShelf.toLowerCase()) {
+        bill.items[idx].location = '';
+      }
+    });
+
+    document.getElementById('shelfTabBillSearch').value = '';
+    document.getElementById('shelfTabFoundBillArea').innerHTML = '';
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'ഷെൽഫിലേക്ക് സേവ് ചെയ്യുന്നു...');
+  }
+
+  async function removeFromShelf(billId, itemIdx) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill || !confirm(`Bill #${bill.billNo} (${bill.items[itemIdx].label}) ഈ ഷെൽഫിൽ നിന്ന് മാറ്റണമോ?`)) return;
+    bill.items[itemIdx].location = '';
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'ഷെൽഫിൽ നിന്ന് മാറ്റുന്നു...');
+  }
+
+  function renderShelfDetail() {
+    const listContainer = document.getElementById('shelfItemsList');
+    const storedItems = [];
+
+    bills.forEach(bill => bill.items.forEach((item, idx) => {
+      if (!item.delivered && (item.location || '').toLowerCase() === selectedShelf.toLowerCase()) {
+        storedItems.push({
+          billId: bill.id,
+          itemIdx: idx,
+          billNo: bill.billNo,
+          customerName: bill.customerName,
+          deliveryDate: bill.deliveryDate,
+          label: item.label,
+          ironed: item.ironed
+        });
+      }
+    }));
+
+    document.getElementById('selectedShelfCountBadge').innerText = `${storedItems.length} എണ്ണം`;
+
+    if (storedItems.length === 0) {
+      listContainer.innerHTML = `<p style="color:var(--muted); font-size:0.86rem; text-align:center; padding:16px;">ഈ ഷെൽഫിൽ / ബോക്സിൽ നിലവിൽ തുണികൾ ഒന്നും വെച്ചിട്ടില്ല.</p>`;
+      return;
+    }
+
+    listContainer.innerHTML = storedItems.map(h => `
+      <div class="history-card shelf-history">
+        <div>
+          <strong style="color:var(--primary-dark); font-size:0.98rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          ${h.ironed ? '<span style="background:var(--success-soft); color:var(--success); font-size:0.72rem; padding:2px 6px; border-radius:6px; margin-left:4px; font-weight:800;">✅ Ready</span>' : ''}
+          <div style="font-size:0.78rem; color:var(--muted); margin-top:2px;">
+            ${h.customerName ? `👤 ${h.customerName} • ` : ''}ഡെലിവറി: ${h.deliveryDate}
+          </div>
+        </div>
+        <div class="history-right">
+          <button type="button" class="btn-item-deliver" onclick="toggleSingleItemDelivered('${h.billId}', ${h.itemIdx})">📦 ഡെലിവറി</button>
+          <button type="button" class="btn-icon-del" title="ഷെൽഫിൽ നിന്ന് മാറ്റുക" onclick="removeFromShelf('${h.billId}', ${h.itemIdx})">✕</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // --- QUICK SEND TO SHELF / BOX MODAL (FROM STATUS TAB) ---
   function openLocationModal(billId, itemIdx) {
     const bill = bills.find(b => b.id === billId);
     if (!bill || !bill.items[itemIdx]) return;
     const item = bill.items[itemIdx];
 
     activeLocationTarget = { billId, itemIdx };
-    document.getElementById('locModalTitle').innerText = `📍 Bill #${bill.billNo} • ${item.label}`;
+    document.getElementById('locModalTitle').innerText = `🗄️ Bill #${bill.billNo} • ${item.label}`;
     document.getElementById('locCustomDetailInput').value = item.location || '';
 
-    document.querySelectorAll('.loc-choice-btn').forEach(btn => {
-      btn.classList.remove('selected');
-      if (item.location && item.location.toLowerCase().startsWith(btn.innerText.replace(/^[^\w]+/, '').split(' (')[0].toLowerCase())) {
-        btn.classList.add('selected');
-      }
-    });
+    const shelves = getAllShelvesList();
+    document.getElementById('modalShelvesGrid').innerHTML = shelves.map(s => {
+      const isSelected = (item.location || '').toLowerCase() === s.toLowerCase();
+      return `<button type="button" class="loc-choice-btn ${isSelected ? 'selected' : ''}" onclick="selectLocPreset('${s.replace(/'/g, "\\'")}', this)">🗄️ ${s}</button>`;
+    }).join('');
 
     document.getElementById('locationModal').style.display = 'flex';
   }
@@ -1041,12 +1203,10 @@
     document.getElementById('locationModal').style.display = 'none';
   }
 
-  function selectLocPreset(presetName, btn) {
+  function selectLocPreset(shelfName, btn) {
     document.querySelectorAll('.loc-choice-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
-    const input = document.getElementById('locCustomDetailInput');
-    input.value = presetName + ' ';
-    input.focus();
+    document.getElementById('locCustomDetailInput').value = shelfName;
   }
 
   async function saveItemLocation() {
@@ -1059,7 +1219,7 @@
     bill.items[itemIdx].location = locVal;
     closeLocationModal();
 
-    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'സ്ഥലം സേവ് ചെയ്യുന്നു...');
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'ഷെൽഫിലേക്ക് മാറ്റുന്നു...');
   }
 
   async function clearItemLocation() {
@@ -1247,6 +1407,10 @@
       if (selectedIroner) renderIronerDetail();
       else renderIronersList();
     }
+    if (document.getElementById('shelfTab').style.display === 'block') {
+      if (selectedShelf) renderShelfDetail();
+      else renderShelvesList();
+    }
     if (document.getElementById('cuttingTab').style.display === 'block') {
       if (selectedCutter) renderCutterDetail();
       else renderCuttersList();
@@ -1262,7 +1426,7 @@
   }
 
   function switchTab(tabId, btn) {
-    ['statusTab', 'ironingTab', 'entryTab', 'cuttingTab', 'stitchingTab', 'buttonTab'].forEach(id => {
+    ['statusTab', 'ironingTab', 'shelfTab', 'entryTab', 'cuttingTab', 'stitchingTab', 'buttonTab'].forEach(id => {
       document.getElementById(id).style.display = id === tabId ? 'block' : 'none';
     });
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -1275,6 +1439,12 @@
       document.getElementById('ironerListView').style.display = 'block';
       document.getElementById('ironerDetailView').style.display = 'none';
       renderIronersList();
+    }
+    if (tabId === 'shelfTab') {
+      selectedShelf = null;
+      document.getElementById('shelfListView').style.display = 'block';
+      document.getElementById('shelfDetailView').style.display = 'none';
+      renderShelvesList();
     }
     if (tabId === 'cuttingTab') {
       selectedCutter = null;
@@ -1308,6 +1478,7 @@
   function renderManageModalContent() {
     const body = document.getElementById('manageModalBody');
     const categories = [
+      { role: 'Shelf', title: '🗄️ ഷെൽഫ് & ബോക്സുകൾ (Shelves / Boxes)' },
       { role: 'Cutter', title: '✂️ കട്ടർമാർ (Cutters)' },
       { role: 'Tailor', title: '🧵 തയ്യൽക്കാർ (Tailors)' },
       { role: 'Button', title: '🔘 ബട്ടൺ & ചെക്കിംഗ് സ്റ്റാഫ്' },
@@ -1337,6 +1508,7 @@
     if (selectedButtonWorker === name) selectedButtonWorker = null;
     if (selectedCutter === name) selectedCutter = null;
     if (selectedTailor === name) selectedTailor = null;
+    if (selectedShelf === name) selectedShelf = null;
     callApi({ action: 'deleteStaff', role, name }, 'ഡിലീറ്റ് ചെയ്യുന്നു...');
   }
 
@@ -1397,7 +1569,7 @@
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
   }
 
-  // --- IRONING PROFILES (WITH STORAGE LOCATION ASSIGNMENT) ---
+  // --- IRONING PROFILES ---
   function renderIronersList() {
     const grid = document.getElementById('ironersGrid');
     const ironers = staff.Ironer || [];
@@ -1458,14 +1630,15 @@
       return;
     }
 
+    const shelves = getAllShelvesList();
     let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matchedBill.billNo} (ഡെലിവറി: ${matchedBill.deliveryDate})</div>`;
     matchedBill.items.forEach((item, idx) => {
       const isCurrent = item.ironed && item.ironer === selectedIroner;
       const isOther = item.ironed && item.ironer !== selectedIroner;
       let note = isCurrent ? `<small style="color:var(--success); font-weight:700;">(${item.ironTime || ''})</small>` : (isOther ? `<small style="color:var(--warning); font-weight:700;">(${item.ironer})</small>` : '');
       
-      const locOpts = '<option value="">-- വെച്ച സ്ഥലം (Location) --</option>' +
-        STORAGE_LOCATIONS.map(loc => `<option value="${loc}" ${(item.location || '').startsWith(loc) ? 'selected' : ''}>📍 ${loc}</option>`).join('');
+      const locOpts = '<option value="">-- വെച്ച ഷെൽഫ് / ബോക്സ് --</option>' +
+        shelves.map(loc => `<option value="${loc}" ${(item.location || '').toLowerCase() === loc.toLowerCase() ? 'selected' : ''}>🗄️ ${loc}</option>`).join('');
 
       rowsHtml += `
         <div class="found-item-row iron-row">
@@ -1602,7 +1775,7 @@
       <div class="history-card iron-history">
         <div>
           <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
-          ${h.location ? `<div style="font-size:0.78rem; color:var(--teal); font-weight:700; margin-top:2px;">📍 ${h.location}</div>` : ''}
+          ${h.location ? `<div style="font-size:0.78rem; color:var(--amber); font-weight:700; margin-top:2px;">🗄️ ${h.location}</div>` : ''}
         </div>
         <div class="history-right">
           <span class="history-time">🕒 ${h.ironTime}</span>
@@ -2434,7 +2607,7 @@
           icon = '✅';
         }
 
-        const locText = item.location ? `📍 ${item.location}` : '📍 സ്ഥലം ചേർക്കുക';
+        const locText = item.location ? `🗄️ ${item.location}` : '🗄️ ഷെൽഫ് / ബോക്സ്';
         const locBtnClass = item.location ? 'loc-chip-btn' : 'loc-chip-btn empty';
 
         return `
