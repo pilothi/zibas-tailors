@@ -27,6 +27,8 @@
       --warning-soft: #fffbeb;
       --success: #16a34a;
       --success-soft: #f0fdf4;
+      --delivered: #0284c7;
+      --delivered-soft: #e0f2fe;
       --bg: #f1f5f9;
       --card: #ffffff;
       --text: #0f172a;
@@ -50,7 +52,6 @@
       overflow-x: hidden;
     }
 
-    /* Sticky Glass App Header */
     header {
       background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
       color: white;
@@ -64,183 +65,77 @@
       justify-content: space-between;
       gap: 10px;
     }
-    .brand-area {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .brand-area { display: flex; align-items: center; gap: 10px; }
     .brand-logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.14);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
+      width: 38px; height: 38px; border-radius: 12px; background: rgba(255,255,255,0.14);
+      display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
       border: 1px solid rgba(255,255,255,0.2);
     }
-    header h1 {
-      margin: 0;
-      font-size: 1.12rem;
-      font-weight: 800;
-      letter-spacing: 0.4px;
-    }
-    header p {
-      margin: 1px 0 0;
-      font-size: 0.72rem;
-      opacity: 0.8;
-    }
+    header h1 { margin: 0; font-size: 1.12rem; font-weight: 800; letter-spacing: 0.4px; }
+    header p { margin: 1px 0 0; font-size: 0.72rem; opacity: 0.8; }
 
-    .header-actions {
-      display: flex;
-      gap: 6px;
-    }
+    .header-actions { display: flex; gap: 6px; }
     .icon-pill-btn {
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.25);
-      color: white;
-      padding: 7px 11px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.76rem;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: 0.15s;
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); color: white;
+      padding: 7px 11px; border-radius: 20px; cursor: pointer; font-size: 0.76rem; font-weight: 700;
+      display: inline-flex; align-items: center; gap: 4px; transition: 0.15s;
     }
     .icon-pill-btn:active { transform: scale(0.95); }
 
-    /* Bottom Mobile App Navigation */
     .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      position: fixed; bottom: 0; left: 0; right: 0;
       background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border-top: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      align-items: center;
+      display: grid; grid-template-columns: repeat(6, 1fr); align-items: center;
       padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
-      z-index: 800;
-      box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.06);
+      z-index: 800; box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.06);
     }
 
     .nav-item {
-      background: none;
-      border: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      padding: 5px 2px;
-      color: var(--muted);
-      font-size: 0.68rem;
-      font-weight: 700;
-      cursor: pointer;
-      border-radius: 12px;
-      transition: 0.15s;
+      background: none; border: none; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 3px; padding: 5px 2px; color: var(--muted); font-size: 0.68rem; font-weight: 700; cursor: pointer;
+      border-radius: 12px; transition: 0.15s;
     }
-    .nav-item .nav-icon {
-      font-size: 1.25rem;
-      line-height: 1;
-      transition: transform 0.15s;
-    }
-    .nav-item.active {
-      color: var(--primary);
-    }
-    .nav-item.active .nav-icon {
-      transform: translateY(-2px);
-    }
-    .nav-item.add-fab {
-      position: relative;
-    }
+    .nav-item .nav-icon { font-size: 1.25rem; line-height: 1; transition: transform 0.15s; }
+    .nav-item.active { color: var(--primary); }
+    .nav-item.active .nav-icon { transform: translateY(-2px); }
+    .nav-item.add-fab { position: relative; }
     .fab-circle {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      font-weight: 800;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
-      margin-top: -14px;
-      border: 3px solid white;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white;
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 800;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4); margin-top: -14px; border: 3px solid white;
     }
     .nav-item.add-fab.active .fab-circle {
       background: linear-gradient(135deg, #16a34a, #15803d);
       box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4);
     }
 
-    /* Loader */
     #loader {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.45);
-      backdrop-filter: blur(4px);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+      display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(4px); z-index: 9999; justify-content: center; align-items: center; padding: 20px;
     }
     .loader-card {
-      background: white;
-      padding: 22px 28px;
-      border-radius: 18px;
-      text-align: center;
-      box-shadow: var(--shadow-md);
-      font-weight: 700;
-      color: var(--primary-dark);
-      font-size: 0.92rem;
+      background: white; padding: 22px 28px; border-radius: 18px; text-align: center;
+      box-shadow: var(--shadow-md); font-weight: 700; color: var(--primary-dark); font-size: 0.92rem;
     }
     .spinner {
-      border: 3.5px solid #e2e8f0;
-      border-top: 3.5px solid var(--primary);
-      border-radius: 50%;
-      width: 34px;
-      height: 34px;
-      animation: spin 0.75s linear infinite;
-      margin: 0 auto 12px;
+      border: 3.5px solid #e2e8f0; border-top: 3.5px solid var(--primary); border-radius: 50%;
+      width: 34px; height: 34px; animation: spin 0.75s linear infinite; margin: 0 auto 12px;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* Modal */
     .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.55);
-      backdrop-filter: blur(3px);
-      z-index: 9000;
-      justify-content: center;
-      align-items: flex-end;
+      display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(3px); z-index: 9000; justify-content: center; align-items: flex-end;
     }
-    @media (min-width: 600px) {
-      .modal-overlay { align-items: center; padding: 15px; }
-    }
+    @media (min-width: 600px) { .modal-overlay { align-items: center; padding: 15px; } }
     .modal-box {
-      background: white;
-      border-radius: 22px 22px 0 0;
-      max-width: 540px;
-      width: 100%;
-      max-height: 85vh;
-      overflow-y: auto;
-      padding: 20px;
-      box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
-      animation: slideUp 0.22s ease-out;
+      background: white; border-radius: 22px 22px 0 0; max-width: 540px; width: 100%; max-height: 85vh;
+      overflow-y: auto; padding: 20px; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); animation: slideUp 0.22s ease-out;
     }
-    @media (min-width: 600px) {
-      .modal-box { border-radius: 18px; }
-    }
+    @media (min-width: 600px) { .modal-box { border-radius: 18px; } }
     @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
     .manage-group { margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
@@ -255,92 +150,70 @@
       width: 19px; height: 19px; font-size: 0.7rem; cursor: pointer; line-height: 1;
     }
 
-    .container {
-      max-width: 820px;
-      margin: 14px auto;
-      padding: 0 12px;
-    }
+    .container { max-width: 820px; margin: 14px auto; padding: 0 12px; }
 
-    /* Alert Banner */
     .alert-section {
-      background: var(--danger-soft);
-      border: 1px solid #fecdd3;
-      border-left: 4px solid var(--danger);
-      border-radius: 14px;
-      padding: 12px 14px;
-      margin-bottom: 14px;
-      display: none;
+      background: var(--danger-soft); border: 1px solid #fecdd3; border-left: 4px solid var(--danger);
+      border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; display: none;
+    }
+    .alert-section.late-alert {
+      background: var(--warning-soft); border-color: #fde68a; border-left-color: var(--warning);
     }
     .alert-section h3 { margin: 0 0 8px 0; color: var(--danger); font-size: 0.86rem; font-weight: 800; }
+    .alert-section.late-alert h3 { color: #b45309; }
     .alert-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
     .alert-badge {
       background: white; border: 1px solid #fda4af; color: #be123c;
       padding: 6px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer; white-space: nowrap;
     }
+    .alert-section.late-alert .alert-badge {
+      border-color: #fcd34d; color: #b45309;
+    }
 
     .section-card {
-      background: var(--card);
-      border-radius: 18px;
-      padding: 16px;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      margin-bottom: 16px;
+      background: var(--card); border-radius: 18px; padding: 16px;
+      box-shadow: var(--shadow-sm); border: 1px solid rgba(226, 232, 240, 0.8); margin-bottom: 16px;
     }
 
     .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 14px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;
     }
-    .section-title {
-      margin: 0;
-      font-size: 1.08rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .section-title { margin: 0; font-size: 1.08rem; font-weight: 800; display: flex; align-items: center; gap: 6px; }
 
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
     @media (max-width: 520px) { .form-row { grid-template-columns: 1fr; gap: 10px; } }
 
     label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.82rem; color: #334155; }
     input[type="text"], input[type="tel"], input[type="number"], input[type="date"], select {
-      width: 100%;
-      padding: 11px 13px;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      font-size: 0.95rem;
-      background: #f8fafc;
-      color: var(--text);
-      transition: border-color 0.15s, background 0.15s;
+      width: 100%; padding: 11px 13px; border: 1.5px solid var(--border); border-radius: 12px;
+      font-size: 0.95rem; background: #f8fafc; color: var(--text); transition: border-color 0.15s, background 0.15s;
     }
-    input:focus, select:focus {
-      outline: none;
-      border-color: var(--primary);
-      background: white;
+    input:focus, select:focus { outline: none; border-color: var(--primary); background: white; }
+
+    /* Payment Box in New Bill Form */
+    .payment-entry-box {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+    .balance-preview {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed #cbd5e1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--primary-dark);
     }
 
-    .search-input-wrap {
-      position: relative;
-      margin-bottom: 12px;
-    }
-    .search-input-wrap input {
-      padding-left: 38px;
-      border-radius: 14px;
-      background: white;
-    }
+    .search-input-wrap { position: relative; margin-bottom: 12px; }
+    .search-input-wrap input { padding-left: 38px; border-radius: 14px; background: white; }
     .search-input-wrap::before {
-      content: '🔍';
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.95rem;
-      opacity: 0.65;
+      content: '🔍'; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.95rem; opacity: 0.65;
     }
 
     .btn-pill {
@@ -349,9 +222,6 @@
       display: inline-flex; align-items: center; gap: 4px;
     }
     .btn-pill:active { transform: scale(0.96); }
-    .btn-pill.danger-soft {
-      background: var(--danger-soft); color: var(--danger); border: 1px solid #fecdd3;
-    }
 
     .quick-chips-bar { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 12px; align-items: center; }
     .bill-chip {
@@ -359,17 +229,12 @@
       padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 800; cursor: pointer; white-space: nowrap;
     }
 
-    /* Item Counter Grid */
     .items-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
     @media (min-width: 640px) { .items-grid { grid-template-columns: repeat(3, 1fr); } }
 
     .item-box {
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 12px 8px;
-      text-align: center;
-      background: #f8fafc;
-      position: relative;
+      border: 1.5px solid var(--border); border-radius: 14px; padding: 12px 8px;
+      text-align: center; background: #f8fafc; position: relative;
     }
     .item-box .del-custom-box {
       position: absolute; top: 5px; right: 5px; background: var(--danger-soft); color: var(--danger);
@@ -402,41 +267,18 @@
     }
 
     .btn-primary-full {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #16a34a, #15803d);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      font-size: 1rem;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
-      transition: transform 0.12s;
+      width: 100%; padding: 14px; background: linear-gradient(135deg, #16a34a, #15803d);
+      color: white; border: none; border-radius: 14px; font-size: 1rem; font-weight: 800; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25); transition: transform 0.12s;
     }
     .btn-primary-full:active { transform: scale(0.98); }
 
-    /* WORKER PROFILE CARDS - 2 COLUMN MOBILE GRID */
-    .worker-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 10px;
-    }
-    @media (min-width: 640px) {
-      .worker-grid { grid-template-columns: repeat(3, 1fr); }
-    }
+    .worker-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 10px; }
+    @media (min-width: 640px) { .worker-grid { grid-template-columns: repeat(3, 1fr); } }
 
     .worker-card {
-      background: var(--purple-soft);
-      border: 1.5px solid #ddd6fe;
-      border-radius: 16px;
-      padding: 16px 10px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.18s;
-      position: relative;
-      box-shadow: var(--shadow-sm);
+      background: var(--purple-soft); border: 1.5px solid #ddd6fe; border-radius: 16px;
+      padding: 16px 10px; text-align: center; cursor: pointer; transition: 0.18s; position: relative; box-shadow: var(--shadow-sm);
     }
     .worker-card:active { transform: scale(0.97); }
     
@@ -456,18 +298,15 @@
     }
     .avatar-fallback {
       width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 8px; display: flex;
-      align-items: center; justify-content: center; font-size: 1.8rem; background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      align-items: center; justify-content: center; font-size: 1.8rem; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
 
     .worker-card .w-name {
-      font-size: 1.05rem; font-weight: 800; color: var(--purple); display: block; text-transform: uppercase; letter-spacing: 0.4px;
-      word-break: break-word;
+      font-size: 1.05rem; font-weight: 800; color: var(--purple); display: block; text-transform: uppercase; letter-spacing: 0.4px; word-break: break-word;
     }
     .worker-card .w-count {
       display: inline-block; margin-top: 6px; font-size: 0.74rem; background: white;
-      color: #475569; padding: 4px 9px; border-radius: 20px; font-weight: 700;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      color: #475569; padding: 4px 9px; border-radius: 20px; font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
     .worker-card.ironer-card { background: var(--orange-soft); border-color: #fed7aa; }
@@ -538,14 +377,8 @@
       border-radius: 8px; padding: 5px 8px; font-size: 0.78rem; font-weight: 800; cursor: pointer;
     }
 
-    /* Horizontal Scrollable Filter Pills */
     .filter-pills {
-      display: flex;
-      gap: 7px;
-      margin-bottom: 12px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: none;
+      display: flex; gap: 7px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none;
     }
     .filter-pills::-webkit-scrollbar { display: none; }
 
@@ -554,20 +387,20 @@
       background: white; cursor: pointer; font-size: 0.8rem; font-weight: 700; white-space: nowrap; color: #475569;
     }
     .pill.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .pill.late-pill { border-color: #fcd34d; color: #b45309; background: #fffbeb; }
+    .pill.late-pill.active { background: var(--warning); color: white; border-color: var(--warning); }
     .pill.orange-pill.active { background: var(--orange); border-color: var(--orange); }
 
     /* Bill Status Cards */
     .bill-card {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px;
-      margin-bottom: 12px;
-      background: white;
-      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border); border-radius: 16px; padding: 14px;
+      margin-bottom: 12px; background: white; box-shadow: var(--shadow-sm);
     }
     .bill-card.urgent { border-left: 5px solid var(--danger); background: #fffafb; }
+    .bill-card.late-7 { border-left: 5px solid #991b1b; background: #fef2f2; }
     .bill-card.tomorrow { border-left: 5px solid var(--warning); background: #fffdf7; }
     .bill-card.completed { border-left: 5px solid var(--success); background: #f7fef9; }
+    .bill-card.delivered-card { border-left: 5px solid var(--delivered); background: #f8fafc; opacity: 0.92; }
 
     .bill-header {
       display: flex; justify-content: space-between; align-items: flex-start;
@@ -575,11 +408,36 @@
     }
     .bill-no { font-size: 1.15rem; font-weight: 800; color: var(--primary-dark); }
     .cust-sub { font-size: 0.8rem; color: var(--muted); margin-top: 2px; font-weight: 600; }
+
+    /* Payment Summary Strip inside Bill Card */
+    .payment-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      font-size: 0.8rem;
+    }
+    .pay-amounts { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .pay-tag { font-weight: 700; color: #334155; }
+    .pay-balance { font-weight: 800; color: var(--danger); background: var(--danger-soft); padding: 2px 8px; border-radius: 12px; }
+    .pay-paid { font-weight: 800; color: var(--success); background: var(--success-soft); padding: 2px 8px; border-radius: 12px; }
+    .btn-pay-edit {
+      background: white; border: 1px solid #cbd5e1; color: var(--primary-dark);
+      padding: 4px 10px; border-radius: 16px; font-size: 0.74rem; font-weight: 800; cursor: pointer;
+    }
     
     .delivery-tag { font-size: 0.76rem; padding: 4px 10px; border-radius: 20px; font-weight: 700; background: #f1f5f9; color: #334155; white-space: nowrap; }
     .delivery-tag.urgent { background: var(--danger-soft); color: var(--danger); }
+    .delivery-tag.late7-tag { background: #991b1b; color: white; }
     .delivery-tag.tomorrow { background: var(--warning-soft); color: var(--warning); }
     .delivery-tag.done { background: var(--success-soft); color: var(--success); }
+    .delivery-tag.delivered-tag { background: var(--delivered-soft); color: var(--delivered); }
 
     .status-item-list { display: flex; flex-direction: column; gap: 8px; }
     .status-item-row {
@@ -587,22 +445,43 @@
       padding: 10px 12px; border: 1px solid #f1f5f9; border-radius: 12px; background: #f8fafc;
     }
     .status-item-row.ironed-done { background: var(--success-soft); border-color: #bbf7d0; }
+    .status-item-row.item-delivered { background: var(--delivered-soft); border-color: #bae6fd; }
+
     .item-left { display: flex; align-items: center; gap: 8px; }
     .item-name { font-weight: 800; font-size: 0.92rem; }
     .item-stage-pill {
       font-size: 0.72rem; padding: 3px 9px; border-radius: 20px; font-weight: 800; background: var(--primary-soft); color: var(--primary);
     }
     .item-stage-pill.done { background: var(--success); color: white; }
+    .item-stage-pill.delivered-pill { background: var(--delivered); color: white; }
+
     .item-workers { display: flex; flex-wrap: wrap; gap: 5px; font-size: 0.74rem; align-items: center; }
     .w-chip { background: white; border: 1px solid var(--border); padding: 3px 8px; border-radius: 8px; color: #334155; font-weight: 600; }
+
+    .btn-item-deliver {
+      background: white; border: 1.5px solid #38bdf8; color: var(--delivered);
+      padding: 4px 10px; border-radius: 20px; font-size: 0.74rem; font-weight: 800; cursor: pointer; transition: 0.15s;
+    }
+    .btn-item-deliver.is-delivered { background: var(--delivered); color: white; border-color: var(--delivered); }
+    .btn-item-deliver:active { transform: scale(0.95); }
 
     .bill-footer {
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
       margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--border); font-size: 0.8rem; color: var(--muted); font-weight: 600;
     }
     .footer-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+    
+    .btn-deliver-all {
+      background: var(--delivered-soft); border: 1px solid #7dd3fc; color: #0369a1;
+      padding: 6px 11px; border-radius: 20px; cursor: pointer; font-size: 0.78rem; font-weight: 800;
+    }
+    .btn-deliver-all.all-done { background: var(--delivered); color: white; border-color: var(--delivered); }
     .btn-wa-share {
       background: var(--success-soft); border: 1px solid #bbf7d0; color: #15803d;
+      padding: 6px 11px; border-radius: 20px; cursor: pointer; font-size: 0.78rem; font-weight: 800;
+    }
+    .btn-wa-reminder {
+      background: #fef3c7; border: 1px solid #fcd34d; color: #b45309;
       padding: 6px 11px; border-radius: 20px; cursor: pointer; font-size: 0.78rem; font-weight: 800;
     }
     .btn-delete-bill {
@@ -656,21 +535,30 @@
 <!-- MAIN SHOP ADMIN VIEW -->
 <div id="shopMainContainer" class="container">
 
+  <!-- Urgent Due Tomorrow / Today Alert -->
   <div id="alertSection" class="alert-section">
     <h3>⚠️ ഡെലിവറി അടുത്ത / തീരാനുള്ള ബില്ലുകൾ:</h3>
     <div id="alertList" class="alert-list"></div>
   </div>
 
-  <!-- TAB 1: STATUS -->
+  <!-- Late 7+ Days Uncollected Alert -->
+  <div id="late7AlertSection" class="alert-section late-alert">
+    <h3>⏰ ഡെലിവറി ഡേറ്റ് കഴിഞ്ഞ് ഒരാഴ്ചയിലധികമായി കൊണ്ടുപോകാത്തവ (7+ Days):</h3>
+    <div id="late7AlertList" class="alert-list"></div>
+  </div>
+
+  <!-- TAB 1: STATUS & DELIVERY -->
   <div id="statusTab">
     <div class="search-input-wrap">
       <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ / കസ്റ്റമർ പേര് സെർച്ച് ചെയ്യുക..." onkeyup="renderBills()">
     </div>
     <div class="filter-pills">
       <button class="pill active" onclick="setFilter('all', this)">എല്ലാം (All)</button>
-      <button class="pill" onclick="setFilter('pending', this)">തീരാനുള്ളവ (Pending)</button>
+      <button class="pill" onclick="setFilter('pending', this)">ബാക്കിയുള്ളവ (Pending)</button>
       <button class="pill" onclick="setFilter('urgent', this)">നാളെ / ഇന്ന് ഡെലിവറി</button>
-      <button class="pill" onclick="setFilter('completed', this)">റെഡി (Ready)</button>
+      <button class="pill late-pill" onclick="setFilter('late7', this)">⏰ ലേറ്റ് / കൊണ്ടുപോകാത്തവ (7+ Days)</button>
+      <button class="pill" onclick="setFilter('ready', this)">റെഡി (Ready)</button>
+      <button class="pill" onclick="setFilter('delivered', this)">📦 ഡെലിവറി കഴിഞ്ഞവ</button>
     </div>
     <div id="billsContainer"></div>
   </div>
@@ -730,7 +618,7 @@
     </div>
   </div>
 
-  <!-- TAB 3: NEW BILL -->
+  <!-- TAB 3: NEW BILL (WITH TOTAL AMOUNT & ADVANCE PAYMENT) -->
   <div id="entryTab" class="section-card" style="display: none;">
     <div class="section-header">
       <h3 class="section-title" style="color: var(--primary);">➕ പുതിയ ബിൽ ചേർക്കുക</h3>
@@ -754,6 +642,24 @@
       <div>
         <label>വാട്സാപ്പ് നമ്പർ (Optional)</label>
         <input type="tel" id="customerPhone" placeholder="ഉദാ: 9847012345">
+      </div>
+    </div>
+
+    <!-- Total Amount & Advance Payment -->
+    <div class="payment-entry-box">
+      <div class="form-row" style="margin-bottom:0;">
+        <div>
+          <label>ബിൽ ടോട്ടൽ തുക (Total Amount ₹)</label>
+          <input type="number" id="totalAmount" placeholder="0" min="0" oninput="updateBalancePreview()">
+        </div>
+        <div>
+          <label>അഡ്വാൻസ് പേയ്‌മെന്റ് (Advance Paid ₹)</label>
+          <input type="number" id="advanceAmount" placeholder="0" min="0" oninput="updateBalancePreview()">
+        </div>
+      </div>
+      <div class="balance-preview">
+        <span>ബാക്കി ലഭിക്കാനുള്ളത് (Balance Due):</span>
+        <span id="balancePreviewText" style="color:var(--primary); font-size:1rem;">₹0</span>
       </div>
     </div>
 
@@ -1018,19 +924,42 @@
     }
 
     const totalItems = bill.items.length;
-    const readyCount = bill.items.filter(i => i.ironed).length;
-    const progressPercent = totalItems > 0 ? Math.round((readyCount / totalItems) * 100) : 0;
-    const isAllReady = readyCount === totalItems && totalItems > 0;
+    const readyOrDeliveredCount = bill.items.filter(i => i.ironed || i.delivered).length;
+    const deliveredCount = bill.items.filter(i => i.delivered).length;
+    const progressPercent = totalItems > 0 ? Math.round((readyOrDeliveredCount / totalItems) * 100) : 0;
+    const isAllDelivered = deliveredCount === totalItems && totalItems > 0;
+    const isAllReady = readyOrDeliveredCount === totalItems && totalItems > 0;
+
+    const totalAmt = Number(bill.totalAmount) || 0;
+    const advAmt = Number(bill.advanceAmount) || 0;
+    const balAmt = Math.max(0, totalAmt - advAmt);
+
+    const paymentHtml = totalAmt > 0 ? `
+      <div class="payment-strip" style="margin-top:10px;">
+        <div class="pay-amounts">
+          <span class="pay-tag">Total: ₹${totalAmt}</span>
+          <span class="pay-tag">Advance: ₹${advAmt}</span>
+        </div>
+        ${balAmt > 0 ? `<span class="pay-balance">Balance: ₹${balAmt}</span>` : `<span class="pay-paid">✅ Paid</span>`}
+      </div>
+    ` : '';
 
     const itemsHtml = bill.items.map(item => {
       let statusText = 'ഓർഡർ സ്വീകരിച്ചു';
       let badgeStyle = 'background:#f1f5f9; color:#475569;';
       let icon = '⏳';
+      let rowClass = '';
 
-      if (item.ironed) {
-        statusText = 'തയ്യാറായി (Ready)';
+      if (item.delivered) {
+        statusText = `ഡെലിവറി ചെയ്തു ${item.deliveredTime ? '(' + item.deliveredTime + ')' : ''}`;
+        badgeStyle = 'background:#0284c7; color:white;';
+        icon = '📦';
+        rowClass = 'item-delivered';
+      } else if (item.ironed) {
+        statusText = 'തയ്യാറായി (Ready for Delivery)';
         badgeStyle = 'background:#16a34a; color:white;';
         icon = '✅';
+        rowClass = 'ironed-done';
       } else if (item.buttonWorker || item.stitchDone) {
         statusText = 'തയ്യൽ പൂർത്തിയായി';
         badgeStyle = 'background:#fef3c7; color:#b45309;';
@@ -1046,7 +975,7 @@
       }
 
       return `
-        <div class="status-item-row ${item.ironed ? 'ironed-done' : ''}" style="padding:12px;">
+        <div class="status-item-row ${rowClass}" style="padding:12px;">
           <div class="item-left">
             <span style="font-size:1.2rem;">${icon}</span>
             <span class="item-name" style="font-size:1rem;">${item.label}</span>
@@ -1056,6 +985,16 @@
       `;
     }).join('');
 
+    let headerBadgeText = `📅 ഡെലിവറി: ${bill.deliveryDate}`;
+    let headerBadgeClass = '';
+    if (isAllDelivered) {
+      headerBadgeText = '📦 എല്ലാം ഡെലിവറി ചെയ്തു';
+      headerBadgeClass = 'delivered-tag';
+    } else if (isAllReady) {
+      headerBadgeText = '✅ ഡെലിവറിക്ക് തയ്യാറാണ്';
+      headerBadgeClass = 'done';
+    }
+
     container.innerHTML = `
       <div class="section-card">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:12px;">
@@ -1063,14 +1002,14 @@
             <div style="font-size:1.3rem; font-weight:800; color:var(--primary-dark);">Bill #${bill.billNo}</div>
             ${bill.customerName ? `<div style="font-size:0.9rem; font-weight:700; color:#475569; margin-top:2px;">👤 ${bill.customerName}</div>` : ''}
           </div>
-          <span class="delivery-tag ${isAllReady ? 'done' : ''}">
-            ${isAllReady ? '✅ ഡെലിവറിക്ക് തയ്യാറാണ്' : `📅 ഡെലിവറി: ${bill.deliveryDate}`}
-          </span>
+          <span class="delivery-tag ${headerBadgeClass}">${headerBadgeText}</span>
         </div>
 
+        ${paymentHtml}
+
         <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-weight:700; color:#334155;">
-          <span>നിലവിലെ പുരോഗതി</span>
-          <span>${readyCount} / ${totalItems} (${progressPercent}%)</span>
+          <span>നിലവിലെ പുരോഗതി (${deliveredCount} Delivered)</span>
+          <span>${readyOrDeliveredCount} / ${totalItems} (${progressPercent}%)</span>
         </div>
         <div class="cust-progress-bar">
           <div class="cust-progress-fill" style="width:${progressPercent}%;"></div>
@@ -1499,7 +1438,16 @@
     `).join('');
   }
 
-  // --- NEW BILL ---
+  // --- NEW BILL & PAYMENT PREVIEW ---
+  function updateBalancePreview() {
+    const total = parseFloat(document.getElementById('totalAmount').value) || 0;
+    const adv = parseFloat(document.getElementById('advanceAmount').value) || 0;
+    const bal = Math.max(0, total - adv);
+    const el = document.getElementById('balancePreviewText');
+    el.innerText = `₹${bal}`;
+    el.style.color = bal > 0 ? 'var(--danger)' : 'var(--success)';
+  }
+
   function updateCount(itemKey, delta) {
     const input = document.getElementById('count-' + itemKey);
     if (!input) return;
@@ -1538,6 +1486,8 @@
     const deliveryDate = document.getElementById('deliveryDate').value;
     const customerName = document.getElementById('customerName').value.trim();
     const customerPhone = document.getElementById('customerPhone').value.trim();
+    const totalAmount = parseFloat(document.getElementById('totalAmount').value) || 0;
+    const advanceAmount = parseFloat(document.getElementById('advanceAmount').value) || 0;
 
     if (!billNo || !deliveryDate) return alert('ബിൽ നമ്പറും ഡെലിവറി ഡേറ്റും നൽകുക!');
 
@@ -1546,22 +1496,29 @@
     allTypes.forEach(t => {
       const count = parseInt(document.getElementById('count-' + t.key)?.value) || 0;
       for (let i = 1; i <= count; i++) {
-        itemsList.push({ label: count > 1 ? `${t.key} #${i}` : t.key, cutter: '', cutTime: '', tailor: '', stitchTime: '', stitchDone: false, stitchDoneTime: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false });
+        itemsList.push({ label: count > 1 ? `${t.key} #${i}` : t.key, cutter: '', cutTime: '', tailor: '', stitchTime: '', stitchDone: false, stitchDoneTime: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false, delivered: false, deliveredTime: '' });
       }
     });
     manualCustomItems.forEach(mItem => {
       for (let i = 1; i <= mItem.count; i++) {
-        itemsList.push({ label: mItem.count > 1 ? `${mItem.name} #${i}` : mItem.name, cutter: '', cutTime: '', tailor: '', stitchTime: '', stitchDone: false, stitchDoneTime: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false });
+        itemsList.push({ label: mItem.count > 1 ? `${mItem.name} #${i}` : mItem.name, cutter: '', cutTime: '', tailor: '', stitchTime: '', stitchDone: false, stitchDoneTime: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false, delivered: false, deliveredTime: '' });
       }
     });
 
     if (itemsList.length === 0) return alert('കുറഞ്ഞത് ഒരു ഐറ്റം എങ്കിലും തിരഞ്ഞെടുക്കുക!');
 
-    const ok = await callApi({ action: 'addBill', billData: { billNo, deliveryDate, customerName, customerPhone, items: itemsList } }, 'ബിൽ സേവ് ചെയ്യുന്നു...');
+    const ok = await callApi({
+      action: 'addBill',
+      billData: { billNo, deliveryDate, customerName, customerPhone, totalAmount, advanceAmount, items: itemsList }
+    }, 'ബിൽ സേവ് ചെയ്യുന്നു...');
+
     if (ok) {
       billNoInput.value = '';
       document.getElementById('customerName').value = '';
       document.getElementById('customerPhone').value = '';
+      document.getElementById('totalAmount').value = '';
+      document.getElementById('advanceAmount').value = '';
+      updateBalancePreview();
       allTypes.forEach(t => { const inp = document.getElementById('count-' + t.key); if (inp) inp.value = 0; });
       manualCustomItems = [];
       renderManualCustomChips();
@@ -1574,13 +1531,13 @@
   function renderCuttersList() {
     const grid = document.getElementById('cuttersGrid');
     const chipsDiv = document.getElementById('pendingCuttingChips');
-    const unassigned = bills.filter(b => b.items.some(it => !it.cutter));
+    const unassigned = bills.filter(b => b.items.some(it => !it.cutter && !it.delivered));
 
     if (unassigned.length === 0) {
       chipsDiv.innerHTML = '<span style="font-size:0.78rem; color:var(--success); font-weight:700;">✅ എല്ലാ ബില്ലുകൾക്കും കട്ടർമാരെ അസൈൻ ചെയ്തിട്ടുണ്ട്.</span>';
     } else {
       chipsDiv.innerHTML = `<span style="font-size:0.78rem; color:var(--muted); font-weight:700; white-space:nowrap;">ബാക്കിയുള്ളവ:</span>` +
-        unassigned.slice(0, 15).map(b => `<span class="bill-chip">#${b.billNo} (${b.items.filter(i=>!i.cutter).length})</span>`).join('');
+        unassigned.slice(0, 15).map(b => `<span class="bill-chip">#${b.billNo} (${b.items.filter(i=>!i.cutter && !i.delivered).length})</span>`).join('');
     }
 
     const cutters = staff.Cutter || [];
@@ -1722,7 +1679,7 @@
       let doneCount = 0;
       bills.forEach(b => b.items.forEach(it => {
         if (it.tailor === name) {
-          if (it.stitchDone || it.buttonWorker || it.ironed) doneCount++;
+          if (it.stitchDone || it.buttonWorker || it.ironed || it.delivered) doneCount++;
           else pendingCount++;
         }
       }));
@@ -1839,7 +1796,7 @@
     const items = [];
     bills.forEach(bill => bill.items.forEach((item, idx) => {
       if (item.tailor === selectedTailor) {
-        const isCompleted = Boolean(item.stitchDone || item.buttonWorker || item.ironed);
+        const isCompleted = Boolean(item.stitchDone || item.buttonWorker || item.ironed || item.delivered);
         items.push({
           billId: bill.id,
           itemIdx: idx,
@@ -2009,7 +1966,67 @@
     `).join('');
   }
 
-  // --- STATUS PAGE & WHATSAPP SHARE ---
+  // --- PAYMENT UPDATE & PARTIAL/FULL DELIVERY ---
+  async function updatePaymentForBill(billId) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill) return;
+
+    const newTotalStr = prompt(`Bill #${bill.billNo} - ടോട്ടൽ തുക (Total Amount ₹):`, bill.totalAmount || 0);
+    if (newTotalStr === null) return;
+    const newTotal = parseFloat(newTotalStr) || 0;
+
+    const newAdvStr = prompt(`Bill #${bill.billNo} - ഇതുവരെ ലഭിച്ച ആകെ തുക (Paid Amount ₹):`, newTotal);
+    if (newAdvStr === null) return;
+    const newAdv = parseFloat(newAdvStr) || 0;
+
+    await callApi({ action: 'updateBillPayment', billId, totalAmount: newTotal, advanceAmount: newAdv }, 'പേയ്‌മെന്റ് അപ്‌ഡേറ്റ് ചെയ്യുന്നു...');
+  }
+
+  async function toggleSingleItemDelivered(billId, itemIdx) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill || !bill.items[itemIdx]) return;
+    const item = bill.items[itemIdx];
+    const nowTime = formatCurrentDateTime();
+
+    if (!item.delivered) {
+      item.delivered = true;
+      item.deliveredTime = nowTime;
+    } else {
+      if (!confirm(`Bill #${bill.billNo} (${item.label})-ന്റെ ഡെലിവറി സ്റ്റാറ്റസ് മാറ്റണമോ?`)) return;
+      item.delivered = false;
+      item.deliveredTime = '';
+    }
+
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'ഡെലിവറി സ്റ്റാറ്റസ് അപ്‌ഡേറ്റ് ചെയ്യുന്നു...');
+  }
+
+  async function deliverAllItemsInBill(billId) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill) return;
+
+    const allDelivered = bill.items.every(i => i.delivered);
+    const nowTime = formatCurrentDateTime();
+
+    if (!allDelivered) {
+      if (!confirm(`Bill #${bill.billNo}-ലെ എല്ലാ ഐറ്റംസും (${bill.items.length} എണ്ണം) കസ്റ്റമർക്ക് ഡെലിവറി ചെയ്തു എന്ന് മാർക്ക് ചെയ്യണമോ?`)) return;
+      bill.items.forEach(item => {
+        if (!item.delivered) {
+          item.delivered = true;
+          item.deliveredTime = nowTime;
+        }
+      });
+    } else {
+      if (!confirm(`Bill #${bill.billNo}-ന്റെ മുഴുവൻ ഡെലിവറി സ്റ്റാറ്റസും തിരിച്ചെടുക്കണമോ?`)) return;
+      bill.items.forEach(item => {
+        item.delivered = false;
+        item.deliveredTime = '';
+      });
+    }
+
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'ഡെലിവറി അപ്‌ഡേറ്റ് ചെയ്യുന്നു...');
+  }
+
+  // --- WHATSAPP SHARE & 7+ DAYS LATE REMINDER ---
   function shareBillViaWhatsApp(billId) {
     const bill = bills.find(b => b.id === billId);
     if (!bill) return;
@@ -2030,7 +2047,34 @@
     window.open(waUrl, '_blank');
   }
 
+  function sendLateReminderWhatsApp(billId) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill) return;
+
+    const baseUrl = window.location.origin + window.location.pathname;
+    const trackingLink = `${baseUrl}?bill=${encodeURIComponent(bill.billNo)}`;
+    const pendingItems = bill.items.filter(i => !i.delivered).map(i => i.label).join(', ');
+    const balAmt = Math.max(0, (Number(bill.totalAmount) || 0) - (Number(bill.advanceAmount) || 0));
+
+    const greetName = bill.customerName ? `പ്രിയ ${bill.customerName},` : 'നമസ്കാരം,';
+    let msg = `${greetName}\n*Zibas Tailors*-ൽ നിന്നും ഓർമ്മപ്പെടുത്തുന്നു: നിങ്ങളുടെ *Bill #${bill.billNo}* (${pendingItems}) ഡെലിവറി ഡേറ്റ് (${bill.deliveryDate}) കഴിഞ്ഞിട്ടും ഇതുവരെ കൈപ്പറ്റിയിട്ടില്ല.\n`;
+    if (balAmt > 0) {
+      msg += `ബാക്കി തുക (Balance): *₹${balAmt}*\n`;
+    }
+    msg += `ദയവായി എത്രയും വേഗം കടയിൽ വന്ന് കൈപ്പറ്റണമെന്ന് അഭ്യർത്ഥിക്കുന്നു.\n\nസ്റ്റാറ്റസ് കാണാൻ: ${trackingLink}`;
+
+    let phone = (bill.customerPhone || '').replace(/\D/g, '');
+    if (phone.length === 10) phone = '91' + phone;
+
+    const waUrl = phone 
+      ? `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
+      : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+
+    window.open(waUrl, '_blank');
+  }
+
   function getItemStage(item) {
+    if (item.delivered) return 'Delivered';
     if (item.ironed) return 'Ready';
     if (item.buttonWorker) return 'Buttoning / Ironing';
     if (item.stitchDone) return 'Stitching Done';
@@ -2081,35 +2125,60 @@
     const container = document.getElementById('billsContainer');
     const alertSection = document.getElementById('alertSection');
     const alertList = document.getElementById('alertList');
+    const late7Section = document.getElementById('late7AlertSection');
+    const late7List = document.getElementById('late7AlertList');
 
-    container.innerHTML = ''; alertList.innerHTML = '';
+    container.innerHTML = ''; alertList.innerHTML = ''; late7List.innerHTML = '';
     let hasAlerts = false;
+    let hasLate7 = false;
 
     bills.forEach(bill => {
-      const pendingCount = bill.items.filter(i => !i.ironed).length;
+      const unreadyUndelivered = bill.items.filter(i => !i.ironed && !i.delivered).length;
+      const undeliveredCount = bill.items.filter(i => !i.delivered).length;
       const diff = getDaysDiff(bill.deliveryDate);
-      if (pendingCount > 0 && diff <= 1) {
+
+      // 1. Urgent unready items due tomorrow / today / overdue
+      if (unreadyUndelivered > 0 && diff <= 1) {
         hasAlerts = true;
         let statusText = diff === 1 ? 'നാളെ' : (diff === 0 ? 'ഇന്ന്' : 'കഴിഞ്ഞു');
         const badge = document.createElement('div');
         badge.className = 'alert-badge';
-        badge.innerHTML = `#${bill.billNo} (${pendingCount}) • ${statusText}`;
+        badge.innerHTML = `#${bill.billNo} (${unreadyUndelivered}) • ${statusText}`;
         badge.onclick = () => quickSearchBill(bill.billNo);
         alertList.appendChild(badge);
       }
+
+      // 2. Late 7+ days after delivery date and still NOT collected (delivered)
+      if (undeliveredCount > 0 && diff <= -7) {
+        hasLate7 = true;
+        const daysLate = Math.abs(diff);
+        const badge = document.createElement('div');
+        badge.className = 'alert-badge';
+        badge.innerHTML = `#${bill.billNo} (${daysLate} ദിവസം വൈകി)`;
+        badge.onclick = () => quickSearchBill(bill.billNo);
+        late7List.appendChild(badge);
+      }
     });
+
     alertSection.style.display = hasAlerts ? 'block' : 'none';
+    late7Section.style.display = hasLate7 ? 'block' : 'none';
 
     const filteredBills = bills.filter(bill => {
       const matchBill = bill.billNo.toLowerCase().includes(search);
       const matchCust = (bill.customerName || '').toLowerCase().includes(search) || (bill.customerPhone || '').includes(search);
       if (!matchBill && !matchCust) return false;
 
-      const pendingCount = bill.items.filter(i => !i.ironed).length;
+      const total = bill.items.length;
+      const deliveredCount = bill.items.filter(i => i.delivered).length;
+      const readyOrDelCount = bill.items.filter(i => i.ironed || i.delivered).length;
+      const unreadyCount = bill.items.filter(i => !i.ironed && !i.delivered).length;
       const diff = getDaysDiff(bill.deliveryDate);
-      if (currentFilter === 'pending') return pendingCount > 0;
-      if (currentFilter === 'completed') return pendingCount === 0;
-      if (currentFilter === 'urgent') return pendingCount > 0 && diff <= 1;
+
+      if (currentFilter === 'pending') return deliveredCount < total;
+      if (currentFilter === 'ready') return readyOrDelCount === total && deliveredCount < total;
+      if (currentFilter === 'delivered') return deliveredCount === total && total > 0;
+      if (currentFilter === 'urgent') return unreadyCount > 0 && diff <= 1;
+      if (currentFilter === 'late7') return deliveredCount < total && diff <= -7;
       return true;
     });
 
@@ -2120,34 +2189,86 @@
 
     filteredBills.forEach(bill => {
       const totalItems = bill.items.length;
-      const ironedCount = bill.items.filter(i => i.ironed).length;
-      const isCompleted = ironedCount === totalItems;
+      const deliveredCount = bill.items.filter(i => i.delivered).length;
+      const ironedCount = bill.items.filter(i => i.ironed || i.delivered).length;
+      const isAllDelivered = deliveredCount === totalItems && totalItems > 0;
+      const isAllReady = ironedCount === totalItems && !isAllDelivered;
       const diff = getDaysDiff(bill.deliveryDate);
+      const isLate7 = !isAllDelivered && diff <= -7;
+
+      const totalAmt = Number(bill.totalAmount) || 0;
+      const advAmt = Number(bill.advanceAmount) || 0;
+      const balAmt = Math.max(0, totalAmt - advAmt);
 
       let cardClass = 'bill-card', tagClass = 'delivery-tag', statusLabel = `📅 ${bill.deliveryDate}`;
-      if (isCompleted) { cardClass += ' completed'; tagClass += ' done'; statusLabel = `✅ റെഡി (${bill.deliveryDate})`; }
-      else if (diff <= 0) { cardClass += ' urgent'; tagClass += ' urgent'; statusLabel = diff === 0 ? `🔥 ഇന്ന് (${bill.deliveryDate})` : `🚨 കഴിഞ്ഞു (${bill.deliveryDate})`; }
-      else if (diff === 1) { cardClass += ' tomorrow'; tagClass += ' tomorrow'; statusLabel = `⚠️ നാളെ (${bill.deliveryDate})`; }
+      if (isAllDelivered) {
+        cardClass += ' delivered-card'; tagClass += ' delivered-tag'; statusLabel = `📦 എല്ലാം ഡെലിവറി കഴിഞ്ഞു`;
+      } else if (isLate7) {
+        cardClass += ' late-7'; tagClass += ' late7-tag'; statusLabel = `⏰ ${Math.abs(diff)} ദിവസം വൈകി (${bill.deliveryDate})`;
+      } else if (isAllReady) {
+        cardClass += ' completed'; tagClass += ' done'; statusLabel = `✅ റെഡി (${bill.deliveryDate})`;
+      } else if (diff <= 0) {
+        cardClass += ' urgent'; tagClass += ' urgent'; statusLabel = diff === 0 ? `🔥 ഇന്ന് (${bill.deliveryDate})` : `🚨 കഴിഞ്ഞു (${bill.deliveryDate})`;
+      } else if (diff === 1) {
+        cardClass += ' tomorrow'; tagClass += ' tomorrow'; statusLabel = `⚠️ നാളെ (${bill.deliveryDate})`;
+      }
 
-      const itemsHtml = bill.items.map((item, idx) => `
-        <div class="status-item-row ${item.ironed ? 'ironed-done' : ''}">
-          <div class="item-left">
-            <span>${item.ironed ? '✅' : '⏳'}</span>
-            <span class="item-name">${item.label}</span>
-            <span class="item-stage-pill ${item.ironed ? 'done' : ''}">${getItemStage(item)}</span>
+      const paymentHtml = `
+        <div class="payment-strip">
+          <div class="pay-amounts">
+            <span class="pay-tag">Total: <strong>₹${totalAmt}</strong></span>
+            <span class="pay-tag">Adv: <strong>₹${advAmt}</strong></span>
+            ${totalAmt > 0 
+              ? (balAmt > 0 ? `<span class="pay-balance">Bal: ₹${balAmt}</span>` : `<span class="pay-paid">✅ Paid</span>`)
+              : `<span style="color:var(--muted);">തുക ചേർത്തിട്ടില്ല</span>`
+            }
           </div>
-          <div class="item-workers">
-            <span class="w-chip">✂️ ${item.cutter || '-'}</span>
-            <span class="w-chip">🧵 ${item.tailor || '-'} ${item.stitchDone ? '✅' : ''}</span>
-            <span class="w-chip">🔘 ${item.buttonWorker || '-'}</span>
-            <span class="w-chip">🔥 ${item.ironer || '-'}</span>
-            <button type="button" class="btn-icon-del" onclick="deleteSingleItemFromBill('${bill.id}', ${idx})">✕</button>
-          </div>
+          <button type="button" class="btn-pay-edit" onclick="updatePaymentForBill('${bill.id}')">💰 പേയ്‌മെന്റ്</button>
         </div>
-      `).join('');
+      `;
+
+      const itemsHtml = bill.items.map((item, idx) => {
+        let rowClass = '';
+        let pillClass = '';
+        let icon = '⏳';
+
+        if (item.delivered) {
+          rowClass = 'item-delivered';
+          pillClass = 'delivered-pill';
+          icon = '📦';
+        } else if (item.ironed) {
+          rowClass = 'ironed-done';
+          pillClass = 'done';
+          icon = '✅';
+        }
+
+        return `
+          <div class="status-item-row ${rowClass}">
+            <div class="item-left">
+              <span>${icon}</span>
+              <span class="item-name">${item.label}</span>
+              <span class="item-stage-pill ${pillClass}">${getItemStage(item)}</span>
+            </div>
+            <div class="item-workers">
+              <span class="w-chip">✂️ ${item.cutter || '-'}</span>
+              <span class="w-chip">🧵 ${item.tailor || '-'} ${item.stitchDone ? '✅' : ''}</span>
+              <span class="w-chip">🔘 ${item.buttonWorker || '-'}</span>
+              <span class="w-chip">🔥 ${item.ironer || '-'}</span>
+              <button type="button" class="btn-item-deliver ${item.delivered ? 'is-delivered' : ''}" onclick="toggleSingleItemDelivered('${bill.id}', ${idx})">
+                ${item.delivered ? `📦 Delivered (${item.deliveredTime || ''})` : '📦 ഡെലിവറി ചെയ്യുക'}
+              </button>
+              <button type="button" class="btn-icon-del" onclick="deleteSingleItemFromBill('${bill.id}', ${idx})">✕</button>
+            </div>
+          </div>
+        `;
+      }).join('');
 
       const custLine = (bill.customerName || bill.customerPhone)
         ? `<div class="cust-sub">👤 ${bill.customerName || ''} ${bill.customerPhone ? `• ${bill.customerPhone}` : ''}</div>`
+        : '';
+
+      const reminderBtnHtml = isLate7
+        ? `<button type="button" class="btn-wa-reminder" onclick="sendLateReminderWhatsApp('${bill.id}')">⏰ WhatsApp Reminder</button>`
         : '';
 
       const card = document.createElement('div');
@@ -2160,10 +2281,15 @@
           </div>
           <span class="${tagClass}">${statusLabel}</span>
         </div>
+        ${paymentHtml}
         <div class="status-item-list">${itemsHtml}</div>
         <div class="bill-footer">
-          <span><strong>${ironedCount}/${totalItems}</strong> Ready</span>
+          <span>Ready: <strong>${ironedCount}/${totalItems}</strong> • Delivered: <strong>${deliveredCount}/${totalItems}</strong></span>
           <div class="footer-btns">
+            ${reminderBtnHtml}
+            <button type="button" class="btn-deliver-all ${isAllDelivered ? 'all-done' : ''}" onclick="deliverAllItemsInBill('${bill.id}')">
+              ${isAllDelivered ? '↩️ Undo All' : '📦 എല്ലാം ഡെലിവറി'}
+            </button>
             <button type="button" class="btn-wa-share" onclick="shareBillViaWhatsApp('${bill.id}')">📲 WhatsApp</button>
             <button type="button" class="btn-delete-bill" onclick="deleteBill('${bill.id}')">🗑️ ഡിലീറ്റ്</button>
           </div>
