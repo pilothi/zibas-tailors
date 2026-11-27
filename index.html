@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Zibas Tailors - Production & Customer Tracking</title>
+  <title>Zibas Tailors - Production, Storage & Delivery Tracker</title>
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#0f172a">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3050/3050253.png">
@@ -150,6 +150,31 @@
       width: 19px; height: 19px; font-size: 0.7rem; cursor: pointer; line-height: 1;
     }
 
+    /* Storage Location Quick Buttons in Modal */
+    .loc-preset-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .loc-choice-btn {
+      padding: 10px 8px;
+      border: 1.5px solid var(--border);
+      background: #f8fafc;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      text-align: center;
+      transition: 0.15s;
+    }
+    .loc-choice-btn.selected {
+      background: var(--teal-soft);
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
     .container { max-width: 820px; margin: 14px auto; padding: 0 12px; }
 
     .alert-section {
@@ -190,24 +215,12 @@
     }
     input:focus, select:focus { outline: none; border-color: var(--primary); background: white; }
 
-    /* Payment Box in New Bill Form */
     .payment-entry-box {
-      background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 14px;
-      padding: 12px;
-      margin-bottom: 14px;
+      background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 12px; margin-bottom: 14px;
     }
     .balance-preview {
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px dashed #cbd5e1;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--primary-dark);
+      margin-top: 8px; padding-top: 8px; border-top: 1px dashed #cbd5e1;
+      display: flex; justify-content: space-between; align-items: center; font-size: 0.88rem; font-weight: 800; color: var(--primary-dark);
     }
 
     .search-input-wrap { position: relative; margin-bottom: 12px; }
@@ -341,7 +354,12 @@
       .found-item-row { grid-template-columns: auto 1fr 1.2fr; }
       .found-item-row select { grid-column: auto; margin-top: 0; }
     }
-    .found-item-row.iron-row, .found-item-row.cut-row, .found-item-row.tailor-row { grid-template-columns: auto 1fr auto; }
+    .found-item-row.iron-row { grid-template-columns: auto 1fr 1.1fr; }
+    @media (max-width: 520px) {
+      .found-item-row.iron-row { grid-template-columns: auto 1fr; }
+      .found-item-row.iron-row select { grid-column: 1 / -1; }
+    }
+    .found-item-row.cut-row, .found-item-row.tailor-row { grid-template-columns: auto 1fr auto; }
 
     .found-item-row input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--purple); cursor: pointer; }
     .found-item-row.iron-row input[type="checkbox"] { accent-color: var(--orange); }
@@ -378,7 +396,7 @@
     }
 
     .filter-pills {
-      display: flex; gap: 7px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none;
+      display: flex; gap: 7px; margin-bottom: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none;
     }
     .filter-pills::-webkit-scrollbar { display: none; }
 
@@ -387,9 +405,40 @@
       background: white; cursor: pointer; font-size: 0.8rem; font-weight: 700; white-space: nowrap; color: #475569;
     }
     .pill.active { background: var(--primary); color: white; border-color: var(--primary); }
-    .pill.late-pill { border-color: #fcd34d; color: #b45309; background: #fffbeb; }
-    .pill.late-pill.active { background: var(--warning); color: white; border-color: var(--warning); }
+    .pill.uncollected-pill { border-color: #fcd34d; color: #b45309; background: #fffbeb; }
+    .pill.uncollected-pill.active { background: #d97706; color: white; border-color: #d97706; }
     .pill.orange-pill.active { background: var(--orange); border-color: var(--orange); }
+
+    /* Sub-filter bar for Uncollected Aging (3d, 7d, 30d, Custom) */
+    .uncollected-sub-bar {
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .sub-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .sub-pill {
+      padding: 5px 12px;
+      border-radius: 16px;
+      border: 1px solid #fcd34d;
+      background: white;
+      color: #92400e;
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .sub-pill.active {
+      background: #b45309;
+      color: white;
+      border-color: #b45309;
+    }
 
     /* Bill Status Cards */
     .bill-card {
@@ -397,8 +446,7 @@
       margin-bottom: 12px; background: white; box-shadow: var(--shadow-sm);
     }
     .bill-card.urgent { border-left: 5px solid var(--danger); background: #fffafb; }
-    .bill-card.late-7 { border-left: 5px solid #991b1b; background: #fef2f2; }
-    .bill-card.tomorrow { border-left: 5px solid var(--warning); background: #fffdf7; }
+    .bill-card.late-7 { border-left: 5px solid #b45309; background: #fffdf5; }
     .bill-card.completed { border-left: 5px solid var(--success); background: #f7fef9; }
     .bill-card.delivered-card { border-left: 5px solid var(--delivered); background: #f8fafc; opacity: 0.92; }
 
@@ -409,19 +457,9 @@
     .bill-no { font-size: 1.15rem; font-weight: 800; color: var(--primary-dark); }
     .cust-sub { font-size: 0.8rem; color: var(--muted); margin-top: 2px; font-weight: 600; }
 
-    /* Payment Summary Strip inside Bill Card */
     .payment-strip {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 8px 12px;
-      margin-bottom: 10px;
-      font-size: 0.8rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+      background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; margin-bottom: 10px; font-size: 0.8rem;
     }
     .pay-amounts { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
     .pay-tag { font-weight: 700; color: #334155; }
@@ -434,8 +472,7 @@
     
     .delivery-tag { font-size: 0.76rem; padding: 4px 10px; border-radius: 20px; font-weight: 700; background: #f1f5f9; color: #334155; white-space: nowrap; }
     .delivery-tag.urgent { background: var(--danger-soft); color: var(--danger); }
-    .delivery-tag.late7-tag { background: #991b1b; color: white; }
-    .delivery-tag.tomorrow { background: var(--warning-soft); color: var(--warning); }
+    .delivery-tag.late-tag { background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; }
     .delivery-tag.done { background: var(--success-soft); color: var(--success); }
     .delivery-tag.delivered-tag { background: var(--delivered-soft); color: var(--delivered); }
 
@@ -447,13 +484,33 @@
     .status-item-row.ironed-done { background: var(--success-soft); border-color: #bbf7d0; }
     .status-item-row.item-delivered { background: var(--delivered-soft); border-color: #bae6fd; }
 
-    .item-left { display: flex; align-items: center; gap: 8px; }
+    .item-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .item-name { font-weight: 800; font-size: 0.92rem; }
     .item-stage-pill {
       font-size: 0.72rem; padding: 3px 9px; border-radius: 20px; font-weight: 800; background: var(--primary-soft); color: var(--primary);
     }
     .item-stage-pill.done { background: var(--success); color: white; }
     .item-stage-pill.delivered-pill { background: var(--delivered); color: white; }
+
+    /* Storage Location Badge & Button */
+    .loc-chip-btn {
+      background: #f0fdfa;
+      border: 1.5px solid #5eead4;
+      color: #0f766e;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .loc-chip-btn.empty {
+      background: white;
+      border-color: #cbd5e1;
+      color: #64748b;
+    }
 
     .item-workers { display: flex; flex-wrap: wrap; gap: 5px; font-size: 0.74rem; align-items: center; }
     .w-chip { background: white; border: 1px solid var(--border); padding: 3px 8px; border-radius: 8px; color: #334155; font-weight: 600; }
@@ -505,6 +562,37 @@
 
 <input type="file" id="staffPhotoInput" accept="image/*" style="display:none;" onchange="handleStaffPhotoSelected(event)">
 
+<!-- STORAGE LOCATION MODAL (Shelf, Rack, Left/Right Hanger, Showcase Box) -->
+<div id="locationModal" class="modal-overlay" onclick="if(event.target===this) closeLocationModal()">
+  <div class="modal-box">
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px; margin-bottom:14px;">
+      <h3 id="locModalTitle" style="margin:0; color:var(--teal); font-size:1rem;">📍 തുണി വെച്ച സ്ഥലം (Storage Location)</h3>
+      <button type="button" class="btn-back" onclick="closeLocationModal()">✕</button>
+    </div>
+
+    <label>സ്ഥലം തിരഞ്ഞെടുക്കുക:</label>
+    <div class="loc-preset-grid">
+      <button type="button" class="loc-choice-btn" onclick="selectLocPreset('Shelf', this)">🗄️ Shelf (ഷെൽഫ്)</button>
+      <button type="button" class="loc-choice-btn" onclick="selectLocPreset('Rack', this)">🪜 Rack (റാക്ക്)</button>
+      <button type="button" class="loc-choice-btn" onclick="selectLocPreset('Left Side Hanger', this)">⬅️ Left Side Hanger</button>
+      <button type="button" class="loc-choice-btn" onclick="selectLocPreset('Right Side Hanger', this)">➡️ Right Side Hanger</button>
+      <button type="button" class="loc-choice-btn" onclick="selectLocPreset('Showcase Box', this)">📦 Showcase Box</button>
+      <button type="button" class="loc-choice-btn" onclick="selectLocPreset('Counter', this)">🏪 Counter</button>
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <label>കൃത്യമായ നമ്പർ / വിശദാംശം (ഉദാ: Shelf 2, Rack A, Box 4):</label>
+      <input type="text" id="locCustomDetailInput" placeholder="ഉദാ: Rack 3 / Left Hanger...">
+    </div>
+
+    <div style="display:flex; gap:8px;">
+      <button type="button" class="btn-primary-full" style="background:var(--teal);" onclick="saveItemLocation()">💾 സ്ഥലം സേവ് ചെയ്യുക</button>
+      <button type="button" class="btn-back" style="padding:0 16px;" onclick="clearItemLocation()">Clear</button>
+    </div>
+  </div>
+</div>
+
+<!-- MANAGE / DELETE STAFF MODAL -->
 <div id="manageModal" class="modal-overlay" onclick="if(event.target===this) closeManageModal()">
   <div class="modal-box">
     <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px; margin-bottom:14px;">
@@ -520,7 +608,7 @@
     <div class="brand-logo">✂️</div>
     <div>
       <h1>ZIBAS TAILORS</h1>
-      <p id="headerSubtitle">Production & Delivery Tracker</p>
+      <p id="headerSubtitle">Production, Storage & Delivery Tracker</p>
     </div>
   </div>
   <div class="header-actions" id="shopHeaderActions">
@@ -541,25 +629,41 @@
     <div id="alertList" class="alert-list"></div>
   </div>
 
-  <!-- Late 7+ Days Uncollected Alert -->
+  <!-- Uncollected After Delivery Date Alert -->
   <div id="late7AlertSection" class="alert-section late-alert">
-    <h3>⏰ ഡെലിവറി ഡേറ്റ് കഴിഞ്ഞ് ഒരാഴ്ചയിലധികമായി കൊണ്ടുപോകാത്തവ (7+ Days):</h3>
+    <h3>📦 ഡെലിവറി ഡേറ്റ് കഴിഞ്ഞിട്ടും കൊണ്ടുപോകാത്തവ (Uncollected):</h3>
     <div id="late7AlertList" class="alert-list"></div>
   </div>
 
-  <!-- TAB 1: STATUS & DELIVERY -->
+  <!-- TAB 1: STATUS, STORAGE & UNCOLLECTED REMINDERS -->
   <div id="statusTab">
     <div class="search-input-wrap">
-      <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ / കസ്റ്റമർ പേര് സെർച്ച് ചെയ്യുക..." onkeyup="renderBills()">
+      <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ / പേര് / സ്ഥലം (Shelf, Rack) സെർച്ച് ചെയ്യുക..." onkeyup="renderBills()">
     </div>
     <div class="filter-pills">
       <button class="pill active" onclick="setFilter('all', this)">എല്ലാം (All)</button>
       <button class="pill" onclick="setFilter('pending', this)">ബാക്കിയുള്ളവ (Pending)</button>
       <button class="pill" onclick="setFilter('urgent', this)">നാളെ / ഇന്ന് ഡെലിവറി</button>
-      <button class="pill late-pill" onclick="setFilter('late7', this)">⏰ ലേറ്റ് / കൊണ്ടുപോകാത്തവ (7+ Days)</button>
+      <button class="pill uncollected-pill" onclick="setFilter('uncollected', this)">📦 കൊണ്ടുപോകാത്തവ (Uncollected)</button>
       <button class="pill" onclick="setFilter('ready', this)">റെഡി (Ready)</button>
-      <button class="pill" onclick="setFilter('delivered', this)">📦 ഡെലിവറി കഴിഞ്ഞവ</button>
+      <button class="pill" onclick="setFilter('delivered', this)">✅ ഡെലിവറി കഴിഞ്ഞവ</button>
     </div>
+
+    <!-- Uncollected Aging Sub-Filter Bar (3 days, 7 days, 1 month, Custom) -->
+    <div id="uncollectedSubBar" class="uncollected-sub-bar">
+      <div style="font-size:0.8rem; font-weight:800; color:#92400e; margin-bottom:8px;">⏳ ഡെലിവറി ഡേറ്റ് കഴിഞ്ഞ് എത്ര ദിവസമായി കൊണ്ടുപോകാത്തവ കാണണം?</div>
+      <div class="sub-pills">
+        <button type="button" class="sub-pill active" onclick="setUncollectedDays(1, this)">എല്ലാ കൊണ്ടുപോകാത്തവ (1+ Day)</button>
+        <button type="button" class="sub-pill" onclick="setUncollectedDays(3, this)">3+ ദിവസം</button>
+        <button type="button" class="sub-pill" onclick="setUncollectedDays(7, this)">7+ ദിവസം (ഒരാഴ്ച)</button>
+        <button type="button" class="sub-pill" onclick="setUncollectedDays(30, this)">30+ ദിവസം (ഒരു മാസം)</button>
+        <button type="button" class="sub-pill" onclick="setUncollectedDays('custom', this)">✍️ ദിവസം നൽകുക</button>
+      </div>
+      <div id="customDaysInputRow" style="display:none; margin-top:8px;">
+        <input type="number" id="customOverdueDaysInput" min="1" value="10" placeholder="എത്ര ദിവസം കഴിഞ്ഞവ? (ഉദാ: 10)" oninput="renderBills()">
+      </div>
+    </div>
+
     <div id="billsContainer"></div>
   </div>
 
@@ -584,7 +688,7 @@
       </div>
 
       <div class="assign-box-orange">
-        <label style="color:var(--orange);">➕ അയൺ ചെയ്ത ബിൽ നമ്പർ ചേർക്കുക:</label>
+        <label style="color:var(--orange);">➕ അയൺ ചെയ്ത ബിൽ നമ്പർ & വെച്ച സ്ഥലം ചേർക്കുക:</label>
         <input type="text" id="ironTabBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForIroner()">
         <div id="ironTabFoundBillArea" style="margin-top:10px;"></div>
       </div>
@@ -618,7 +722,7 @@
     </div>
   </div>
 
-  <!-- TAB 3: NEW BILL (WITH TOTAL AMOUNT & ADVANCE PAYMENT) -->
+  <!-- TAB 3: NEW BILL -->
   <div id="entryTab" class="section-card" style="display: none;">
     <div class="section-header">
       <h3 class="section-title" style="color: var(--primary);">➕ പുതിയ ബിൽ ചേർക്കുക</h3>
@@ -645,7 +749,6 @@
       </div>
     </div>
 
-    <!-- Total Amount & Advance Payment -->
     <div class="payment-entry-box">
       <div class="form-row" style="margin-bottom:0;">
         <div>
@@ -815,6 +918,7 @@
   let staff = { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [] };
   let staffPhotos = {};
   let currentFilter = 'all';
+  let uncollectedMinDays = 1; // 1 = any overdue, 3, 7, 30, or 'custom'
   let manualCustomItems = [];
   let selectedButtonWorker = null;
   let selectedIroner = null;
@@ -822,6 +926,11 @@
   let selectedTailor = null;
   let ironerDateFilter = 'thisWeek';
   let pendingPhotoTarget = null;
+  let activeLocationTarget = null; // { billId, itemIdx }
+
+  const STORAGE_LOCATIONS = [
+    'Shelf', 'Rack', 'Left Side Hanger', 'Right Side Hanger', 'Showcase Box', 'Counter'
+  ];
 
   const urlParams = new URLSearchParams(window.location.search);
   const customerQueryBill = urlParams.get('bill');
@@ -905,6 +1014,64 @@
 
   function loadAllData() {
     callApi(null, 'വിവരങ്ങൾ ലോഡ് ചെയ്യുന്നു...');
+  }
+
+  // --- STORAGE LOCATION MODAL (SHELF, RACK, HANGER, SHOWCASE BOX) ---
+  function openLocationModal(billId, itemIdx) {
+    const bill = bills.find(b => b.id === billId);
+    if (!bill || !bill.items[itemIdx]) return;
+    const item = bill.items[itemIdx];
+
+    activeLocationTarget = { billId, itemIdx };
+    document.getElementById('locModalTitle').innerText = `📍 Bill #${bill.billNo} • ${item.label}`;
+    document.getElementById('locCustomDetailInput').value = item.location || '';
+
+    document.querySelectorAll('.loc-choice-btn').forEach(btn => {
+      btn.classList.remove('selected');
+      if (item.location && item.location.toLowerCase().startsWith(btn.innerText.replace(/^[^\w]+/, '').split(' (')[0].toLowerCase())) {
+        btn.classList.add('selected');
+      }
+    });
+
+    document.getElementById('locationModal').style.display = 'flex';
+  }
+
+  function closeLocationModal() {
+    activeLocationTarget = null;
+    document.getElementById('locationModal').style.display = 'none';
+  }
+
+  function selectLocPreset(presetName, btn) {
+    document.querySelectorAll('.loc-choice-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    const input = document.getElementById('locCustomDetailInput');
+    input.value = presetName + ' ';
+    input.focus();
+  }
+
+  async function saveItemLocation() {
+    if (!activeLocationTarget) return;
+    const { billId, itemIdx } = activeLocationTarget;
+    const bill = bills.find(b => b.id === billId);
+    if (!bill) return;
+
+    const locVal = document.getElementById('locCustomDetailInput').value.trim();
+    bill.items[itemIdx].location = locVal;
+    closeLocationModal();
+
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'സ്ഥലം സേവ് ചെയ്യുന്നു...');
+  }
+
+  async function clearItemLocation() {
+    if (!activeLocationTarget) return;
+    const { billId, itemIdx } = activeLocationTarget;
+    const bill = bills.find(b => b.id === billId);
+    if (!bill) return;
+
+    bill.items[itemIdx].location = '';
+    closeLocationModal();
+
+    await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'മാറ്റുന്നു...');
   }
 
   // --- CUSTOMER PUBLIC TRACKING VIEW ---
@@ -1230,7 +1397,7 @@
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
   }
 
-  // --- IRONING PROFILES ---
+  // --- IRONING PROFILES (WITH STORAGE LOCATION ASSIGNMENT) ---
   function renderIronersList() {
     const grid = document.getElementById('ironersGrid');
     const ironers = staff.Ironer || [];
@@ -1296,11 +1463,15 @@
       const isCurrent = item.ironed && item.ironer === selectedIroner;
       const isOther = item.ironed && item.ironer !== selectedIroner;
       let note = isCurrent ? `<small style="color:var(--success); font-weight:700;">(${item.ironTime || ''})</small>` : (isOther ? `<small style="color:var(--warning); font-weight:700;">(${item.ironer})</small>` : '');
+      
+      const locOpts = '<option value="">-- വെച്ച സ്ഥലം (Location) --</option>' +
+        STORAGE_LOCATIONS.map(loc => `<option value="${loc}" ${(item.location || '').startsWith(loc) ? 'selected' : ''}>📍 ${loc}</option>`).join('');
+
       rowsHtml += `
         <div class="found-item-row iron-row">
           <input type="checkbox" class="iron-assign-check" data-idx="${idx}" ${isCurrent ? 'checked' : ''}>
           <div><strong>${item.label}</strong> ${note}</div>
-          <span style="font-size:0.75rem; color:var(--muted);">${item.tailor ? '🧵 ' + item.tailor : ''}</span>
+          <select class="iron-assign-loc" data-idx="${idx}" style="padding:6px 8px; font-size:0.82rem;">${locOpts}</select>
         </div>
       `;
     });
@@ -1313,9 +1484,11 @@
     if (!bill) return;
     const nowTime = formatCurrentDateTime();
     const todayISO = getTodayISO();
+    const locSelects = document.querySelectorAll('.iron-assign-loc');
 
-    document.querySelectorAll('.iron-assign-check').forEach(cb => {
+    document.querySelectorAll('.iron-assign-check').forEach((cb, i) => {
       const idx = parseInt(cb.getAttribute('data-idx'));
+      const chosenLoc = locSelects[i] ? locSelects[i].value : '';
       if (cb.checked) {
         if (!bill.items[idx].ironed || bill.items[idx].ironer !== selectedIroner) {
           bill.items[idx].ironTime = nowTime;
@@ -1323,6 +1496,7 @@
         }
         bill.items[idx].ironed = true;
         bill.items[idx].ironer = selectedIroner;
+        if (chosenLoc) bill.items[idx].location = chosenLoc;
       } else if (bill.items[idx].ironer === selectedIroner) {
         bill.items[idx].ironed = false;
         bill.items[idx].ironer = '';
@@ -1415,7 +1589,7 @@
     const matchedItems = [];
     bills.forEach(bill => bill.items.forEach((item, idx) => {
       if (item.ironed && item.ironer === selectedIroner && isDateInFilter(item.ironDate || item.ironTime, ironerDateFilter)) {
-        matchedItems.push({ billId: bill.id, itemIdx: idx, billNo: bill.billNo, label: item.label, ironTime: item.ironTime || '', tailor: item.tailor });
+        matchedItems.push({ billId: bill.id, itemIdx: idx, billNo: bill.billNo, label: item.label, ironTime: item.ironTime || '', location: item.location || '' });
       }
     }));
 
@@ -1428,7 +1602,7 @@
       <div class="history-card iron-history">
         <div>
           <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
-          ${h.tailor ? `<div style="font-size:0.78rem; color:var(--muted);">🧵 തയ്ച്ചത്: ${h.tailor}</div>` : ''}
+          ${h.location ? `<div style="font-size:0.78rem; color:var(--teal); font-weight:700; margin-top:2px;">📍 ${h.location}</div>` : ''}
         </div>
         <div class="history-right">
           <span class="history-time">🕒 ${h.ironTime}</span>
@@ -1496,12 +1670,12 @@
     allTypes.forEach(t => {
       const count = parseInt(document.getElementById('count-' + t.key)?.value) || 0;
       for (let i = 1; i <= count; i++) {
-        itemsList.push({ label: count > 1 ? `${t.key} #${i}` : t.key, cutter: '', cutTime: '', tailor: '', stitchTime: '', stitchDone: false, stitchDoneTime: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false, delivered: false, deliveredTime: '' });
+        itemsList.push({ label: count > 1 ? `${t.key} #${i}` : t.key, cutter: '', cutTime: '', tailor: '', stitchTime: '', stitchDone: false, stitchDoneTime: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false, location: '', delivered: false, deliveredTime: '' });
       }
     });
     manualCustomItems.forEach(mItem => {
       for (let i = 1; i <= mItem.count; i++) {
-        itemsList.push({ label: mItem.count > 1 ? `${mItem.name} #${i}` : mItem.name, cutter: '', cutTime: '', tailor: '', stitchTime: '', stitchDone: false, stitchDoneTime: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false, delivered: false, deliveredTime: '' });
+        itemsList.push({ label: mItem.count > 1 ? `${mItem.name} #${i}` : mItem.name, cutter: '', cutTime: '', tailor: '', stitchTime: '', stitchDone: false, stitchDoneTime: '', buttonWorker: '', buttonTime: '', ironer: '', ironTime: '', ironDate: '', ironed: false, location: '', delivered: false, deliveredTime: '' });
       }
     });
 
@@ -2026,7 +2200,7 @@
     await callApi({ action: 'updateBillItems', billId, updatedItemsJson: JSON.stringify(bill.items) }, 'ഡെലിവറി അപ്‌ഡേറ്റ് ചെയ്യുന്നു...');
   }
 
-  // --- WHATSAPP SHARE & 7+ DAYS LATE REMINDER ---
+  // --- WHATSAPP SHARE & UNCOLLECTED REMINDER ---
   function shareBillViaWhatsApp(billId) {
     const bill = bills.find(b => b.id === billId);
     if (!bill) return;
@@ -2055,9 +2229,10 @@
     const trackingLink = `${baseUrl}?bill=${encodeURIComponent(bill.billNo)}`;
     const pendingItems = bill.items.filter(i => !i.delivered).map(i => i.label).join(', ');
     const balAmt = Math.max(0, (Number(bill.totalAmount) || 0) - (Number(bill.advanceAmount) || 0));
+    const daysLate = Math.abs(getDaysDiff(bill.deliveryDate));
 
     const greetName = bill.customerName ? `പ്രിയ ${bill.customerName},` : 'നമസ്കാരം,';
-    let msg = `${greetName}\n*Zibas Tailors*-ൽ നിന്നും ഓർമ്മപ്പെടുത്തുന്നു: നിങ്ങളുടെ *Bill #${bill.billNo}* (${pendingItems}) ഡെലിവറി ഡേറ്റ് (${bill.deliveryDate}) കഴിഞ്ഞിട്ടും ഇതുവരെ കൈപ്പറ്റിയിട്ടില്ല.\n`;
+    let msg = `${greetName}\n*Zibas Tailors*-ൽ നിന്നും ഓർമ്മപ്പെടുത്തുന്നു: നിങ്ങളുടെ *Bill #${bill.billNo}* (${pendingItems}) ഡെലിവറി ഡേറ്റ് (${bill.deliveryDate}) കഴിഞ്ഞ് *${daysLate} ദിവസമായിട്ടും* ഇതുവരെ കൈപ്പറ്റിയിട്ടില്ല.\n`;
     if (balAmt > 0) {
       msg += `ബാക്കി തുക (Balance): *₹${balAmt}*\n`;
     }
@@ -2104,6 +2279,19 @@
     currentFilter = filterType;
     document.querySelectorAll('#statusTab .pill').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
+
+    const subBar = document.getElementById('uncollectedSubBar');
+    subBar.style.display = filterType === 'uncollected' ? 'block' : 'none';
+    renderBills();
+  }
+
+  function setUncollectedDays(daysVal, btn) {
+    uncollectedMinDays = daysVal;
+    document.querySelectorAll('.sub-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+
+    const customRow = document.getElementById('customDaysInputRow');
+    customRow.style.display = daysVal === 'custom' ? 'block' : 'none';
     renderBills();
   }
 
@@ -2137,7 +2325,6 @@
       const undeliveredCount = bill.items.filter(i => !i.delivered).length;
       const diff = getDaysDiff(bill.deliveryDate);
 
-      // 1. Urgent unready items due tomorrow / today / overdue
       if (unreadyUndelivered > 0 && diff <= 1) {
         hasAlerts = true;
         let statusText = diff === 1 ? 'നാളെ' : (diff === 0 ? 'ഇന്ന്' : 'കഴിഞ്ഞു');
@@ -2148,8 +2335,7 @@
         alertList.appendChild(badge);
       }
 
-      // 2. Late 7+ days after delivery date and still NOT collected (delivered)
-      if (undeliveredCount > 0 && diff <= -7) {
+      if (undeliveredCount > 0 && diff < 0) {
         hasLate7 = true;
         const daysLate = Math.abs(diff);
         const badge = document.createElement('div');
@@ -2163,22 +2349,28 @@
     alertSection.style.display = hasAlerts ? 'block' : 'none';
     late7Section.style.display = hasLate7 ? 'block' : 'none';
 
+    const minOverdueThreshold = uncollectedMinDays === 'custom'
+      ? (parseInt(document.getElementById('customOverdueDaysInput').value) || 1)
+      : Number(uncollectedMinDays);
+
     const filteredBills = bills.filter(bill => {
       const matchBill = bill.billNo.toLowerCase().includes(search);
       const matchCust = (bill.customerName || '').toLowerCase().includes(search) || (bill.customerPhone || '').includes(search);
-      if (!matchBill && !matchCust) return false;
+      const matchLoc = bill.items.some(it => (it.location || '').toLowerCase().includes(search));
+      if (!matchBill && !matchCust && !matchLoc) return false;
 
       const total = bill.items.length;
       const deliveredCount = bill.items.filter(i => i.delivered).length;
       const readyOrDelCount = bill.items.filter(i => i.ironed || i.delivered).length;
       const unreadyCount = bill.items.filter(i => !i.ironed && !i.delivered).length;
       const diff = getDaysDiff(bill.deliveryDate);
+      const daysOverdue = diff < 0 ? Math.abs(diff) : 0;
 
       if (currentFilter === 'pending') return deliveredCount < total;
       if (currentFilter === 'ready') return readyOrDelCount === total && deliveredCount < total;
       if (currentFilter === 'delivered') return deliveredCount === total && total > 0;
       if (currentFilter === 'urgent') return unreadyCount > 0 && diff <= 1;
-      if (currentFilter === 'late7') return deliveredCount < total && diff <= -7;
+      if (currentFilter === 'uncollected') return deliveredCount < total && daysOverdue >= minOverdueThreshold;
       return true;
     });
 
@@ -2194,7 +2386,7 @@
       const isAllDelivered = deliveredCount === totalItems && totalItems > 0;
       const isAllReady = ironedCount === totalItems && !isAllDelivered;
       const diff = getDaysDiff(bill.deliveryDate);
-      const isLate7 = !isAllDelivered && diff <= -7;
+      const isOverdueUncollected = !isAllDelivered && diff < 0;
 
       const totalAmt = Number(bill.totalAmount) || 0;
       const advAmt = Number(bill.advanceAmount) || 0;
@@ -2203,8 +2395,8 @@
       let cardClass = 'bill-card', tagClass = 'delivery-tag', statusLabel = `📅 ${bill.deliveryDate}`;
       if (isAllDelivered) {
         cardClass += ' delivered-card'; tagClass += ' delivered-tag'; statusLabel = `📦 എല്ലാം ഡെലിവറി കഴിഞ്ഞു`;
-      } else if (isLate7) {
-        cardClass += ' late-7'; tagClass += ' late7-tag'; statusLabel = `⏰ ${Math.abs(diff)} ദിവസം വൈകി (${bill.deliveryDate})`;
+      } else if (isOverdueUncollected) {
+        cardClass += ' late-7'; tagClass += ' late-tag'; statusLabel = `⏰ ${Math.abs(diff)} ദിവസം വൈകി (${bill.deliveryDate})`;
       } else if (isAllReady) {
         cardClass += ' completed'; tagClass += ' done'; statusLabel = `✅ റെഡി (${bill.deliveryDate})`;
       } else if (diff <= 0) {
@@ -2242,12 +2434,16 @@
           icon = '✅';
         }
 
+        const locText = item.location ? `📍 ${item.location}` : '📍 സ്ഥലം ചേർക്കുക';
+        const locBtnClass = item.location ? 'loc-chip-btn' : 'loc-chip-btn empty';
+
         return `
           <div class="status-item-row ${rowClass}">
             <div class="item-left">
               <span>${icon}</span>
               <span class="item-name">${item.label}</span>
               <span class="item-stage-pill ${pillClass}">${getItemStage(item)}</span>
+              <button type="button" class="${locBtnClass}" onclick="openLocationModal('${bill.id}', ${idx})">${locText}</button>
             </div>
             <div class="item-workers">
               <span class="w-chip">✂️ ${item.cutter || '-'}</span>
@@ -2267,7 +2463,7 @@
         ? `<div class="cust-sub">👤 ${bill.customerName || ''} ${bill.customerPhone ? `• ${bill.customerPhone}` : ''}</div>`
         : '';
 
-      const reminderBtnHtml = isLate7
+      const reminderBtnHtml = isOverdueUncollected
         ? `<button type="button" class="btn-wa-reminder" onclick="sendLateReminderWhatsApp('${bill.id}')">⏰ WhatsApp Reminder</button>`
         : '';
 
