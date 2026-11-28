@@ -54,7 +54,6 @@
       overflow-x: hidden;
     }
 
-    /* Sticky App Header */
     header {
       background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
       color: white;
@@ -83,65 +82,29 @@
       padding: 7px 11px; border-radius: 20px; cursor: pointer; font-size: 0.76rem; font-weight: 700;
       display: inline-flex; align-items: center; gap: 4px; transition: 0.15s;
     }
-    .icon-pill-btn.home-btn {
-      background: white;
-      color: var(--primary-dark);
-      border-color: white;
-    }
+    .icon-pill-btn.home-btn { background: white; color: var(--primary-dark); border-color: white; }
     .icon-pill-btn:active { transform: scale(0.95); }
 
     .container { max-width: 780px; margin: 16px auto; padding: 0 14px; }
 
-    /* SKETCH-BASED FRONT PAGE 2-COLUMN MENU GRID */
+    /* FRONT PAGE 2-COLUMN MENU GRID */
     .front-menu-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 14px;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 14px;
     }
 
     .menu-box-card {
-      background: white;
-      border-radius: 20px;
-      padding: 18px 14px;
-      border: 1.5px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: 8px;
-      transition: transform 0.14s, box-shadow 0.14s;
-      position: relative;
-      min-height: 112px;
+      background: white; border-radius: 20px; padding: 18px 14px; border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm); cursor: pointer; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center; gap: 8px;
+      transition: transform 0.14s, box-shadow 0.14s; position: relative; min-height: 112px;
     }
-    .menu-box-card:active {
-      transform: scale(0.96);
-    }
+    .menu-box-card:active { transform: scale(0.96); }
     .menu-box-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.55rem;
+      width: 48px; height: 48px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.55rem;
     }
-    .menu-box-title {
-      font-size: 1.02rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      letter-spacing: 0.2px;
-    }
-    .menu-box-sub {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--muted);
-    }
+    .menu-box-title { font-size: 1.02rem; font-weight: 800; color: var(--primary-dark); letter-spacing: 0.2px; }
+    .menu-box-sub { font-size: 0.72rem; font-weight: 600; color: var(--muted); }
 
-    /* Card Color Accents */
     .mb-admin .menu-box-icon { background: #e0e7ff; }
     .mb-cutting .menu-box-icon { background: var(--teal-soft); }
     .mb-stitching .menu-box-icon { background: var(--indigo-soft); }
@@ -157,58 +120,20 @@
     .mb-addbill .menu-box-title { color: white; }
     .mb-addbill .menu-box-sub { color: rgba(255,255,255,0.85); }
 
-    /* FULL-WIDTH NOTIFICATIONS BOX AT BOTTOM OF FRONT PAGE */
+    /* NOTIFICATIONS CARD */
     .front-notifications-card {
-      background: white;
-      border-radius: 20px;
-      padding: 16px;
-      border: 1.5px solid #fde68a;
-      box-shadow: var(--shadow-sm);
+      background: white; border-radius: 20px; padding: 16px; border: 1.5px solid #fde68a; box-shadow: var(--shadow-sm);
     }
-    .notif-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .notif-title {
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .notif-row-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
+    .notif-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .notif-title { font-size: 1rem; font-weight: 800; color: var(--primary-dark); display: flex; align-items: center; gap: 6px; }
+    .notif-row-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
     .notif-pill-box {
-      padding: 11px 12px;
-      border-radius: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 800;
-      font-size: 0.82rem;
+      padding: 11px 12px; border-radius: 14px; cursor: pointer; display: flex;
+      align-items: center; justify-content: space-between; font-weight: 800; font-size: 0.82rem;
     }
-    .notif-pill-box.due-box {
-      background: var(--danger-soft);
-      color: var(--danger);
-      border: 1px solid #fecdd3;
-    }
-    .notif-pill-box.uncol-box {
-      background: var(--warning-soft);
-      color: #b45309;
-      border: 1px solid #fde68a;
-    }
-    .notif-count-num {
-      font-size: 1.25rem;
-      font-weight: 800;
-    }
+    .notif-pill-box.due-box { background: var(--danger-soft); color: var(--danger); border: 1px solid #fecdd3; }
+    .notif-pill-box.uncol-box { background: var(--warning-soft); color: #b45309; border: 1px solid #fde68a; }
+    .notif-count-num { font-size: 1.25rem; font-weight: 800; }
 
     .alert-list { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 4px; }
     .alert-badge {
@@ -218,36 +143,102 @@
     .alert-badge.urgent { border-color: #fda4af; background: var(--danger-soft); color: #be123c; }
     .alert-badge.late { border-color: #fcd34d; background: var(--warning-soft); color: #b45309; }
 
-    /* Quick Auto-Add Missing Bill Box inside Worker Tabs */
-    .quick-create-bill-box {
-      background: #fffbeb;
-      border: 1.5px dashed #f59e0b;
-      border-radius: 14px;
-      padding: 13px;
-      margin-top: 8px;
+    /* MULTI-PHOTO STRIP & GALLERY MODAL */
+    .multi-photo-strip {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      padding: 4px 0 8px;
+      align-items: center;
     }
-    .quick-item-mini-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      margin: 10px 0;
+    .bill-thumb-wrap {
+      position: relative;
+      flex-shrink: 0;
     }
-    .q-mini-item {
-      background: white;
-      border: 1px solid var(--border);
+    .bill-thumb-img {
+      width: 52px;
+      height: 52px;
       border-radius: 10px;
-      padding: 6px;
-      text-align: center;
-      font-size: 0.76rem;
-      font-weight: 700;
+      object-fit: cover;
+      border: 1.5px solid #cbd5e1;
+      cursor: pointer;
+      background: white;
+      display: block;
     }
-    .q-mini-item input {
-      width: 48px;
-      padding: 4px;
-      text-align: center;
-      margin-top: 4px;
+    .thumb-del-mini {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--danger);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.65rem;
       font-weight: 800;
+      cursor: pointer;
+      line-height: 1;
     }
+    .btn-add-more-photo {
+      height: 52px;
+      padding: 0 12px;
+      border-radius: 10px;
+      border: 1.5px dashed #94a3b8;
+      background: #f8fafc;
+      color: #334155;
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .gallery-item-card {
+      position: relative;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f8fafc;
+    }
+    .gallery-item-card img {
+      width: 100%;
+      height: 165px;
+      object-fit: cover;
+      display: block;
+      cursor: pointer;
+    }
+    .gallery-item-card .gal-del-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(225, 29, 72, 0.9);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .quick-create-bill-box {
+      background: #fffbeb; border: 1.5px dashed #f59e0b; border-radius: 14px; padding: 13px; margin-top: 8px;
+    }
+    .quick-item-mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 10px 0; }
+    .q-mini-item {
+      background: white; border: 1px solid var(--border); border-radius: 10px; padding: 6px; text-align: center; font-size: 0.76rem; font-weight: 700;
+    }
+    .q-mini-item input { width: 48px; padding: 4px; text-align: center; margin-top: 4px; font-weight: 800; }
 
     #loader {
       display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45);
@@ -320,10 +311,7 @@
 
     .payment-entry-box {
       background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-      border: 1.5px solid #cbd5e1;
-      border-radius: 16px;
-      padding: 13px;
-      margin-bottom: 12px;
+      border: 1.5px solid #cbd5e1; border-radius: 16px; padding: 13px; margin-bottom: 12px;
     }
     .balance-preview-row {
       margin-top: 8px; padding-top: 8px; border-top: 1px dashed #cbd5e1;
@@ -331,14 +319,6 @@
       font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);
     }
 
-    .bill-photo-upload-box {
-      border: 1.5px dashed #94a3b8; border-radius: 14px; padding: 10px 12px; background: #f8fafc;
-      display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px;
-    }
-    .bill-thumb-img {
-      width: 48px; height: 48px; border-radius: 10px; object-fit: cover;
-      border: 1.5px solid #cbd5e1; cursor: pointer; background: white;
-    }
     .bill-details-banner {
       background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
       padding: 7px 11px; border-radius: 10px; font-size: 0.8rem; font-weight: 700; margin-bottom: 10px;
@@ -702,7 +682,23 @@
 
 <!-- Hidden File Inputs -->
 <input type="file" id="staffPhotoInput" accept="image/*" style="display:none;" onchange="handleStaffPhotoSelected(event)">
-<input type="file" id="billPhotoFileInput" accept="image/*" style="display:none;" onchange="handleBillPhotoFileSelected(event)">
+<input type="file" id="billPhotoFileInput" accept="image/*" multiple style="display:none;" onchange="handleBillPhotoFileSelected(event)">
+
+<!-- MULTI-PHOTO GALLERY & UPLOAD MODAL -->
+<div id="photoGalleryModal" class="modal-overlay" onclick="if(event.target===this) closePhotoGallery()">
+  <div class="modal-box">
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px; margin-bottom:12px;">
+      <h3 id="photoGalleryTitle" style="margin:0; font-size:1.05rem;">📷 ബിൽ & ഷെൽഫ് ഫോട്ടോകൾ</h3>
+      <button type="button" class="btn-back" onclick="closePhotoGallery()">✕</button>
+    </div>
+
+    <button type="button" class="btn-primary-full" style="background:var(--primary); padding:11px; margin-bottom:12px;" onclick="triggerAddMorePhotosToExistingBill()">
+      ➕ പുതിയ ഫോട്ടോകൾ കൂടി ചേർക്കുക (Camera / Gallery)
+    </button>
+
+    <div id="photoGalleryGrid" class="gallery-grid"></div>
+  </div>
+</div>
 
 <!-- INSTALLMENT PAYMENT HISTORY MODAL -->
 <div id="paymentModal" class="modal-overlay" onclick="if(event.target===this) closePaymentModal()">
@@ -745,22 +741,7 @@
   </div>
 </div>
 
-<!-- FULL SCREEN PHOTO VIEWER MODAL -->
-<div id="photoViewerModal" class="modal-overlay" onclick="if(event.target===this) closePhotoViewer()">
-  <div class="modal-box" style="text-align:center;">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-      <h3 id="photoViewerTitle" style="margin:0; font-size:1rem;">📷 ബിൽ / ഡിസൈൻ ഫോട്ടോ</h3>
-      <button type="button" class="btn-back" onclick="closePhotoViewer()">✕</button>
-    </div>
-    <img id="photoViewerImg" src="" style="max-width:100%; max-height:60vh; border-radius:14px; border:1px solid var(--border); margin-bottom:12px;">
-    <div style="display:flex; gap:8px; justify-content:center;">
-      <button type="button" class="btn-pill" style="background:var(--primary); padding:10px 16px;" onclick="triggerExistingBillPhotoChange()">📷 പുതിയ ഫോട്ടോ മാറ്റുക</button>
-      <button type="button" class="btn-delete-bill" style="padding:10px 16px;" onclick="removeExistingBillPhoto()">🗑️ ഫോട്ടോ നീക്കം ചെയ്യുക</button>
-    </div>
-  </div>
-</div>
-
-<!-- FULL BILL EDIT MODAL (WITH YEAR FIELD) -->
+<!-- FULL BILL EDIT MODAL -->
 <div id="editBillModal" class="modal-overlay" onclick="if(event.target===this) closeEditBillModal()">
   <div class="modal-box">
     <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px; margin-bottom:14px;">
@@ -896,10 +877,9 @@
 <!-- MAIN SHOP ADMIN VIEW -->
 <div id="shopMainContainer" class="container">
 
-  <!-- FRONT PAGE (EXACTLY MATCHING YOUR SKETCH: 2x4 GRID + NOTIFICATIONS) -->
+  <!-- FRONT PAGE (2x4 GRID + NOTIFICATIONS) -->
   <div id="frontHomeView">
     <div class="front-menu-grid">
-      <!-- Row 1: Admin | Cutting -->
       <div class="menu-box-card mb-admin" onclick="openScreen('statusTab')">
         <div class="menu-box-icon">📊</div>
         <span class="menu-box-title">Admin</span>
@@ -912,7 +892,6 @@
         <span class="menu-box-sub">കട്ടിംഗ് വിഭാഗം</span>
       </div>
 
-      <!-- Row 2: Stitching | Ironing -->
       <div class="menu-box-card mb-stitching" onclick="openScreen('stitchingTab')">
         <div class="menu-box-icon">🧵</div>
         <span class="menu-box-title">Stitching</span>
@@ -925,7 +904,6 @@
         <span class="menu-box-sub">അയേണിംഗ് വിഭാഗം</span>
       </div>
 
-      <!-- Row 3: Shelf | Button -->
       <div class="menu-box-card mb-shelf" onclick="openScreen('shelfTab')">
         <div class="menu-box-icon">🗄️</div>
         <span class="menu-box-title">Shelf</span>
@@ -938,7 +916,6 @@
         <span class="menu-box-sub">ബട്ടൺ & ചെക്കിംഗ്</span>
       </div>
 
-      <!-- Row 4: List | Add Bill -->
       <div class="menu-box-card mb-list" onclick="openScreen('billListTab')">
         <div class="menu-box-icon">📋</div>
         <span class="menu-box-title">List</span>
@@ -952,7 +929,6 @@
       </div>
     </div>
 
-    <!-- Bottom Full-Width Notifications Card -->
     <div class="front-notifications-card">
       <div class="notif-header">
         <span class="notif-title">🔔 Notifications</span>
@@ -974,7 +950,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 1: ADMIN (STATUS, DELIVERY & PAYMENTS) -->
+  <!-- SCREEN 1: ADMIN -->
   <div id="statusTab" style="display: none;">
     <div class="section-header">
       <h3 class="section-title" style="color: var(--primary-dark);">📊 Admin — സ്റ്റാറ്റസ് & ഡെലിവറി</h3>
@@ -1011,7 +987,7 @@
     <div id="billsContainer"></div>
   </div>
 
-  <!-- SCREEN 2: ALL BILLS LIST (ENTRY ORDER + YEAR + MULTI-SEARCH + EDIT) -->
+  <!-- SCREEN 2: ALL BILLS LIST -->
   <div id="billListTab" class="section-card" style="display: none;">
     <div class="section-header">
       <h3 class="section-title" style="color: var(--primary-dark);">📋 ബിൽ ലിസ്റ്റ് (Entry Order)</h3>
@@ -1098,7 +1074,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 4: ADD NEW BILL (WITH YEAR, DISCOUNT, PHOTO & BILL DETAILS) -->
+  <!-- SCREEN 4: ADD NEW BILL (WITH MULTIPLE PHOTOS TO GOOGLE DRIVE) -->
   <div id="entryTab" class="section-card" style="display: none;">
     <div class="section-header">
       <h3 class="section-title" style="color: var(--primary);">➕ പുതിയ ബിൽ ചേർക്കുക</h3>
@@ -1152,19 +1128,16 @@
       </div>
     </div>
 
-    <div class="form-row" style="margin-bottom:12px;">
-      <div>
-        <label>ബിൽ ഡീറ്റെയിൽസ് / കുറിപ്പ് (Details)</label>
-        <input type="text" id="billDetails" placeholder="ഉദാ: Stiff collar, 2 pockets...">
-      </div>
-      <div>
-        <label>ബിൽ / തുണിയുടെ ഫോട്ടോ (Photo)</label>
-        <div class="bill-photo-upload-box" style="margin-bottom:0; padding:7px 10px;">
-          <button type="button" class="btn-pill" style="background:var(--primary);" onclick="triggerNewBillPhotoUpload()">📷 ഫോട്ടോ ചേർക്കുക</button>
-          <div id="newBillPhotoPreviewArea" style="display:flex; align-items:center; gap:6px;">
-            <span style="font-size:0.74rem; color:var(--muted);">ഫോട്ടോ ഇല്ല</span>
-          </div>
-        </div>
+    <div style="margin-bottom:12px;">
+      <label>ബിൽ ഡീറ്റെയിൽസ് / കുറിപ്പ് (Details)</label>
+      <input type="text" id="billDetails" placeholder="ഉദാ: Stiff collar, 2 pockets...">
+    </div>
+
+    <!-- Multiple Photos Upload Section -->
+    <div style="margin-bottom:14px;">
+      <label>ബിൽ / തുണികളുടെ ഫോട്ടോകൾ (എത്ര ഫോട്ടോ വേണമെങ്കിലും ചേർക്കാം):</label>
+      <div class="multi-photo-strip" id="newBillMultiPhotoStrip">
+        <button type="button" class="btn-add-more-photo" onclick="triggerNewBillPhotoUpload()">📷 + ഫോട്ടോ ചേർക്കുക</button>
       </div>
     </div>
 
@@ -1338,7 +1311,7 @@
   let uncollectedMinDays = 1;
   let billListOldestFirst = true;
   let manualCustomItems = [];
-  let newBillPhotoBase64 = '';
+  let newBillPhotosBase64 = []; // Multiple photos array
   let selectedButtonWorker = null;
   let selectedIroner = null;
   let selectedCutter = null;
@@ -1352,6 +1325,7 @@
   let editingItemsBuffer = [];
   let activePayBillId = null;
   let activePayHistoryBuffer = [];
+  let galleryBillId = null;
 
   const DEFAULT_SHELVES = [
     'Shelf 1', 'Shelf 2', 'Rack 1', 'Left Side Hanger', 'Right Side Hanger', 'Showcase Box'
@@ -1565,24 +1539,11 @@
           location: '', delivered: false, deliveredTime: ''
         };
 
-        if (targetRole === 'Cutter') {
-          itemObj.cutter = targetName;
-          itemObj.cutTime = nowTime;
-        } else if (targetRole === 'Tailor') {
-          itemObj.tailor = targetName;
-          itemObj.stitchTime = nowTime;
-        } else if (targetRole === 'Button') {
-          itemObj.buttonWorker = targetName;
-          itemObj.buttonTime = nowTime;
-          itemObj.stitchDone = true;
-        } else if (targetRole === 'Ironer') {
-          itemObj.ironer = targetName;
-          itemObj.ironTime = nowTime;
-          itemObj.ironDate = todayISO;
-          itemObj.ironed = true;
-        } else if (targetRole === 'Shelf') {
-          itemObj.location = targetName;
-        }
+        if (targetRole === 'Cutter') { itemObj.cutter = targetName; itemObj.cutTime = nowTime; }
+        else if (targetRole === 'Tailor') { itemObj.tailor = targetName; itemObj.stitchTime = nowTime; }
+        else if (targetRole === 'Button') { itemObj.buttonWorker = targetName; itemObj.buttonTime = nowTime; itemObj.stitchDone = true; }
+        else if (targetRole === 'Ironer') { itemObj.ironer = targetName; itemObj.ironTime = nowTime; itemObj.ironDate = todayISO; itemObj.ironed = true; }
+        else if (targetRole === 'Shelf') { itemObj.location = targetName; }
 
         itemsList.push(itemObj);
       }
@@ -1596,7 +1557,7 @@
         billNo, billYear, deliveryDate,
         customerName: '', customerPhone: '',
         totalAmount: 0, discountAmount: 0, advanceAmount: 0,
-        billDetails: 'Quick added by staff', billPhoto: '', items: itemsList
+        billDetails: 'Quick added by staff', billPhotos: [], items: itemsList
       }
     }, `Bill #${billNo} ആഡ് ചെയ്യുന്നു...`);
 
@@ -1656,7 +1617,7 @@
     callApi(null, 'വിവരങ്ങൾ ലോഡ് ചെയ്യുന്നു...');
   }
 
-  // --- BILL PHOTO CAPTURE & VIEWER ---
+  // --- MULTI-PHOTO CAPTURE, GOOGLE DRIVE UPLOAD & GALLERY VIEWER ---
   function triggerNewBillPhotoUpload() {
     billPhotoTargetId = null;
     const inp = document.getElementById('billPhotoFileInput');
@@ -1664,90 +1625,147 @@
     inp.click();
   }
 
-  function triggerBillPhotoUploadForExisting(billId) {
+  function triggerAddMorePhotosToExistingBill() {
+    if (!galleryBillId) return;
+    billPhotoTargetId = galleryBillId;
+    const inp = document.getElementById('billPhotoFileInput');
+    inp.value = '';
+    inp.click();
+  }
+
+  function triggerDirectPhotoUploadForBill(billId) {
     billPhotoTargetId = billId;
     const inp = document.getElementById('billPhotoFileInput');
     inp.value = '';
     inp.click();
   }
 
-  function handleBillPhotoFileSelected(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+  function compressImageFileToBase64(file) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 900; // Crisp quality for Drive storage
+          let w = img.width;
+          let h = img.height;
+          if (w > h && w > maxDim) { h = Math.round(h * maxDim / w); w = maxDim; }
+          else if (h > maxDim) { w = Math.round(w * maxDim / h); h = maxDim; }
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const img = new Image();
-      img.onload = async function() {
-        const canvas = document.createElement('canvas');
-        const maxDim = 420;
-        let w = img.width;
-        let h = img.height;
-        if (w > h && w > maxDim) { h = Math.round(h * maxDim / w); w = maxDim; }
-        else if (h > maxDim) { w = Math.round(w * maxDim / h); h = maxDim; }
-
-        canvas.width = w;
-        canvas.height = h;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, w, h);
-
-        const base64 = canvas.toDataURL('image/jpeg', 0.72);
-        if (!billPhotoTargetId) {
-          newBillPhotoBase64 = base64;
-          renderNewBillPhotoPreview();
-        } else {
-          const targetId = billPhotoTargetId;
-          billPhotoTargetId = null;
-          closePhotoViewer();
-          await callApi({ action: 'updateBillPhoto', billId: targetId, billPhoto: base64 }, 'ബിൽ ഫോട്ടോ സേവ് ചെയ്യുന്നു...');
-        }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', 0.78));
+        };
+        img.src = e.target.result;
       };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    });
   }
 
-  function renderNewBillPhotoPreview() {
-    const area = document.getElementById('newBillPhotoPreviewArea');
-    if (!newBillPhotoBase64) {
-      area.innerHTML = `<span style="font-size:0.74rem; color:var(--muted);">ഫോട്ടോ ഇല്ല</span>`;
+  async function handleBillPhotoFileSelected(event) {
+    const files = Array.from(event.target.files || []);
+    if (files.length === 0) return;
+
+    showLoader(`${files.length} ഫോട്ടോ പ്രോസസ്സ് ചെയ്യുന്നു...`);
+    const compressedList = [];
+    for (const f of files) {
+      const b64 = await compressImageFileToBase64(f);
+      compressedList.push(b64);
+    }
+    hideLoader();
+
+    if (!billPhotoTargetId) {
+      newBillPhotosBase64.push(...compressedList);
+      renderNewBillMultiPhotoStrip();
+    } else {
+      const targetId = billPhotoTargetId;
+      billPhotoTargetId = null;
+      const ok = await callApi({
+        action: 'addBillPhotos',
+        billId: targetId,
+        newPhotosBase64Array: compressedList
+      }, 'Google Drive-ലേക്ക് ഫോട്ടോകൾ സേവ് ചെയ്യുന്നു...');
+      if (ok && galleryBillId === targetId) {
+        renderPhotoGalleryModalContent();
+      }
+    }
+  }
+
+  function renderNewBillMultiPhotoStrip() {
+    const strip = document.getElementById('newBillMultiPhotoStrip');
+    const thumbsHtml = newBillPhotosBase64.map((src, idx) => `
+      <div class="bill-thumb-wrap">
+        <img src="${src}" class="bill-thumb-img" alt="Photo ${idx + 1}">
+        <button type="button" class="thumb-del-mini" onclick="removeNewBillPhotoAt(${idx})">✕</button>
+      </div>
+    `).join('');
+
+    strip.innerHTML = thumbsHtml + `<button type="button" class="btn-add-more-photo" onclick="triggerNewBillPhotoUpload()">📷 + ഫോട്ടോ (${newBillPhotosBase64.length})</button>`;
+  }
+
+  function removeNewBillPhotoAt(idx) {
+    newBillPhotosBase64.splice(idx, 1);
+    renderNewBillMultiPhotoStrip();
+  }
+
+  function openPhotoGalleryModal(billId) {
+    galleryBillId = billId;
+    renderPhotoGalleryModalContent();
+    document.getElementById('photoGalleryModal').style.display = 'flex';
+  }
+
+  function closePhotoGallery() {
+    galleryBillId = null;
+    document.getElementById('photoGalleryModal').style.display = 'none';
+  }
+
+  function renderPhotoGalleryModalContent() {
+    const bill = bills.find(b => b.id === galleryBillId);
+    if (!bill) return;
+    const photos = bill.billPhotos || [];
+    document.getElementById('photoGalleryTitle').innerText = `📷 Bill #${bill.billNo} (${photos.length} ഫോട്ടോകൾ)`;
+
+    const grid = document.getElementById('photoGalleryGrid');
+    if (photos.length === 0) {
+      grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:20px;">ഈ ബില്ലിൽ ഫോട്ടോകൾ ഒന്നും ചേർത്തിട്ടില്ല.</p>`;
       return;
     }
-    area.innerHTML = `
-      <img src="${newBillPhotoBase64}" class="bill-thumb-img" alt="Preview">
-      <button type="button" class="btn-icon-del" onclick="clearNewBillPhoto()">✕</button>
+
+    grid.innerHTML = photos.map((url, idx) => `
+      <div class="gallery-item-card">
+        <img src="${url}" alt="Bill Photo ${idx + 1}" onclick="window.open('${url}', '_blank')">
+        <button type="button" class="gal-del-btn" title="നീക്കം ചെയ്യുക" onclick="deletePhotoFromBill('${bill.id}', '${url.replace(/'/g, "\\'")}')">✕</button>
+      </div>
+    `).join('');
+  }
+
+  async function deletePhotoFromBill(billId, photoUrl) {
+    if (!confirm('ഈ ഫോട്ടോ ബില്ലിൽ നിന്ന് നീക്കം ചെയ്യണമോ?')) return;
+    const ok = await callApi({ action: 'removeBillPhoto', billId, photoUrl }, 'ഫോട്ടോ നീക്കം ചെയ്യുന്നു...');
+    if (ok && galleryBillId === billId) {
+      renderPhotoGalleryModalContent();
+    }
+  }
+
+  function renderBillPhotosStripHtml(bill) {
+    const photos = bill.billPhotos || [];
+    const thumbs = photos.map((url, idx) => `
+      <div class="bill-thumb-wrap">
+        <img src="${url}" class="bill-thumb-img" title="ഫോട്ടോ ${idx + 1} കാണുക" onclick="openPhotoGalleryModal('${bill.id}')">
+      </div>
+    `).join('');
+
+    return `
+      <div class="multi-photo-strip">
+        ${thumbs}
+        <button type="button" class="btn-add-more-photo" onclick="triggerDirectPhotoUploadForBill('${bill.id}')">
+          📷 ${photos.length > 0 ? `+ ഫോട്ടോ (${photos.length})` : '+ ഫോട്ടോ ചേർക്കുക'}
+        </button>
+      </div>
     `;
-  }
-
-  function clearNewBillPhoto() {
-    newBillPhotoBase64 = '';
-    renderNewBillPhotoPreview();
-  }
-
-  let viewingPhotoBillId = null;
-  function openBillPhotoViewer(billId) {
-    const bill = bills.find(b => b.id === billId);
-    if (!bill || !bill.billPhoto) return;
-    viewingPhotoBillId = billId;
-    document.getElementById('photoViewerTitle').innerText = `📷 Bill #${bill.billNo} (${bill.billYear || ''})`;
-    document.getElementById('photoViewerImg').src = bill.billPhoto;
-    document.getElementById('photoViewerModal').style.display = 'flex';
-  }
-
-  function closePhotoViewer() {
-    viewingPhotoBillId = null;
-    document.getElementById('photoViewerModal').style.display = 'none';
-  }
-
-  function triggerExistingBillPhotoChange() {
-    if (viewingPhotoBillId) triggerBillPhotoUploadForExisting(viewingPhotoBillId);
-  }
-
-  async function removeExistingBillPhoto() {
-    if (!viewingPhotoBillId || !confirm('ഈ ബില്ലിലെ ഫോട്ടോ നീക്കം ചെയ്യണമോ?')) return;
-    const targetId = viewingPhotoBillId;
-    closePhotoViewer();
-    await callApi({ action: 'updateBillPhoto', billId: targetId, billPhoto: '' }, 'ഫോട്ടോ നീക്കം ചെയ്യുന്നു...');
   }
 
   // --- INSTALLMENT PAYMENT HISTORY MODAL ---
@@ -2026,23 +2044,21 @@
       return `
         <div class="bill-list-row">
           <div class="bill-list-top">
-            <div style="display:flex; gap:10px; align-items:center;">
-              ${bill.billPhoto ? `<img src="${bill.billPhoto}" class="bill-thumb-img" onclick="openBillPhotoViewer('${bill.id}')">` : ''}
+            <div>
               <div>
-                <div>
-                  <span class="order-sl-badge">#${slNo}</span>
-                  <strong style="font-size:1.1rem; color:var(--primary-dark);">Bill #${bill.billNo}</strong>
-                  ${bill.billYear ? `<span class="year-badge">${bill.billYear}</span>` : ''}
-                </div>
-                <div style="font-size:0.82rem; font-weight:700; color:#334155; margin-top:4px;">
-                  👤 ${bill.customerName || 'പേര് നൽകിയിട്ടില്ല'} 
-                  ${bill.customerPhone ? `• 📞 <a href="tel:${bill.customerPhone}" style="color:var(--primary); text-decoration:none;">${bill.customerPhone}</a>` : ''}
-                </div>
+                <span class="order-sl-badge">#${slNo}</span>
+                <strong style="font-size:1.1rem; color:var(--primary-dark);">Bill #${bill.billNo}</strong>
+                ${bill.billYear ? `<span class="year-badge">${bill.billYear}</span>` : ''}
+              </div>
+              <div style="font-size:0.82rem; font-weight:700; color:#334155; margin-top:4px;">
+                👤 ${bill.customerName || 'പേര് നൽകിയിട്ടില്ല'} 
+                ${bill.customerPhone ? `• 📞 <a href="tel:${bill.customerPhone}" style="color:var(--primary); text-decoration:none;">${bill.customerPhone}</a>` : ''}
               </div>
             </div>
             <button type="button" class="btn-edit-bill" onclick="openEditBillModal('${bill.id}')">✏️ Edit</button>
           </div>
 
+          ${renderBillPhotosStripHtml(bill)}
           ${bill.billDetails ? `<div class="bill-details-banner" style="margin-bottom:0;">📝 ${bill.billDetails}</div>` : ''}
 
           <div class="bill-list-meta">
@@ -2064,7 +2080,7 @@
     return DEFAULT_SHELVES;
   }
 
-  // --- DEDICATED SHELF & BOXES MENU ---
+  // --- DEDICATED SHELF & BOXES MENU (WITH PHOTO CAPTURE FOR SHELF ITEMS) ---
   function promptNewShelf() {
     const name = prompt('പുതിയ ഷെൽഫ് അല്ലെങ്കിൽ ബോക്സിന്റെ പേര് നൽകുക (ഉദാ: Shelf 3, Box 2, Left Hanger):');
     if (!name || !name.trim()) return;
@@ -2143,7 +2159,12 @@
       `;
     });
 
-    rowsHtml += `<button type="button" class="btn-primary-full" style="background:var(--amber); margin-top:8px;" onclick="saveAssignedShelfItems('${matched.id}')">📥 ${selectedShelf.toUpperCase()}-ലേക്ക് വെക്കുക (Save)</button>`;
+    rowsHtml += `
+      <div style="display:grid; grid-template-columns:1fr auto; gap:8px; margin-top:8px;">
+        <button type="button" class="btn-primary-full" style="background:var(--amber);" onclick="saveAssignedShelfItems('${matched.id}')">📥 ${selectedShelf.toUpperCase()}-ലേക്ക് വെക്കുക</button>
+        <button type="button" class="btn-pill" style="background:var(--primary); padding:0 14px;" onclick="triggerDirectPhotoUploadForBill('${matched.id}')">📷 ഫോട്ടോ</button>
+      </div>
+    `;
     area.innerHTML = rowsHtml;
   }
 
@@ -2186,7 +2207,8 @@
           customerName: bill.customerName,
           deliveryDate: bill.deliveryDate,
           label: item.label,
-          ironed: item.ironed
+          ironed: item.ironed,
+          photoCount: (bill.billPhotos || []).length
         });
       }
     }));
@@ -2208,6 +2230,7 @@
           </div>
         </div>
         <div class="history-right">
+          <button type="button" class="btn-pay-edit" onclick="openPhotoGalleryModal('${h.billId}')">📷 (${h.photoCount})</button>
           <button type="button" class="btn-item-deliver" onclick="toggleSingleItemDelivered('${h.billId}', ${h.itemIdx})">📦 ഡെലിവറി</button>
           <button type="button" class="btn-icon-del" title="ഷെൽഫിൽ നിന്ന് മാറ്റുക" onclick="removeFromShelf('${h.billId}', ${h.itemIdx})">✕</button>
         </div>
@@ -2867,9 +2890,9 @@
       billData: {
         billNo, billYear, deliveryDate, customerName, customerPhone,
         totalAmount, discountAmount, advanceAmount,
-        billDetails, billPhoto: newBillPhotoBase64, items: itemsList
+        billDetails, billPhotos: newBillPhotosBase64, items: itemsList
       }
-    }, 'ബിൽ സേവ് ചെയ്യുന്നു...');
+    }, newBillPhotosBase64.length > 0 ? 'ബില്ലും ഫോട്ടോകളും Google Drive-ൽ സേവ് ചെയ്യുന്നു...' : 'ബിൽ സേവ് ചെയ്യുന്നു...');
 
     if (ok) {
       billNoInput.value = '';
@@ -2879,7 +2902,8 @@
       document.getElementById('discountAmount').value = '';
       document.getElementById('advanceAmount').value = '';
       document.getElementById('billDetails').value = '';
-      clearNewBillPhoto();
+      newBillPhotosBase64 = [];
+      renderNewBillMultiPhotoStrip();
       updateBalancePreview();
       allTypes.forEach(t => { const inp = document.getElementById('count-' + t.key); if (inp) inp.value = 0; });
       manualCustomItems = [];
@@ -3609,10 +3633,6 @@
         ? `<div class="cust-sub">👤 ${bill.customerName || ''} ${bill.customerPhone ? `• ${bill.customerPhone}` : ''}</div>`
         : '';
 
-      const photoBtnHtml = bill.billPhoto
-        ? `<img src="${bill.billPhoto}" class="bill-thumb-img" title="ഫോട്ടോ കാണുക" onclick="openBillPhotoViewer('${bill.id}')">`
-        : `<button type="button" class="btn-pay-edit" style="padding:5px 9px;" title="ഫോട്ടോ ചേർക്കുക" onclick="triggerBillPhotoUploadForExisting('${bill.id}')">📷 ഫോട്ടോ</button>`;
-
       const reminderBtnHtml = isOverdueUncollected
         ? `<button type="button" class="btn-wa-reminder" onclick="sendLateReminderWhatsApp('${bill.id}')">⏰ Reminder</button>`
         : '';
@@ -3621,15 +3641,13 @@
       card.className = cardClass;
       card.innerHTML = `
         <div class="bill-header">
-          <div style="display:flex; gap:10px; align-items:center;">
-            ${photoBtnHtml}
-            <div>
-              <div class="bill-no">Bill #${bill.billNo} ${bill.billYear ? `<span class="year-badge">${bill.billYear}</span>` : ''}</div>
-              ${custLine}
-            </div>
+          <div>
+            <div class="bill-no">Bill #${bill.billNo} ${bill.billYear ? `<span class="year-badge">${bill.billYear}</span>` : ''}</div>
+            ${custLine}
           </div>
           <span class="${tagClass}">${statusLabel}</span>
         </div>
+        ${renderBillPhotosStripHtml(bill)}
         ${bill.billDetails ? `<div class="bill-details-banner">📝 ${bill.billDetails}</div>` : ''}
         <div class="card-mini-progress"><div class="card-mini-fill" style="width:${progressPct}%;"></div></div>
         ${paymentHtml}
