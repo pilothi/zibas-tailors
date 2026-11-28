@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Zibas Tailors - Workshop & Delivery Manager</title>
+  <title>Zibas Tailors - Workshop, Salary & Delivery Manager</title>
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#0f172a">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3050/3050253.png">
@@ -85,7 +85,7 @@
     .icon-pill-btn.home-btn { background: white; color: var(--primary-dark); border-color: white; }
     .icon-pill-btn:active { transform: scale(0.95); }
 
-    .container { max-width: 780px; margin: 16px auto; padding: 0 14px; }
+    .container { max-width: 820px; margin: 16px auto; padding: 0 14px; }
 
     /* FRONT PAGE 2-COLUMN MENU GRID */
     .front-menu-grid {
@@ -143,92 +143,130 @@
     .alert-badge.urgent { border-color: #fda4af; background: var(--danger-soft); color: #be123c; }
     .alert-badge.late { border-color: #fcd34d; background: var(--warning-soft); color: #b45309; }
 
-    /* MULTI-PHOTO STRIP & GALLERY MODAL */
-    .multi-photo-strip {
-      display: flex;
-      gap: 7px;
-      overflow-x: auto;
-      padding: 4px 0 8px;
-      align-items: center;
+    /* ADMIN SUB-TABS */
+    .admin-sub-nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: #e2e8f0;
+      padding: 5px;
+      border-radius: 16px;
+      margin-bottom: 14px;
     }
-    .bill-thumb-wrap {
-      position: relative;
-      flex-shrink: 0;
-    }
-    .bill-thumb-img {
-      width: 52px;
-      height: 52px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 1.5px solid #cbd5e1;
-      cursor: pointer;
-      background: white;
-      display: block;
-    }
-    .thumb-del-mini {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background: var(--danger);
-      color: white;
+    .admin-sub-btn {
       border: none;
-      border-radius: 50%;
-      width: 18px;
-      height: 18px;
-      font-size: 0.65rem;
+      background: transparent;
+      padding: 10px 6px;
+      border-radius: 12px;
+      font-size: 0.8rem;
       font-weight: 800;
+      color: #475569;
       cursor: pointer;
-      line-height: 1;
+      transition: 0.15s;
     }
-    .btn-add-more-photo {
-      height: 52px;
-      padding: 0 12px;
-      border-radius: 10px;
-      border: 1.5px dashed #94a3b8;
-      background: #f8fafc;
-      color: #334155;
-      font-size: 0.75rem;
-      font-weight: 800;
-      cursor: pointer;
-      white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+    .admin-sub-btn.active {
+      background: white;
+      color: var(--primary-dark);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
     }
 
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin: 12px 0;
-    }
-    .gallery-item-card {
-      position: relative;
+    /* SALARY & RATES STYLES */
+    .salary-staff-card {
+      background: white;
       border: 1.5px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      background: #f8fafc;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
     }
-    .gallery-item-card img {
-      width: 100%;
-      height: 165px;
-      object-fit: cover;
-      display: block;
-      cursor: pointer;
+    .salary-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      gap: 8px;
     }
-    .gallery-item-card .gal-del-btn {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      background: rgba(225, 29, 72, 0.9);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 26px;
-      height: 26px;
-      font-size: 0.78rem;
+    .role-badge {
+      font-size: 0.7rem;
       font-weight: 800;
-      cursor: pointer;
+      padding: 3px 8px;
+      border-radius: 10px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      text-transform: uppercase;
+    }
+    .salary-breakdown-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .sb-tag {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 4px 9px;
+      border-radius: 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #334155;
+    }
+    .salary-numbers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 9px 6px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .sn-box span { display: block; font-size: 0.68rem; color: var(--muted); font-weight: 700; }
+    .sn-box strong { display: block; font-size: 0.92rem; font-weight: 800; margin-top: 2px; }
+
+    .rate-grid-row {
+      display: grid;
+      grid-template-columns: 1fr 110px;
+      gap: 10px;
+      align-items: center;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 12px;
+      margin-bottom: 7px;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    /* MULTI-PHOTO STRIP & GALLERY MODAL */
+    .multi-photo-strip {
+      display: flex; gap: 7px; overflow-x: auto; padding: 4px 0 8px; align-items: center;
+    }
+    .bill-thumb-wrap { position: relative; flex-shrink: 0; }
+    .bill-thumb-img {
+      width: 52px; height: 52px; border-radius: 10px; object-fit: cover;
+      border: 1.5px solid #cbd5e1; cursor: pointer; background: white; display: block;
+    }
+    .thumb-del-mini {
+      position: absolute; top: -4px; right: -4px; background: var(--danger); color: white;
+      border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 0.65rem; font-weight: 800; cursor: pointer; line-height: 1;
+    }
+    .btn-add-more-photo {
+      height: 52px; padding: 0 12px; border-radius: 10px; border: 1.5px dashed #94a3b8;
+      background: #f8fafc; color: #334155; font-size: 0.75rem; font-weight: 800; cursor: pointer;
+      white-space: nowrap; display: inline-flex; align-items: center; gap: 4px;
+    }
+
+    .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 12px 0; }
+    .gallery-item-card {
+      position: relative; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; background: #f8fafc;
+    }
+    .gallery-item-card img { width: 100%; height: 165px; object-fit: cover; display: block; cursor: pointer; }
+    .gallery-item-card .gal-del-btn {
+      position: absolute; top: 6px; right: 6px; background: rgba(225, 29, 72, 0.9);
+      color: white; border: none; border-radius: 50%; width: 26px; height: 26px; font-size: 0.78rem; font-weight: 800; cursor: pointer;
     }
 
     .quick-create-bill-box {
@@ -303,7 +341,7 @@
     }
 
     label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.8rem; color: #334155; }
-    input[type="text"], input[type="tel"], input[type="number"], input[type="date"], textarea, select {
+    input[type="text"], input[type="tel"], input[type="number"], input[type="date"], input[type="password"], textarea, select {
       width: 100%; padding: 11px 12px; border: 1.5px solid var(--border); border-radius: 12px;
       font-size: 0.94rem; background: #f8fafc; color: var(--text); transition: border-color 0.15s, background 0.15s;
     }
@@ -684,6 +722,93 @@
 <input type="file" id="staffPhotoInput" accept="image/*" style="display:none;" onchange="handleStaffPhotoSelected(event)">
 <input type="file" id="billPhotoFileInput" accept="image/*" multiple style="display:none;" onchange="handleBillPhotoFileSelected(event)">
 
+<!-- ADMIN PASSWORD MODAL -->
+<div id="adminPassModal" class="modal-overlay" onclick="if(event.target===this) closeAdminPassModal()">
+  <div class="modal-box" style="max-width:400px; text-align:center;">
+    <h3 style="margin:0 0 8px 0; color:var(--primary-dark);">🔒 Admin Login</h3>
+    <p style="font-size:0.82rem; color:var(--muted); margin:0 0 14px 0;">Admin പാനലിൽ പ്രവേശിക്കാൻ പാസ്‌വേഡ് നൽകുക:</p>
+    <input type="password" id="adminPassInput" placeholder="പാസ്‌വേഡ് (Default: 1234)" style="text-align:center; font-size:1.1rem; letter-spacing:3px; margin-bottom:12px;" onkeyup="if(event.key==='Enter') verifyAdminPassword()">
+    <div style="display:flex; gap:8px;">
+      <button type="button" class="btn-primary-full" style="background:var(--primary);" onclick="verifyAdminPassword()">🔓 തുറക്കുക</button>
+      <button type="button" class="btn-back" onclick="closeAdminPassModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- STAFF ADVANCE / SALARY PAYOUT MODAL -->
+<div id="staffLedgerModal" class="modal-overlay" onclick="if(event.target===this) closeStaffLedgerModal()">
+  <div class="modal-box">
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px; margin-bottom:14px;">
+      <h3 id="ledgerModalTitle" style="margin:0; color:var(--primary-dark); font-size:1.05rem;">💵 Staff Advance / Salary</h3>
+      <button type="button" class="btn-back" onclick="closeStaffLedgerModal()">✕</button>
+    </div>
+
+    <div style="background:var(--primary-soft); border:1.5px solid #bfdbfe; border-radius:14px; padding:12px; margin-bottom:14px;">
+      <div class="form-row" style="margin-bottom:8px;">
+        <div>
+          <label>തരം (Type):</label>
+          <select id="ledgerEntryType">
+            <option value="Advance">💸 അഡ്വാൻസ് (Advance Given)</option>
+            <option value="SalaryPaid">✅ ശമ്പളം നൽകി (Weekly Salary Paid)</option>
+          </select>
+        </div>
+        <div>
+          <label>തുക (Amount ₹) *</label>
+          <input type="number" id="ledgerEntryAmount" placeholder="0" min="1">
+        </div>
+      </div>
+      <div class="form-row" style="margin-bottom:8px;">
+        <div>
+          <label>തീയതി (Date):</label>
+          <input type="date" id="ledgerEntryDate">
+        </div>
+        <div>
+          <label>കുറിപ്പ് (Note - Optional):</label>
+          <input type="text" id="ledgerEntryNote" placeholder="ഉദാ: Weekly payout, Cash...">
+        </div>
+      </div>
+      <button type="button" class="btn-primary-full" style="background:var(--primary); padding:11px;" onclick="saveNewStaffLedgerEntry()">💾 സേവ് ചെയ്യുക</button>
+    </div>
+
+    <label>ഈ സ്റ്റാഫിന്റെ മുൻ ഇടപാടുകൾ (Date & Time സഹിതം):</label>
+    <div id="staffLedgerHistoryList"></div>
+  </div>
+</div>
+
+<!-- STAFF DETAILS EDIT MODAL -->
+<div id="staffDetailEditModal" class="modal-overlay" onclick="if(event.target===this) closeStaffDetailEditModal()">
+  <div class="modal-box">
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px; margin-bottom:14px;">
+      <h3 id="sdEditModalTitle" style="margin:0; color:var(--primary-dark); font-size:1.05rem;">👤 സ്റ്റാഫ് വിവരങ്ങൾ (Staff Details)</h3>
+      <button type="button" class="btn-back" onclick="closeStaffDetailEditModal()">✕</button>
+    </div>
+
+    <div class="form-row">
+      <div>
+        <label>സ്റ്റാഫിന്റെ പേര് *</label>
+        <input type="text" id="sdEditName">
+      </div>
+      <div>
+        <label>ഫോൺ / വാട്സാപ്പ് നമ്പർ</label>
+        <input type="tel" id="sdEditPhone" placeholder="ഉദാ: 9847012345">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div>
+        <label>ജോയിൻ ചെയ്ത തീയതി (Joined Date)</label>
+        <input type="date" id="sdEditJoined">
+      </div>
+      <div>
+        <label>വിലാസം / സ്ഥലം (Address)</label>
+        <input type="text" id="sdEditAddress" placeholder="സ്ഥലം...">
+      </div>
+    </div>
+
+    <button type="button" class="btn-primary-full" onclick="saveStaffDetailsEdit()">💾 വിവരങ്ങൾ സേവ് ചെയ്യുക</button>
+  </div>
+</div>
+
 <!-- MULTI-PHOTO GALLERY & UPLOAD MODAL -->
 <div id="photoGalleryModal" class="modal-overlay" onclick="if(event.target===this) closePhotoGallery()">
   <div class="modal-box">
@@ -861,7 +986,7 @@
     <div class="brand-logo">✂️</div>
     <div>
       <h1>ZIBAS TAILORS</h1>
-      <p id="headerSubtitle">Workshop & Delivery Tracker</p>
+      <p id="headerSubtitle">Workshop, Salary & Delivery Tracker</p>
     </div>
   </div>
   <div class="header-actions" id="shopHeaderActions">
@@ -880,10 +1005,10 @@
   <!-- FRONT PAGE (2x4 GRID + NOTIFICATIONS) -->
   <div id="frontHomeView">
     <div class="front-menu-grid">
-      <div class="menu-box-card mb-admin" onclick="openScreen('statusTab')">
-        <div class="menu-box-icon">📊</div>
+      <div class="menu-box-card mb-admin" onclick="requestAdminAccess()">
+        <div class="menu-box-icon">🔒</div>
         <span class="menu-box-title">Admin</span>
-        <span class="menu-box-sub" id="homeAdminSub">സ്റ്റാറ്റസ് & ഡെലിവറി</span>
+        <span class="menu-box-sub" id="homeAdminSub">സ്റ്റാറ്റസ്, സാലറി & റേറ്റ്</span>
       </div>
 
       <div class="menu-box-card mb-cutting" onclick="openScreen('cuttingTab')">
@@ -936,11 +1061,11 @@
       </div>
 
       <div class="notif-row-grid">
-        <div class="notif-pill-box due-box" onclick="openAdminWithFilter('urgent', 2)">
+        <div class="notif-pill-box due-box" onclick="requestAdminAccess('urgent', 2)">
           <span>⚠️ ഇന്ന് / നാളെ</span>
           <span class="notif-count-num" id="homeDueCount">0</span>
         </div>
-        <div class="notif-pill-box uncol-box" onclick="openAdminWithFilter('uncollected', 3)">
+        <div class="notif-pill-box uncol-box" onclick="requestAdminAccess('uncollected', 3)">
           <span>📦 കൊണ്ടുപോകാത്തവ</span>
           <span class="notif-count-num" id="homeUncolCount">0</span>
         </div>
@@ -950,41 +1075,125 @@
     </div>
   </div>
 
-  <!-- SCREEN 1: ADMIN -->
+  <!-- SCREEN 1: PASSWORD-PROTECTED ADMIN PANEL (BILLS, WEEKLY SALARY & RATES, STAFF DETAILS) -->
   <div id="statusTab" style="display: none;">
     <div class="section-header">
-      <h3 class="section-title" style="color: var(--primary-dark);">📊 Admin — സ്റ്റാറ്റസ് & ഡെലിവറി</h3>
-      <button type="button" class="btn-back" onclick="goHome()">🏠 Home</button>
-    </div>
-
-    <div class="search-input-wrap">
-      <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ / വർഷം / പേര് / ഫോൺ / ഷെൽഫ്..." onkeyup="renderBills()">
-    </div>
-
-    <div class="filter-pills">
-      <button class="pill active" onclick="setFilter('all', this)">എല്ലാം (All)</button>
-      <button class="pill" onclick="setFilter('pending', this)">ബാക്കിയുള്ളവ (Pending)</button>
-      <button class="pill" onclick="setFilter('urgent', this)">നാളെ / ഇന്ന് ഡെലിവറി</button>
-      <button class="pill uncollected-pill" onclick="setFilter('uncollected', this)">📦 കൊണ്ടുപോകാത്തവ (Uncollected)</button>
-      <button class="pill" onclick="setFilter('ready', this)">റെഡി (Ready)</button>
-      <button class="pill" onclick="setFilter('delivered', this)">✅ ഡെലിവറി കഴിഞ്ഞവ</button>
-    </div>
-
-    <div id="uncollectedSubBar" class="uncollected-sub-bar">
-      <div style="font-size:0.8rem; font-weight:800; color:#92400e; margin-bottom:8px;">⏳ ഡെലിവറി ഡേറ്റ് കഴിഞ്ഞ് എത്ര ദിവസമായി കൊണ്ടുപോകാത്തവ കാണണം?</div>
-      <div class="sub-pills">
-        <button type="button" class="sub-pill active" onclick="setUncollectedDays(1, this)">എല്ലാ കൊണ്ടുപോകാത്തവ (1+ Day)</button>
-        <button type="button" class="sub-pill" onclick="setUncollectedDays(3, this)">3+ ദിവസം</button>
-        <button type="button" class="sub-pill" onclick="setUncollectedDays(7, this)">7+ ദിവസം (ഒരാഴ്ച)</button>
-        <button type="button" class="sub-pill" onclick="setUncollectedDays(30, this)">30+ ദിവസം (ഒരു മാസം)</button>
-        <button type="button" class="sub-pill" onclick="setUncollectedDays('custom', this)">✍️ ദിവസം നൽകുക</button>
-      </div>
-      <div id="customDaysInputRow" style="display:none; margin-top:8px;">
-        <input type="number" id="customOverdueDaysInput" min="1" value="10" placeholder="എത്ര ദിവസം കഴിഞ്ഞവ? (ഉദാ: 10)" oninput="renderBills()">
+      <h3 class="section-title" style="color: var(--primary-dark);">🛡️ Admin Control Panel</h3>
+      <div style="display:flex; gap:6px;">
+        <button type="button" class="btn-pill" style="background:#334155;" onclick="promptChangeAdminPassword()">🔑 Password</button>
+        <button type="button" class="btn-back" onclick="lockAndGoHome()">🔒 Lock & Home</button>
       </div>
     </div>
 
-    <div id="billsContainer"></div>
+    <!-- Admin 3 Sub-Tabs -->
+    <div class="admin-sub-nav">
+      <button type="button" class="admin-sub-btn active" onclick="switchAdminSubTab('adminBillsPane', this)">📦 Bills & Delivery</button>
+      <button type="button" class="admin-sub-btn" onclick="switchAdminSubTab('adminSalaryPane', this)">💰 Weekly Salary</button>
+      <button type="button" class="admin-sub-btn" onclick="switchAdminSubTab('adminStaffPane', this)">👥 Staff Details</button>
+    </div>
+
+    <!-- ADMIN SUB-PANE 1: BILLS & DELIVERY -->
+    <div id="adminBillsPane">
+      <div class="search-input-wrap">
+        <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ / വർഷം / പേര് / ഫോൺ / ഷെൽഫ്..." onkeyup="renderBills()">
+      </div>
+
+      <div class="filter-pills">
+        <button class="pill active" onclick="setFilter('all', this)">എല്ലാം (All)</button>
+        <button class="pill" onclick="setFilter('pending', this)">ബാക്കിയുള്ളവ (Pending)</button>
+        <button class="pill" onclick="setFilter('urgent', this)">നാളെ / ഇന്ന് ഡെലിവറി</button>
+        <button class="pill uncollected-pill" onclick="setFilter('uncollected', this)">📦 കൊണ്ടുപോകാത്തവ (Uncollected)</button>
+        <button class="pill" onclick="setFilter('ready', this)">റെഡി (Ready)</button>
+        <button class="pill" onclick="setFilter('delivered', this)">✅ ഡെലിവറി കഴിഞ്ഞവ</button>
+      </div>
+
+      <div id="uncollectedSubBar" class="uncollected-sub-bar">
+        <div style="font-size:0.8rem; font-weight:800; color:#92400e; margin-bottom:8px;">⏳ ഡെലിവറി ഡേറ്റ് കഴിഞ്ഞ് എത്ര ദിവസമായി കൊണ്ടുപോകാത്തവ കാണണം?</div>
+        <div class="sub-pills">
+          <button type="button" class="sub-pill active" onclick="setUncollectedDays(1, this)">എല്ലാ കൊണ്ടുപോകാത്തവ (1+ Day)</button>
+          <button type="button" class="sub-pill" onclick="setUncollectedDays(3, this)">3+ ദിവസം</button>
+          <button type="button" class="sub-pill" onclick="setUncollectedDays(7, this)">7+ ദിവസം (ഒരാഴ്ച)</button>
+          <button type="button" class="sub-pill" onclick="setUncollectedDays(30, this)">30+ ദിവസം (ഒരു മാസം)</button>
+          <button type="button" class="sub-pill" onclick="setUncollectedDays('custom', this)">✍️ ദിവസം നൽകുക</button>
+        </div>
+        <div id="customDaysInputRow" style="display:none; margin-top:8px;">
+          <input type="number" id="customOverdueDaysInput" min="1" value="10" placeholder="എത്ര ദിവസം കഴിഞ്ഞവ? (ഉദാ: 10)" oninput="renderBills()">
+        </div>
+      </div>
+
+      <div id="billsContainer"></div>
+    </div>
+
+    <!-- ADMIN SUB-PANE 2: WEEKLY SALARY, PIECE RATES & WHATSAPP SALARY SLIP -->
+    <div id="adminSalaryPane" style="display:none;">
+      
+      <!-- 1. Set Item Piece Rates per Role -->
+      <div class="section-card">
+        <div class="section-header" style="margin-bottom:8px;">
+          <h4 style="margin:0; color:var(--primary-dark);">🏷️ ഓരോ ഐറ്റത്തിന്റെയും കൂലി നിശ്ചയിക്കുക (Piece Rates)</h4>
+          <button type="button" class="btn-pill" style="background:var(--primary);" onclick="toggleRateEditorBox()">⚙️ റേറ്റ് മാറ്റുക</button>
+        </div>
+        <p style="font-size:0.78rem; color:var(--muted); margin:0;">Cutter, Tailor, Button, Ironer എന്നിവർക്ക് ഓരോ തുണിക്കും എത്ര രൂപയാണ് കൂലി എന്ന് ഇവിടെ സെറ്റ് ചെയ്യാം.</p>
+
+        <div id="rateEditorContainer" style="display:none; margin-top:12px; border-top:1px solid var(--border); padding-top:12px;">
+          <label>വിഭാഗം തിരഞ്ഞെടുക്കുക (Select Role):</label>
+          <select id="rateRoleSelect" onchange="renderRateInputsForRole()" style="margin-bottom:10px;">
+            <option value="Tailor">🧵 Tailor (തയ്യൽക്കാർ)</option>
+            <option value="Ironer">🔥 Ironer (അയേണിംഗ്)</option>
+            <option value="Cutter">✂️ Cutter (കട്ടിംഗ്)</option>
+            <option value="Button">🔘 Button / Checking (ബട്ടൺ & ചെക്ക്)</option>
+          </select>
+          <div id="rateInputsList"></div>
+          <button type="button" class="btn-primary-full" style="margin-top:8px;" onclick="savePieceRatesFromUI()">💾 കൂലി നിരക്കുകൾ സേവ് ചെയ്യുക</button>
+        </div>
+      </div>
+
+      <!-- 2. Weekly Salary Filter & Summary -->
+      <div class="section-card">
+        <div class="section-header" style="margin-bottom:8px;">
+          <h4 style="margin:0; color:var(--primary-dark);">💰 ആഴ്ചതോറുമുള്ള ശമ്പള കണക്ക് (Weekly Salary)</h4>
+          <select id="salaryRoleFilter" onchange="renderAdminSalaryPane()" style="width:auto; padding:6px 10px; font-size:0.8rem;">
+            <option value="ALL">എല്ലാ സ്റ്റാഫുകളും</option>
+            <option value="Tailor">🧵 Tailors</option>
+            <option value="Ironer">🔥 Ironers</option>
+            <option value="Cutter">✂️ Cutters</option>
+            <option value="Button">🔘 Button/Check</option>
+          </select>
+        </div>
+
+        <div class="filter-pills" style="margin-bottom:8px;">
+          <button type="button" class="pill active" onclick="setSalaryPeriod('thisWeek', this)">ഈ ആഴ്ച (This Week)</button>
+          <button type="button" class="pill" onclick="setSalaryPeriod('lastWeek', this)">കഴിഞ്ഞ ആഴ്ച (Last Week)</button>
+          <button type="button" class="pill" onclick="setSalaryPeriod('all', this)">എല്ലാം (All Time)</button>
+          <button type="button" class="pill" onclick="setSalaryPeriod('custom', this)">📅 തീയതി</button>
+        </div>
+
+        <div id="salaryCustomDateRow" class="form-row" style="display:none; margin-bottom:10px;">
+          <div>
+            <label>മുതൽ (From):</label>
+            <input type="date" id="salFilterFrom" onchange="renderAdminSalaryPane()">
+          </div>
+          <div>
+            <label>വരെ (To):</label>
+            <input type="date" id="salFilterTo" onchange="renderAdminSalaryPane()">
+          </div>
+        </div>
+
+        <div id="salaryCardsContainer"></div>
+      </div>
+    </div>
+
+    <!-- ADMIN SUB-PANE 3: STAFF DETAILS MANAGEMENT -->
+    <div id="adminStaffPane" style="display:none;">
+      <div class="section-card">
+        <div class="section-header">
+          <h4 style="margin:0; color:var(--primary-dark);">👥 സ്റ്റാഫുകളുടെ വിവരങ്ങൾ (Staff Details)</h4>
+          <button type="button" class="btn-pill" style="background:var(--primary);" onclick="openAddNewStaffFullModal()">+ പുതിയ സ്റ്റാഫ്</button>
+        </div>
+        <div id="adminStaffDetailsList"></div>
+      </div>
+    </div>
+
   </div>
 
   <!-- SCREEN 2: ALL BILLS LIST -->
@@ -1074,7 +1283,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 4: ADD NEW BILL (WITH MULTIPLE PHOTOS TO GOOGLE DRIVE) -->
+  <!-- SCREEN 4: ADD NEW BILL -->
   <div id="entryTab" class="section-card" style="display: none;">
     <div class="section-header">
       <h3 class="section-title" style="color: var(--primary);">➕ പുതിയ ബിൽ ചേർക്കുക</h3>
@@ -1133,7 +1342,6 @@
       <input type="text" id="billDetails" placeholder="ഉദാ: Stiff collar, 2 pockets...">
     </div>
 
-    <!-- Multiple Photos Upload Section -->
     <div style="margin-bottom:14px;">
       <label>ബിൽ / തുണികളുടെ ഫോട്ടോകൾ (എത്ര ഫോട്ടോ വേണമെങ്കിലും ചേർക്കാം):</label>
       <div class="multi-photo-strip" id="newBillMultiPhotoStrip">
@@ -1307,11 +1515,19 @@
   let bills = [];
   let staff = { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [], Shelf: [] };
   let staffPhotos = {};
+  let staffDetails = {};
+  let adminPassword = '1234';
+  let isAdminUnlocked = false;
+  let pendingAdminFilter = null;
+  let pieceRates = {}; // key: "Role:ItemKey" -> number
+  let staffLedger = [];
+  let salaryPeriodFilter = 'thisWeek';
+
   let currentFilter = 'all';
   let uncollectedMinDays = 1;
   let billListOldestFirst = true;
   let manualCustomItems = [];
-  let newBillPhotosBase64 = []; // Multiple photos array
+  let newBillPhotosBase64 = [];
   let selectedButtonWorker = null;
   let selectedIroner = null;
   let selectedCutter = null;
@@ -1326,6 +1542,8 @@
   let activePayBillId = null;
   let activePayHistoryBuffer = [];
   let galleryBillId = null;
+  let activeLedgerStaff = null; // { role, name }
+  let editingStaffTarget = null; // { role, oldName }
 
   const DEFAULT_SHELVES = [
     'Shelf 1', 'Shelf 2', 'Rack 1', 'Left Side Hanger', 'Right Side Hanger', 'Showcase Box'
@@ -1369,6 +1587,502 @@
 
   function hideLoader() {
     document.getElementById('loader').style.display = 'none';
+  }
+
+  // --- ADMIN PASSWORD LOCK & ACCESS ---
+  function requestAdminAccess(filterType, pillIdx) {
+    if (isAdminUnlocked) {
+      openScreen('statusTab');
+      if (filterType) {
+        const pills = document.querySelectorAll('#statusTab .pill');
+        if (pills[pillIdx]) setFilter(filterType, pills[pillIdx]);
+      }
+      return;
+    }
+    pendingAdminFilter = filterType ? { filterType, pillIdx } : null;
+    document.getElementById('adminPassInput').value = '';
+    document.getElementById('adminPassModal').style.display = 'flex';
+    setTimeout(() => document.getElementById('adminPassInput').focus(), 100);
+  }
+
+  function closeAdminPassModal() {
+    document.getElementById('adminPassModal').style.display = 'none';
+    pendingAdminFilter = null;
+  }
+
+  function verifyAdminPassword() {
+    const entered = document.getElementById('adminPassInput').value.trim();
+    if (entered === String(adminPassword)) {
+      isAdminUnlocked = true;
+      const savedFilter = pendingAdminFilter;
+      closeAdminPassModal();
+      openScreen('statusTab');
+      if (savedFilter) {
+        const pills = document.querySelectorAll('#statusTab .pill');
+        if (pills[savedFilter.pillIdx]) setFilter(savedFilter.filterType, pills[savedFilter.pillIdx]);
+      }
+    } else {
+      alert('❌ തെറ്റായ പാസ്‌വേഡ്! വീണ്ടും ശ്രമിക്കുക.');
+      document.getElementById('adminPassInput').value = '';
+      document.getElementById('adminPassInput').focus();
+    }
+  }
+
+  function lockAndGoHome() {
+    isAdminUnlocked = false;
+    goHome();
+  }
+
+  async function promptChangeAdminPassword() {
+    const newPass = prompt('പുതിയ Admin പാസ്‌വേഡ് നൽകുക:', adminPassword);
+    if (!newPass || !newPass.trim()) return;
+    await callApi({ action: 'updateAdminPassword', newPassword: newPass.trim() }, 'പുതിയ പാസ്‌വേഡ് സേവ് ചെയ്യുന്നു...');
+    alert('✅ Admin പാസ്‌വേഡ് മാറ്റിയിട്ടുണ്ട്!');
+  }
+
+  function switchAdminSubTab(paneId, btn) {
+    ['adminBillsPane', 'adminSalaryPane', 'adminStaffPane'].forEach(id => {
+      document.getElementById(id).style.display = id === paneId ? 'block' : 'none';
+    });
+    document.querySelectorAll('.admin-sub-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    if (paneId === 'adminBillsPane') renderBills();
+    if (paneId === 'adminSalaryPane') renderAdminSalaryPane();
+    if (paneId === 'adminStaffPane') renderAdminStaffDetailsPane();
+  }
+
+  // --- ADMIN PIECE RATES & WEEKLY SALARY + WHATSAPP SALARY SLIP ---
+  function toggleRateEditorBox() {
+    const box = document.getElementById('rateEditorContainer');
+    if (box.style.display === 'none') {
+      box.style.display = 'block';
+      renderRateInputsForRole();
+    } else {
+      box.style.display = 'none';
+    }
+  }
+
+  function renderRateInputsForRole() {
+    const role = document.getElementById('rateRoleSelect').value;
+    const listDiv = document.getElementById('rateInputsList');
+    const allTypes = getAllPresetTypes();
+
+    listDiv.innerHTML = allTypes.map(t => {
+      const currentRate = pieceRates[`${role}:${t.key}`] || 0;
+      return `
+        <div class="rate-grid-row">
+          <span>${t.label}</span>
+          <input type="number" class="rate-val-input" data-item="${t.key}" value="${currentRate}" min="0" placeholder="₹">
+        </div>
+      `;
+    }).join('');
+  }
+
+  async function savePieceRatesFromUI() {
+    const role = document.getElementById('rateRoleSelect').value;
+    const updatedRates = { ...pieceRates };
+    document.querySelectorAll('.rate-val-input').forEach(inp => {
+      const itemKey = inp.getAttribute('data-item');
+      updatedRates[`${role}:${itemKey}`] = parseFloat(inp.value) || 0;
+    });
+
+    await callApi({ action: 'savePieceRates', rates: updatedRates }, 'കൂലി നിരക്കുകൾ സേവ് ചെയ്യുന്നു...');
+    alert(`✅ ${role} വിഭാഗത്തിന്റെ കൂലി നിരക്കുകൾ സേവ് ചെയ്തു!`);
+  }
+
+  function setSalaryPeriod(period, btn) {
+    salaryPeriodFilter = period;
+    document.querySelectorAll('#adminSalaryPane .pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const customRow = document.getElementById('salaryCustomDateRow');
+    if (period === 'custom') {
+      customRow.style.display = 'grid';
+      if (!document.getElementById('salFilterFrom').value) {
+        document.getElementById('salFilterFrom').value = getTodayISO();
+        document.getElementById('salFilterTo').value = getTodayISO();
+      }
+    } else {
+      customRow.style.display = 'none';
+    }
+    renderAdminSalaryPane();
+  }
+
+  function isSalaryDateMatch(dateOrTimeStr) {
+    if (salaryPeriodFilter === 'all') return true;
+    const itemDate = parseItemDate(dateOrTimeStr);
+    if (!itemDate) return false;
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+
+    const dayOfWeek = today.getDay();
+    const diffToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    const startOfThisWeek = new Date(today);
+    startOfThisWeek.setDate(today.getDate() - diffToMonday);
+
+    if (salaryPeriodFilter === 'thisWeek') {
+      const endOfThisWeek = new Date(startOfThisWeek);
+      endOfThisWeek.setDate(startOfThisWeek.getDate() + 6);
+      return itemDate >= startOfThisWeek && itemDate <= endOfThisWeek;
+    }
+    if (salaryPeriodFilter === 'lastWeek') {
+      const startOfLastWeek = new Date(startOfThisWeek);
+      startOfLastWeek.setDate(startOfThisWeek.getDate() - 7);
+      const endOfLastWeek = new Date(startOfThisWeek);
+      endOfLastWeek.setDate(startOfThisWeek.getDate() - 1);
+      return itemDate >= startOfLastWeek && itemDate <= endOfLastWeek;
+    }
+    if (salaryPeriodFilter === 'custom') {
+      const f = document.getElementById('salFilterFrom').value;
+      const t = document.getElementById('salFilterTo').value;
+      if (f && itemDate < parseItemDate(f)) return false;
+      if (t && itemDate > parseItemDate(t)) return false;
+      return true;
+    }
+    return true;
+  }
+
+  function getItemRateForRole(role, itemLabel) {
+    // Strip "#1", "#2" etc. to match base item key (e.g., "Shirt #2" -> "Shirt")
+    const baseName = itemLabel.replace(/\s*#\d+$/, '').trim();
+    if (pieceRates[`${role}:${baseName}`] !== undefined) {
+      return Number(pieceRates[`${role}:${baseName}`]) || 0;
+    }
+    // Case-insensitive fallback
+    const foundKey = Object.keys(pieceRates).find(k => k.toLowerCase() === `${role}:${baseName}`.toLowerCase());
+    return foundKey ? (Number(pieceRates[foundKey]) || 0) : 0;
+  }
+
+  function calculateStaffSalarySummary(role, name) {
+    const itemCounts = {}; // baseName -> { count, rate, subtotal }
+    let totalEarned = 0;
+
+    bills.forEach(bill => {
+      bill.items.forEach(item => {
+        let matched = false;
+        let workDateStr = '';
+
+        if (role === 'Cutter' && item.cutter === name) {
+          matched = true;
+          workDateStr = item.cutTime || bill.createdAt;
+        } else if (role === 'Tailor' && item.tailor === name) {
+          matched = true;
+          workDateStr = item.stitchDoneTime || item.stitchTime || bill.createdAt;
+        } else if (role === 'Button' && item.buttonWorker === name) {
+          matched = true;
+          workDateStr = item.buttonTime || bill.createdAt;
+        } else if (role === 'Ironer' && item.ironed && item.ironer === name) {
+          matched = true;
+          workDateStr = item.ironDate || item.ironTime;
+        }
+
+        if (matched && isSalaryDateMatch(workDateStr)) {
+          const baseName = item.label.replace(/\s*#\d+$/, '').trim();
+          const rate = getItemRateForRole(role, item.label);
+          if (!itemCounts[baseName]) {
+            itemCounts[baseName] = { count: 0, rate, subtotal: 0 };
+          }
+          itemCounts[baseName].count += 1;
+          itemCounts[baseName].subtotal += rate;
+          totalEarned += rate;
+        }
+      });
+    });
+
+    let advanceTaken = 0;
+    let salaryAlreadyPaid = 0;
+    staffLedger.forEach(entry => {
+      if (entry.role === role && entry.staffName === name && isSalaryDateMatch(entry.dateISO || entry.dateTimeLabel)) {
+        if (entry.type === 'Advance') advanceTaken += Number(entry.amount) || 0;
+        if (entry.type === 'SalaryPaid') salaryAlreadyPaid += Number(entry.amount) || 0;
+      }
+    });
+
+    const netPayable = totalEarned - advanceTaken - salaryAlreadyPaid;
+    return { itemCounts, totalEarned, advanceTaken, salaryAlreadyPaid, netPayable };
+  }
+
+  function renderAdminSalaryPane() {
+    const container = document.getElementById('salaryCardsContainer');
+    const roleFilter = document.getElementById('salaryRoleFilter').value;
+    const rolesToShow = roleFilter === 'ALL' ? ['Tailor', 'Ironer', 'Cutter', 'Button'] : [roleFilter];
+
+    const roleTitles = {
+      Tailor: '🧵 Tailor',
+      Ironer: '🔥 Ironer',
+      Cutter: '✂️ Cutter',
+      Button: '🔘 Button / Check'
+    };
+
+    let html = '';
+    rolesToShow.forEach(role => {
+      const names = staff[role] || [];
+      names.forEach(name => {
+        const summary = calculateStaffSalarySummary(role, name);
+        const safeName = name.replace(/'/g, "\\'");
+
+        const breakdownKeys = Object.keys(summary.itemCounts);
+        const breakdownHtml = breakdownKeys.length === 0
+          ? `<span style="font-size:0.76rem; color:var(--muted);">ഈ ആഴ്ച വർക്കുകൾ ഒന്നും രേഖപ്പെടുത്തിയിട്ടില്ല</span>`
+          : breakdownKeys.map(k => {
+              const info = summary.itemCounts[k];
+              return `<span class="sb-tag">${k}: <strong>${info.count}</strong> × ₹${info.rate} = ₹${info.subtotal}</span>`;
+            }).join('');
+
+        html += `
+          <div class="salary-staff-card">
+            <div class="salary-card-top">
+              <div>
+                <strong style="font-size:1.05rem; color:var(--primary-dark); text-transform:uppercase;">${name}</strong>
+                <span class="role-badge" style="margin-left:6px;">${roleTitles[role]}</span>
+              </div>
+              <button type="button" class="btn-pill" style="background:var(--primary);" onclick="openStaffLedgerModal('${role}', '${safeName}')">💵 Advance / Pay</button>
+            </div>
+
+            <div class="salary-breakdown-tags">${breakdownHtml}</div>
+
+            <div class="salary-numbers-grid">
+              <div class="sn-box">
+                <span>ആകെ കൂലി</span>
+                <strong style="color:var(--primary-dark);">₹${summary.totalEarned}</strong>
+              </div>
+              <div class="sn-box">
+                <span>അഡ്വാൻസ്</span>
+                <strong style="color:var(--warning);">₹${summary.advanceTaken}</strong>
+              </div>
+              <div class="sn-box">
+                <span>നൽകിയത്</span>
+                <strong style="color:var(--success);">₹${summary.salaryAlreadyPaid}</strong>
+              </div>
+              <div class="sn-box">
+                <span>ബാക്കി (Balance)</span>
+                <strong style="color:${summary.netPayable > 0 ? 'var(--danger)' : 'var(--success)'};">₹${summary.netPayable}</strong>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; gap:8px;">
+              <button type="button" class="btn-wa-share" onclick="sendWhatsAppSalarySlip('${role}', '${safeName}')">📲 WhatsApp Salary Slip</button>
+            </div>
+          </div>
+        `;
+      });
+    });
+
+    container.innerHTML = html || `<p style="text-align:center; color:var(--muted);">സ്റ്റാഫുകളുടെ പേരുകൾ ചേർത്തിട്ടില്ല.</p>`;
+  }
+
+  function sendWhatsAppSalarySlip(role, name) {
+    const summary = calculateStaffSalarySummary(role, name);
+    const details = staffDetails[`${role}:${name}`] || {};
+    const periodLabels = {
+      thisWeek: 'ഈ ആഴ്ച (This Week)',
+      lastWeek: 'കഴിഞ്ഞ ആഴ്ച (Last Week)',
+      all: 'ആകെ കണക്ക് (All Time)',
+      custom: `${document.getElementById('salFilterFrom').value || ''} to ${document.getElementById('salFilterTo').value || ''}`
+    };
+
+    let msg = `*ZIBAS TAILORS - SALARY SLIP*\n`;
+    msg += `👤 *Staff:* ${name.toUpperCase()} (${role})\n`;
+    msg += `📅 *Period:* ${periodLabels[salaryPeriodFilter] || 'Weekly'}\n`;
+    msg += `------------------------\n`;
+
+    const keys = Object.keys(summary.itemCounts);
+    if (keys.length === 0) {
+      msg += `• No items recorded in this period\n`;
+    } else {
+      keys.forEach(k => {
+        const info = summary.itemCounts[k];
+        msg += `• ${k}: ${info.count} × ₹${info.rate} = *₹${info.subtotal}*\n`;
+      });
+    }
+
+    msg += `------------------------\n`;
+    msg += `💰 *Total Earned:* ₹${summary.totalEarned}\n`;
+    msg += `💸 *Advance Taken:* ₹${summary.advanceTaken}\n`;
+    if (summary.salaryAlreadyPaid > 0) {
+      msg += `✅ *Already Paid:* ₹${summary.salaryAlreadyPaid}\n`;
+    }
+    msg += `💵 *Net Balance Payable:* *₹${summary.netPayable}*\n`;
+    msg += `🕒 _Generated on ${formatCurrentDateTime()}_`;
+
+    let phone = (details.phone || '').replace(/\D/g, '');
+    if (phone.length === 10) phone = '91' + phone;
+
+    const waUrl = phone
+      ? `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
+      : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+
+    window.open(waUrl, '_blank');
+  }
+
+  // --- STAFF LEDGER MODAL (ADVANCE & WEEKLY PAYOUT WITH DATE & TIME) ---
+  function openStaffLedgerModal(role, name) {
+    activeLedgerStaff = { role, name };
+    document.getElementById('ledgerModalTitle').innerText = `💵 ${name.toUpperCase()} (${role})`;
+    document.getElementById('ledgerEntryAmount').value = '';
+    document.getElementById('ledgerEntryNote').value = '';
+    document.getElementById('ledgerEntryDate').value = getTodayISO();
+    renderStaffLedgerHistoryList();
+    document.getElementById('staffLedgerModal').style.display = 'flex';
+  }
+
+  function closeStaffLedgerModal() {
+    activeLedgerStaff = null;
+    document.getElementById('staffLedgerModal').style.display = 'none';
+  }
+
+  function renderStaffLedgerHistoryList() {
+    if (!activeLedgerStaff) return;
+    const { role, name } = activeLedgerStaff;
+    const listDiv = document.getElementById('staffLedgerHistoryList');
+    const items = staffLedger.filter(e => e.role === role && e.staffName === name);
+
+    if (items.length === 0) {
+      listDiv.innerHTML = `<p style="font-size:0.8rem; color:var(--muted); text-align:center;">ഇതുവരെ അഡ്വാൻസോ ശമ്പളമോ രേഖപ്പെടുത്തിയിട്ടില്ല.</p>`;
+      return;
+    }
+
+    listDiv.innerHTML = items.map(e => `
+      <div class="pay-hist-row">
+        <div>
+          <strong style="color:${e.type === 'Advance' ? 'var(--warning)' : 'var(--success)'}; font-size:0.95rem;">
+            ${e.type === 'Advance' ? '💸 Advance' : '✅ Salary Paid'}: ₹${e.amount}
+          </strong>
+          ${e.note ? `<span style="color:#334155; font-weight:700; margin-left:6px;">(${e.note})</span>` : ''}
+          <div style="font-size:0.74rem; color:var(--muted);">🕒 ${e.dateTimeLabel || e.dateISO}</div>
+        </div>
+        <button type="button" class="btn-icon-del" onclick="deleteStaffLedgerItem('${e.id}')">🗑️</button>
+      </div>
+    `).join('');
+  }
+
+  async function saveNewStaffLedgerEntry() {
+    if (!activeLedgerStaff) return;
+    const type = document.getElementById('ledgerEntryType').value;
+    const amount = parseFloat(document.getElementById('ledgerEntryAmount').value) || 0;
+    const dateISO = document.getElementById('ledgerEntryDate').value || getTodayISO();
+    const note = document.getElementById('ledgerEntryNote').value.trim();
+
+    if (amount <= 0) return alert('ശരിയായ തുക നൽകുക!');
+
+    const entry = {
+      role: activeLedgerStaff.role,
+      staffName: activeLedgerStaff.name,
+      type,
+      amount,
+      dateISO,
+      dateTimeLabel: formatCurrentDateTime(),
+      note
+    };
+
+    const ok = await callApi({ action: 'addStaffLedgerEntry', entry }, 'സേവ് ചെയ്യുന്നു...');
+    if (ok) {
+      document.getElementById('ledgerEntryAmount').value = '';
+      document.getElementById('ledgerEntryNote').value = '';
+      renderStaffLedgerHistoryList();
+    }
+  }
+
+  async function deleteStaffLedgerItem(entryId) {
+    if (!confirm('ഈ എൻട്രി ഡിലീറ്റ് ചെയ്യണമോ?')) return;
+    const ok = await callApi({ action: 'deleteStaffLedgerEntry', entryId }, 'ഡിലീറ്റ് ചെയ്യുന്നു...');
+    if (ok) renderStaffLedgerHistoryList();
+  }
+
+  // --- ADMIN STAFF DETAILS PANE ---
+  function renderAdminStaffDetailsPane() {
+    const listDiv = document.getElementById('adminStaffDetailsList');
+    const roles = [
+      { key: 'Tailor', label: '🧵 Tailors' },
+      { key: 'Ironer', label: '🔥 Ironers' },
+      { key: 'Cutter', label: '✂️ Cutters' },
+      { key: 'Button', label: '🔘 Button / Check' }
+    ];
+
+    let html = '';
+    roles.forEach(r => {
+      const names = staff[r.key] || [];
+      names.forEach(name => {
+        const det = staffDetails[`${r.key}:${name}`] || {};
+        const safeName = name.replace(/'/g, "\\'");
+        html += `
+          <div class="history-card" style="border-left-color:var(--primary);">
+            <div style="display:flex; align-items:center; gap:10px;">
+              ${getAvatarHtml(r.key, name, '👤', true) || '<div style="width:40px;height:40px;border-radius:50%;background:#eff6ff;display:flex;align-items:center;justify-content:center;">👤</div>'}
+              <div>
+                <strong style="font-size:1rem; color:var(--primary-dark); text-transform:uppercase;">${name}</strong>
+                <span class="role-badge" style="margin-left:5px;">${r.label}</span>
+                <div style="font-size:0.78rem; color:var(--muted); margin-top:2px;">
+                  📞 ${det.phone || 'ഫോൺ ഇല്ല'} • 📍 ${det.address || 'വിലാസം ഇല്ല'}
+                  ${det.joinedDate ? ` • 📅 Joined: ${det.joinedDate}` : ''}
+                </div>
+              </div>
+            </div>
+            <div class="history-right">
+              <button type="button" class="btn-edit-bill" onclick="openStaffDetailEditModal('${r.key}', '${safeName}')">✏️ Details</button>
+              <button type="button" class="btn-icon-del" onclick="deleteStaffMember('${r.key}', '${safeName}')">🗑️</button>
+            </div>
+          </div>
+        `;
+      });
+    });
+
+    listDiv.innerHTML = html || `<p style="text-align:center; color:var(--muted);">സ്റ്റാഫുകൾ ഒന്നും ഇല്ല.</p>`;
+  }
+
+  function openAddNewStaffFullModal() {
+    const role = prompt('വിഭാഗം തിരഞ്ഞെടുക്കുക (Tailor, Ironer, Cutter, Button):', 'Tailor');
+    if (!role) return;
+    const validRoles = ['Tailor', 'Ironer', 'Cutter', 'Button'];
+    const matchedRole = validRoles.find(v => v.toLowerCase() === role.trim().toLowerCase());
+    if (!matchedRole) return alert('Tailor, Ironer, Cutter, Button ഇവയിൽ ഏതെങ്കിലും ഒന്ന് നൽകുക!');
+
+    const name = prompt(`${matchedRole} പേര് നൽകുക:`);
+    if (!name || !name.trim()) return;
+    const phone = prompt('ഫോൺ / വാട്സാപ്പ് നമ്പർ (Optional):') || '';
+    const address = prompt('സ്ഥലം / വിലാസം (Optional):') || '';
+
+    callApi({
+      action: 'addStaff',
+      role: matchedRole,
+      name: name.trim(),
+      photo: '',
+      phone: phone.trim(),
+      address: address.trim(),
+      joinedDate: getTodayISO()
+    }, 'പുതിയ സ്റ്റാഫിനെ ചേർക്കുന്നു...');
+  }
+
+  function openStaffDetailEditModal(role, oldName) {
+    editingStaffTarget = { role, oldName };
+    const det = staffDetails[`${role}:${oldName}`] || {};
+    document.getElementById('sdEditModalTitle').innerText = `👤 ${oldName.toUpperCase()} (${role})`;
+    document.getElementById('sdEditName').value = oldName;
+    document.getElementById('sdEditPhone').value = det.phone || '';
+    document.getElementById('sdEditJoined').value = det.joinedDate || '';
+    document.getElementById('sdEditAddress').value = det.address || '';
+    document.getElementById('staffDetailEditModal').style.display = 'flex';
+  }
+
+  function closeStaffDetailEditModal() {
+    editingStaffTarget = null;
+    document.getElementById('staffDetailEditModal').style.display = 'none';
+  }
+
+  async function saveStaffDetailsEdit() {
+    if (!editingStaffTarget) return;
+    const newName = document.getElementById('sdEditName').value.trim();
+    if (!newName) return alert('പേര് നൽകുക!');
+    const phone = document.getElementById('sdEditPhone').value.trim();
+    const joinedDate = document.getElementById('sdEditJoined').value;
+    const address = document.getElementById('sdEditAddress').value.trim();
+
+    const { role, oldName } = editingStaffTarget;
+    closeStaffDetailEditModal();
+
+    await callApi({
+      action: 'updateStaffDetails',
+      role, oldName, newName, phone, address, joinedDate
+    }, 'സ്റ്റാഫ് വിവരങ്ങൾ സേവ് ചെയ്യുന്നു...');
   }
 
   // --- FRONT PAGE NAVIGATION ---
@@ -1422,12 +2136,6 @@
       document.getElementById('buttonWorkerDetailView').style.display = 'none';
       renderButtonWorkersList();
     }
-  }
-
-  function openAdminWithFilter(filterType, pillIdx) {
-    openScreen('statusTab');
-    const pills = document.querySelectorAll('#statusTab .pill');
-    if (pills[pillIdx]) setFilter(filterType, pills[pillIdx]);
   }
 
   function updateFrontHomeDashboard() {
@@ -1586,6 +2294,10 @@
         staff = data.staff || { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [], Shelf: [] };
         if (!staff.Shelf) staff.Shelf = [];
         staffPhotos = data.staffPhotos || {};
+        staffDetails = data.staffDetails || {};
+        adminPassword = data.adminPassword || '1234';
+        pieceRates = data.pieceRates || {};
+        staffLedger = data.staffLedger || [];
       } else {
         response = await fetch(API_URL, {
           method: 'POST',
@@ -1598,6 +2310,10 @@
         staff = resJson.data.staff || { Cutter: [], Tailor: [], Button: [], Ironer: [], ItemType: [], Shelf: [] };
         if (!staff.Shelf) staff.Shelf = [];
         staffPhotos = resJson.data.staffPhotos || {};
+        staffDetails = resJson.data.staffDetails || {};
+        adminPassword = resJson.data.adminPassword || '1234';
+        pieceRates = resJson.data.pieceRates || {};
+        staffLedger = resJson.data.staffLedger || [];
       }
       hideLoader();
       if (customerQueryBill) {
@@ -1647,7 +2363,7 @@
         const img = new Image();
         img.onload = function() {
           const canvas = document.createElement('canvas');
-          const maxDim = 900; // Crisp quality for Drive storage
+          const maxDim = 900;
           let w = img.width;
           let h = img.height;
           if (w > h && w > maxDim) { h = Math.round(h * maxDim / w); w = maxDim; }
@@ -2063,6 +2779,7 @@
 
           <div class="bill-list-meta">
             <span>📅 ഡെലിവറി: <strong>${bill.deliveryDate}</strong></span>
+            ${bill.createdAt ? `<span>🕒 എൻട്രി: ${bill.createdAt}</span>` : ''}
             <span>💰 Total: <strong>₹${totalAmt}</strong> ${discAmt > 0 ? `| Disc: <strong style="color:var(--teal);">₹${discAmt}</strong>` : ''} | Paid: <strong>₹${advAmt}</strong> | <strong style="color:${balAmt > 0 ? 'var(--danger)' : 'var(--success)'};">Bal: ₹${balAmt}</strong></span>
           </div>
 
@@ -2080,7 +2797,7 @@
     return DEFAULT_SHELVES;
   }
 
-  // --- DEDICATED SHELF & BOXES MENU (WITH PHOTO CAPTURE FOR SHELF ITEMS) ---
+  // --- DEDICATED SHELF & BOXES MENU ---
   function promptNewShelf() {
     const name = prompt('പുതിയ ഷെൽഫ് അല്ലെങ്കിൽ ബോക്സിന്റെ പേര് നൽകുക (ഉദാ: Shelf 3, Box 2, Left Hanger):');
     if (!name || !name.trim()) return;
@@ -2464,7 +3181,11 @@
   function refreshAllActiveViews() {
     renderItemBoxes();
     updateFrontHomeDashboard();
-    if (document.getElementById('statusTab').style.display === 'block') renderBills();
+    if (document.getElementById('statusTab').style.display === 'block') {
+      if (document.getElementById('adminBillsPane').style.display !== 'none') renderBills();
+      if (document.getElementById('adminSalaryPane').style.display !== 'none') renderAdminSalaryPane();
+      if (document.getElementById('adminStaffPane').style.display !== 'none') renderAdminStaffDetailsPane();
+    }
     if (document.getElementById('billListTab').style.display === 'block') renderBillListTab();
     if (document.getElementById('manageModal').style.display === 'flex') renderManageModalContent();
     if (document.getElementById('ironingTab').style.display === 'block') {
@@ -2577,7 +3298,7 @@
     };
     const name = prompt(`${roleNames[role]} നൽകുക:`);
     if (!name || !name.trim()) return;
-    callApi({ action: 'addStaff', role, name: name.trim(), photo: '' }, 'സേവ് ചെയ്യുന്നു...');
+    callApi({ action: 'addStaff', role, name: name.trim(), photo: '', phone: '', address: '', joinedDate: getTodayISO() }, 'സേവ് ചെയ്യുന്നു...');
   }
 
   function formatCurrentDateTime() {
@@ -3501,6 +4222,10 @@
   }
 
   function quickSearchBill(billNo) {
+    if (!isAdminUnlocked) {
+      requestAdminAccess();
+      return;
+    }
     openScreen('statusTab');
     document.getElementById('searchInput').value = billNo;
     setFilter('all', document.querySelectorAll('#statusTab .pill')[0]);
@@ -3616,7 +4341,7 @@
               <button type="button" class="${locBtnClass}" onclick="openLocationModal('${bill.id}', ${idx})">${locText}</button>
             </div>
             <div class="item-workers">
-              <span class="w-chip">✂️ ${item.cutter || '-'}</span>
+              <span class="w-chip">✂️ ${item.cutter || '-'} ${item.cutTime ? `(${item.cutTime})` : ''}</span>
               <span class="w-chip">🧵 ${item.tailor || '-'} ${item.stitchDone ? '✅' : ''}</span>
               <span class="w-chip">🔘 ${item.buttonWorker || '-'}</span>
               <span class="w-chip">🔥 ${item.ironer || '-'}</span>
