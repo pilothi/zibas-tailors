@@ -145,99 +145,77 @@
 
     /* ADMIN SUB-TABS */
     .admin-sub-nav {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      background: #e2e8f0;
-      padding: 5px;
-      border-radius: 16px;
-      margin-bottom: 14px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+      background: #e2e8f0; padding: 5px; border-radius: 16px; margin-bottom: 14px;
     }
     .admin-sub-btn {
-      border: none;
-      background: transparent;
-      padding: 10px 6px;
-      border-radius: 12px;
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: #475569;
-      cursor: pointer;
-      transition: 0.15s;
+      border: none; background: transparent; padding: 10px 6px; border-radius: 12px;
+      font-size: 0.8rem; font-weight: 800; color: #475569; cursor: pointer; transition: 0.15s;
     }
     .admin-sub-btn.active {
-      background: white;
-      color: var(--primary-dark);
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+      background: white; color: var(--primary-dark); box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
     }
 
     /* SALARY & RATES STYLES */
     .salary-staff-card {
-      background: white;
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 14px;
-      margin-bottom: 12px;
-      box-shadow: var(--shadow-sm);
+      background: white; border: 1.5px solid var(--border); border-radius: 16px;
+      padding: 14px; margin-bottom: 12px; box-shadow: var(--shadow-sm);
     }
     .salary-card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #f1f5f9;
-      padding-bottom: 10px;
-      margin-bottom: 10px;
-      gap: 8px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 10px; gap: 8px;
     }
     .role-badge {
-      font-size: 0.7rem;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 10px;
-      background: var(--primary-soft);
-      color: var(--primary);
-      text-transform: uppercase;
+      font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 10px;
+      background: var(--primary-soft); color: var(--primary); text-transform: uppercase;
     }
-    .salary-breakdown-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 10px;
-    }
+    .salary-breakdown-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
     .sb-tag {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      padding: 4px 9px;
-      border-radius: 10px;
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: #334155;
+      background: #f8fafc; border: 1px solid var(--border); padding: 4px 9px;
+      border-radius: 10px; font-size: 0.76rem; font-weight: 700; color: #334155;
     }
     .salary-numbers-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 9px 6px;
-      text-align: center;
-      margin-bottom: 10px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; background: #f8fafc;
+      border: 1px solid var(--border); border-radius: 12px; padding: 9px 6px; text-align: center; margin-bottom: 10px;
     }
     .sn-box span { display: block; font-size: 0.68rem; color: var(--muted); font-weight: 700; }
     .sn-box strong { display: block; font-size: 0.92rem; font-weight: 800; margin-top: 2px; }
 
+    /* Editable Item + Rate Row in Piece Rates */
     .rate-grid-row {
       display: grid;
-      grid-template-columns: 1fr 110px;
-      gap: 10px;
+      grid-template-columns: 1fr 90px auto;
+      gap: 8px;
       align-items: center;
       background: #f8fafc;
       border: 1px solid var(--border);
-      padding: 8px 12px;
+      padding: 8px 10px;
       border-radius: 12px;
       margin-bottom: 7px;
       font-size: 0.88rem;
       font-weight: 700;
+    }
+    .rate-item-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .rate-item-actions {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .btn-mini-icon {
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 5px 7px;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+    .btn-mini-icon.del {
+      background: var(--danger-soft);
+      border-color: #fecdd3;
+      color: var(--danger);
     }
 
     /* MULTI-PHOTO STRIP & GALLERY MODAL */
@@ -929,14 +907,7 @@
       <label style="color:#0369a1; font-size:0.78rem;">+ പുതിയ ഐറ്റം കൂടി ചേർക്കാൻ:</label>
       <div style="display:grid; grid-template-columns:1fr 65px auto; gap:6px;">
         <input type="text" id="editNewItemName" list="presetItemSuggestions" placeholder="ഉദാ: Shirt, Pant...">
-        <datalist id="presetItemSuggestions">
-          <option value="Shirt">
-          <option value="Pant">
-          <option value="Jubba">
-          <option value="Pajama">
-          <option value="Kurta">
-          <option value="Qamees">
-        </datalist>
+        <datalist id="presetItemSuggestions"></datalist>
         <input type="number" id="editNewItemCount" value="1" min="1">
         <button type="button" class="btn-pill" style="background:var(--primary);" onclick="addNewItemInEditModal()">+ ചേർക്കുക</button>
       </div>
@@ -1075,7 +1046,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 1: PASSWORD-PROTECTED ADMIN PANEL (BILLS, WEEKLY SALARY & RATES, STAFF DETAILS) -->
+  <!-- SCREEN 1: PASSWORD-PROTECTED ADMIN PANEL -->
   <div id="statusTab" style="display: none;">
     <div class="section-header">
       <h3 class="section-title" style="color: var(--primary-dark);">🛡️ Admin Control Panel</h3>
@@ -1085,7 +1056,6 @@
       </div>
     </div>
 
-    <!-- Admin 3 Sub-Tabs -->
     <div class="admin-sub-nav">
       <button type="button" class="admin-sub-btn active" onclick="switchAdminSubTab('adminBillsPane', this)">📦 Bills & Delivery</button>
       <button type="button" class="admin-sub-btn" onclick="switchAdminSubTab('adminSalaryPane', this)">💰 Weekly Salary</button>
@@ -1124,18 +1094,28 @@
       <div id="billsContainer"></div>
     </div>
 
-    <!-- ADMIN SUB-PANE 2: WEEKLY SALARY, PIECE RATES & WHATSAPP SALARY SLIP -->
+    <!-- ADMIN SUB-PANE 2: WEEKLY SALARY, PIECE RATES (WITH ADD/EDIT ITEMS) & WHATSAPP SALARY SLIP -->
     <div id="adminSalaryPane" style="display:none;">
       
-      <!-- 1. Set Item Piece Rates per Role -->
+      <!-- 1. Set Item Piece Rates per Role + Add/Edit Items right here -->
       <div class="section-card">
         <div class="section-header" style="margin-bottom:8px;">
-          <h4 style="margin:0; color:var(--primary-dark);">🏷️ ഓരോ ഐറ്റത്തിന്റെയും കൂലി നിശ്ചയിക്കുക (Piece Rates)</h4>
-          <button type="button" class="btn-pill" style="background:var(--primary);" onclick="toggleRateEditorBox()">⚙️ റേറ്റ് മാറ്റുക</button>
+          <h4 style="margin:0; color:var(--primary-dark);">🏷️ ഓരോ ഐറ്റത്തിന്റെയും കൂലി (Piece Rates)</h4>
+          <button type="button" class="btn-pill" style="background:var(--primary);" onclick="toggleRateEditorBox()">⚙️ റേറ്റ് & ഐറ്റംസ്</button>
         </div>
-        <p style="font-size:0.78rem; color:var(--muted); margin:0;">Cutter, Tailor, Button, Ironer എന്നിവർക്ക് ഓരോ തുണിക്കും എത്ര രൂപയാണ് കൂലി എന്ന് ഇവിടെ സെറ്റ് ചെയ്യാം.</p>
+        <p style="font-size:0.78rem; color:var(--muted); margin:0;">ഓരോ തുണിക്കും എത്ര രൂപയാണ് കൂലി എന്ന് സെറ്റ് ചെയ്യാനും, പുതിയ ഐറ്റംസ് ചേർക്കാനും നിലവിലുള്ളവ എഡിറ്റ് ചെയ്യാനും ഇവിടെ സാധിക്കും.</p>
 
         <div id="rateEditorContainer" style="display:none; margin-top:12px; border-top:1px solid var(--border); padding-top:12px;">
+          
+          <!-- Add New Item right inside Piece Rates page -->
+          <div style="background:#f0f9ff; border:1.5px dashed #7dd3fc; border-radius:12px; padding:10px; margin-bottom:12px;">
+            <label style="color:#0369a1; font-size:0.78rem;">➕ പുതിയ ഐറ്റം ചേർക്കുക (ഉദാ: Suit, Safari, Omani Qamees):</label>
+            <div style="display:grid; grid-template-columns:1fr auto; gap:8px;">
+              <input type="text" id="ratePageNewItemInput" placeholder="ഐറ്റത്തിന്റെ പേര് നൽകുക...">
+              <button type="button" class="btn-pill" style="background:var(--primary); padding:10px 14px;" onclick="addNewManagedItemFromRates()">+ ചേർക്കുക</button>
+            </div>
+          </div>
+
           <label>വിഭാഗം തിരഞ്ഞെടുക്കുക (Select Role):</label>
           <select id="rateRoleSelect" onchange="renderRateInputsForRole()" style="margin-bottom:10px;">
             <option value="Tailor">🧵 Tailor (തയ്യൽക്കാർ)</option>
@@ -1143,6 +1123,7 @@
             <option value="Cutter">✂️ Cutter (കട്ടിംഗ്)</option>
             <option value="Button">🔘 Button / Checking (ബട്ടൺ & ചെക്ക്)</option>
           </select>
+
           <div id="rateInputsList"></div>
           <button type="button" class="btn-primary-full" style="margin-top:8px;" onclick="savePieceRatesFromUI()">💾 കൂലി നിരക്കുകൾ സേവ് ചെയ്യുക</button>
         </div>
@@ -1353,7 +1334,7 @@
 
     <div class="section-header" style="border-top: 1px solid var(--border); padding-top: 14px; margin-bottom: 10px;">
       <label style="margin:0;">ഐറ്റംസിന്റെ എണ്ണം:</label>
-      <button type="button" class="btn-pill" onclick="promptNewStaff('ItemType')">+ പുതിയ സ്ഥിരം ഐറ്റം</button>
+      <button type="button" class="btn-pill" onclick="addNewManagedItemPrompt()">+ പുതിയ സ്ഥിരം ഐറ്റം</button>
     </div>
 
     <div id="itemsGrid" class="items-grid"></div>
@@ -1519,7 +1500,8 @@
   let adminPassword = '1234';
   let isAdminUnlocked = false;
   let pendingAdminFilter = null;
-  let pieceRates = {}; // key: "Role:ItemKey" -> number
+  let pieceRates = {};
+  let managedItems = null; // Array of { key, label }
   let staffLedger = [];
   let salaryPeriodFilter = 'thisWeek';
 
@@ -1542,8 +1524,8 @@
   let activePayBillId = null;
   let activePayHistoryBuffer = [];
   let galleryBillId = null;
-  let activeLedgerStaff = null; // { role, name }
-  let editingStaffTarget = null; // { role, oldName }
+  let activeLedgerStaff = null;
+  let editingStaffTarget = null;
 
   const DEFAULT_SHELVES = [
     'Shelf 1', 'Shelf 2', 'Rack 1', 'Left Side Hanger', 'Right Side Hanger', 'Showcase Box'
@@ -1587,6 +1569,89 @@
 
   function hideLoader() {
     document.getElementById('loader').style.display = 'none';
+  }
+
+  // --- UNIFIED ITEM LIST MANAGEMENT (ADD / EDIT / DELETE ITEMS ANYWHERE) ---
+  function getAllPresetTypes() {
+    if (Array.isArray(managedItems) && managedItems.length > 0) {
+      return managedItems.map(it => ({ ...it, isCustom: true }));
+    }
+    const list = DEFAULT_ITEM_TYPES.map(d => ({ ...d, isCustom: false }));
+    (staff.ItemType || []).forEach(customName => {
+      if (!list.some(item => item.key.toLowerCase() === customName.toLowerCase())) {
+        list.push({ key: customName, label: customName, isCustom: true });
+      }
+    });
+    return list;
+  }
+
+  async function addNewManagedItemFromRates() {
+    const inp = document.getElementById('ratePageNewItemInput');
+    const name = inp.value.trim();
+    if (!name) return alert('ഐറ്റത്തിന്റെ പേര് നൽകുക!');
+
+    const currentList = getAllPresetTypes().map(i => ({ key: i.key, label: i.label }));
+    if (currentList.some(i => i.key.toLowerCase() === name.toLowerCase())) {
+      return alert('ഈ ഐറ്റം നിലവിലുണ്ട്!');
+    }
+    currentList.push({ key: name, label: name });
+    inp.value = '';
+    await callApi({ action: 'saveManagedItems', items: currentList, rates: pieceRates }, 'പുതിയ ഐറ്റം ചേർക്കുന്നു...');
+  }
+
+  async function addNewManagedItemPrompt() {
+    const name = prompt('പുതിയ സ്ഥിരം ഐറ്റത്തിന്റെ പേര് നൽകുക (ഉദാ: Safari, Suit, Omani Qamees):');
+    if (!name || !name.trim()) return;
+    const cleanName = name.trim();
+    const currentList = getAllPresetTypes().map(i => ({ key: i.key, label: i.label }));
+    if (currentList.some(i => i.key.toLowerCase() === cleanName.toLowerCase())) {
+      return alert('ഈ ഐറ്റം നിലവിലുണ്ട്!');
+    }
+    currentList.push({ key: cleanName, label: cleanName });
+    await callApi({ action: 'saveManagedItems', items: currentList, rates: pieceRates }, 'പുതിയ ഐറ്റം ചേർക്കുന്നു...');
+  }
+
+  async function editManagedItemName(oldKey) {
+    const currentList = getAllPresetTypes().map(i => ({ key: i.key, label: i.label }));
+    const target = currentList.find(i => i.key === oldKey);
+    if (!target) return;
+
+    const newKey = prompt('ഐറ്റത്തിന്റെ പുതിയ പേര് (English Key, ഉദാ: Shirt, Safari):', target.key);
+    if (!newKey || !newKey.trim()) return;
+    const cleanNewKey = newKey.trim();
+
+    const newLabel = prompt('ഡിസ്പ്ലേ പേര് (ഉദാ: ഷർട്ട് (Shirt)):', target.label === target.key ? cleanNewKey : target.label);
+    if (!newLabel || !newLabel.trim()) return;
+
+    target.key = cleanNewKey;
+    target.label = newLabel.trim();
+
+    // Migrate pieceRates to new key if key changed
+    const updatedRates = { ...pieceRates };
+    if (oldKey !== cleanNewKey) {
+      ['Tailor', 'Ironer', 'Cutter', 'Button'].forEach(r => {
+        if (updatedRates[`${r}:${oldKey}`] !== undefined) {
+          updatedRates[`${r}:${cleanNewKey}`] = updatedRates[`${r}:${oldKey}`];
+          delete updatedRates[`${r}:${oldKey}`];
+        }
+      });
+    }
+
+    await callApi({ action: 'saveManagedItems', items: currentList, rates: updatedRates }, 'ഐറ്റം അപ്‌ഡേറ്റ് ചെയ്യുന്നു...');
+  }
+
+  async function deleteManagedItem(keyToDelete) {
+    const currentList = getAllPresetTypes().map(i => ({ key: i.key, label: i.label }));
+    if (currentList.length <= 1) return alert('കുറഞ്ഞത് ഒരു ഐറ്റം എങ്കിലും ഉണ്ടായിരിക്കണം!');
+    if (!confirm(`"${keyToDelete}" എന്ന ഐറ്റം ലിസ്റ്റിൽ നിന്ന് ഡിലീറ്റ് ചെയ്യണമോ?`)) return;
+
+    const filteredList = currentList.filter(i => i.key !== keyToDelete);
+    const updatedRates = { ...pieceRates };
+    ['Tailor', 'Ironer', 'Cutter', 'Button'].forEach(r => {
+      delete updatedRates[`${r}:${keyToDelete}`];
+    });
+
+    await callApi({ action: 'saveManagedItems', items: filteredList, rates: updatedRates }, 'ഐറ്റം ഡിലീറ്റ് ചെയ്യുന്നു...');
   }
 
   // --- ADMIN PASSWORD LOCK & ACCESS ---
@@ -1670,10 +1735,17 @@
 
     listDiv.innerHTML = allTypes.map(t => {
       const currentRate = pieceRates[`${role}:${t.key}`] || 0;
+      const safeKey = t.key.replace(/'/g, "\\'");
       return `
         <div class="rate-grid-row">
-          <span>${t.label}</span>
+          <div class="rate-item-info">
+            <span>${t.label}</span>
+          </div>
           <input type="number" class="rate-val-input" data-item="${t.key}" value="${currentRate}" min="0" placeholder="₹">
+          <div class="rate-item-actions">
+            <button type="button" class="btn-mini-icon" title="പേര് മാറ്റുക" onclick="editManagedItemName('${safeKey}')">✏️</button>
+            <button type="button" class="btn-mini-icon del" title="ഡിലീറ്റ്" onclick="deleteManagedItem('${safeKey}')">🗑️</button>
+          </div>
         </div>
       `;
     }).join('');
@@ -1742,18 +1814,16 @@
   }
 
   function getItemRateForRole(role, itemLabel) {
-    // Strip "#1", "#2" etc. to match base item key (e.g., "Shirt #2" -> "Shirt")
     const baseName = itemLabel.replace(/\s*#\d+$/, '').trim();
     if (pieceRates[`${role}:${baseName}`] !== undefined) {
       return Number(pieceRates[`${role}:${baseName}`]) || 0;
     }
-    // Case-insensitive fallback
     const foundKey = Object.keys(pieceRates).find(k => k.toLowerCase() === `${role}:${baseName}`.toLowerCase());
     return foundKey ? (Number(pieceRates[foundKey]) || 0) : 0;
   }
 
   function calculateStaffSalarySummary(role, name) {
-    const itemCounts = {}; // baseName -> { count, rate, subtotal }
+    const itemCounts = {};
     let totalEarned = 0;
 
     bills.forEach(bill => {
@@ -1802,6 +1872,9 @@
   }
 
   function renderAdminSalaryPane() {
+    if (document.getElementById('rateEditorContainer').style.display !== 'none') {
+      renderRateInputsForRole();
+    }
     const container = document.getElementById('salaryCardsContainer');
     const roleFilter = document.getElementById('salaryRoleFilter').value;
     const rolesToShow = roleFilter === 'ALL' ? ['Tailor', 'Ironer', 'Cutter', 'Button'] : [roleFilter];
@@ -1914,7 +1987,7 @@
     window.open(waUrl, '_blank');
   }
 
-  // --- STAFF LEDGER MODAL (ADVANCE & WEEKLY PAYOUT WITH DATE & TIME) ---
+  // --- STAFF LEDGER MODAL ---
   function openStaffLedgerModal(role, name) {
     activeLedgerStaff = { role, name };
     document.getElementById('ledgerModalTitle').innerText = `💵 ${name.toUpperCase()} (${role})`;
@@ -2185,6 +2258,11 @@
     const curYear = new Date().getFullYear();
     const safeBillNo = searchedBillNo.replace(/'/g, "\\'");
     const safeTarget = targetWorkerOrShelf.replace(/'/g, "\\'");
+    const allTypes = getAllPresetTypes();
+
+    const miniInputs = allTypes.map(t => `
+      <div class="q-mini-item">${t.key}<br><input type="number" class="q-auto-item-cnt" data-key="${t.key}" value="${t.key === 'Shirt' ? 1 : 0}" min="0"></div>
+    `).join('');
 
     return `
       <div class="quick-create-bill-box">
@@ -2204,14 +2282,7 @@
             <input type="date" id="qAddDelDate" value="${getTodayISO()}" style="padding:7px;">
           </div>
         </div>
-        <div class="quick-item-mini-grid">
-          <div class="q-mini-item">Shirt<br><input type="number" id="qCntShirt" value="1" min="0"></div>
-          <div class="q-mini-item">Pant<br><input type="number" id="qCntPant" value="0" min="0"></div>
-          <div class="q-mini-item">Jubba<br><input type="number" id="qCntJubba" value="0" min="0"></div>
-          <div class="q-mini-item">Pajama<br><input type="number" id="qCntPajama" value="0" min="0"></div>
-          <div class="q-mini-item">Kurta<br><input type="number" id="qCntKurta" value="0" min="0"></div>
-          <div class="q-mini-item">Other<br><input type="number" id="qCntOther" value="0" min="0"></div>
-        </div>
+        <div class="quick-item-mini-grid">${miniInputs}</div>
         <button type="button" class="btn-primary-full" style="background:#d97706; padding:11px; font-size:0.88rem;"
           onclick="executeQuickAutoAddBill('${safeBillNo}', '${targetRole}', '${safeTarget}')">
           ➕ Bill #${searchedBillNo} ആഡ് ചെയ്ത് വർക്ക് നൽകുക
@@ -2226,20 +2297,13 @@
     const nowTime = formatCurrentDateTime();
     const todayISO = getTodayISO();
 
-    const counts = [
-      { key: 'Shirt', cnt: parseInt(document.getElementById('qCntShirt').value) || 0 },
-      { key: 'Pant', cnt: parseInt(document.getElementById('qCntPant').value) || 0 },
-      { key: 'Jubba', cnt: parseInt(document.getElementById('qCntJubba').value) || 0 },
-      { key: 'Pajama', cnt: parseInt(document.getElementById('qCntPajama').value) || 0 },
-      { key: 'Kurta', cnt: parseInt(document.getElementById('qCntKurta').value) || 0 },
-      { key: 'Garment', cnt: parseInt(document.getElementById('qCntOther').value) || 0 }
-    ];
-
     const itemsList = [];
-    counts.forEach(c => {
-      for (let i = 1; i <= c.cnt; i++) {
+    document.querySelectorAll('.q-auto-item-cnt').forEach(inp => {
+      const key = inp.getAttribute('data-key');
+      const cnt = parseInt(inp.value) || 0;
+      for (let i = 1; i <= cnt; i++) {
         const itemObj = {
-          label: c.cnt > 1 ? `${c.key} #${i}` : c.key,
+          label: cnt > 1 ? `${key} #${i}` : key,
           cutter: '', cutTime: '',
           tailor: '', stitchTime: '', stitchDone: false, stitchDoneTime: '',
           buttonWorker: '', buttonTime: '',
@@ -2297,6 +2361,7 @@
         staffDetails = data.staffDetails || {};
         adminPassword = data.adminPassword || '1234';
         pieceRates = data.pieceRates || {};
+        managedItems = data.managedItems || null;
         staffLedger = data.staffLedger || [];
       } else {
         response = await fetch(API_URL, {
@@ -2313,6 +2378,7 @@
         staffDetails = resJson.data.staffDetails || {};
         adminPassword = resJson.data.adminPassword || '1234';
         pieceRates = resJson.data.pieceRates || {};
+        managedItems = resJson.data.managedItems || null;
         staffLedger = resJson.data.staffLedger || [];
       }
       hideLoader();
@@ -2608,6 +2674,9 @@
     document.getElementById('editDiscountAmount').value = bill.discountAmount || 0;
     document.getElementById('editAdvanceAmount').value = bill.advanceAmount || 0;
     document.getElementById('editBillDetails').value = bill.billDetails || '';
+
+    const datalist = document.getElementById('presetItemSuggestions');
+    datalist.innerHTML = getAllPresetTypes().map(t => `<option value="${t.key}">`).join('');
 
     renderEditModalItems();
     document.getElementById('editBillModal').style.display = 'flex';
@@ -3226,9 +3295,15 @@
       { role: 'Cutter', title: '✂️ കട്ടർമാർ (Cutters)' },
       { role: 'Tailor', title: '🧵 തയ്യൽക്കാർ (Tailors)' },
       { role: 'Button', title: '🔘 ബട്ടൺ & ചെക്കിംഗ് സ്റ്റാഫ്' },
-      { role: 'Ironer', title: '🔥 അയേണിംഗ് സ്റ്റാഫുകൾ' },
-      { role: 'ItemType', title: '👕 പുതിയ സ്ഥിരം ഐറ്റംസ്' }
+      { role: 'Ironer', title: '🔥 അയേണിംഗ് സ്റ്റാഫുകൾ' }
     ];
+
+    const managedHtml = getAllPresetTypes().map(it => `
+      <span class="manage-tag">
+        ${it.label}
+        <button type="button" onclick="deleteManagedItem('${it.key.replace(/'/g, "\\'")}')">✕</button>
+      </span>
+    `).join('');
 
     body.innerHTML = categories.map(cat => {
       const list = staff[cat.role] || [];
@@ -3242,7 +3317,7 @@
           `).join('');
 
       return `<div class="manage-group"><h4>${cat.title}</h4><div class="manage-tags">${tagsHtml}</div></div>`;
-    }).join('');
+    }).join('') + `<div class="manage-group"><h4>👕 സ്ഥിരം ഐറ്റംസ് (Items)</h4><div class="manage-tags">${managedHtml}</div></div>`;
   }
 
   function deleteStaffMember(role, name, event) {
@@ -3256,16 +3331,6 @@
     callApi({ action: 'deleteStaff', role, name }, 'ഡിലീറ്റ് ചെയ്യുന്നു...');
   }
 
-  function getAllPresetTypes() {
-    const list = DEFAULT_ITEM_TYPES.map(d => ({ ...d, isCustom: false }));
-    (staff.ItemType || []).forEach(customName => {
-      if (!list.some(item => item.key.toLowerCase() === customName.toLowerCase())) {
-        list.push({ key: customName, label: customName, isCustom: true });
-      }
-    });
-    return list;
-  }
-
   function renderItemBoxes() {
     const grid = document.getElementById('itemsGrid');
     const allTypes = getAllPresetTypes();
@@ -3277,7 +3342,6 @@
 
     grid.innerHTML = allTypes.map(t => `
       <div class="item-box">
-        ${t.isCustom ? `<button type="button" class="del-custom-box" onclick="deleteStaffMember('ItemType', '${t.key.replace(/'/g, "\\'")}')">✕</button>` : ''}
         <span class="title">${t.label}</span>
         <div class="counter">
           <button type="button" class="minus" onclick="updateCount('${t.key}', -1)">-</button>
@@ -3293,8 +3357,7 @@
       Cutter: 'കട്ടറുടെ പേര് (Cutter Name)',
       Tailor: 'തയ്യൽക്കാരന്റെ പേര് (Tailor Name)',
       Button: 'ബട്ടൺ / ചെക്കിംഗ് സ്റ്റാഫിന്റെ പേര്',
-      Ironer: 'അയേണിംഗ് സ്റ്റാഫിന്റെ പേര്',
-      ItemType: 'പുതിയ സ്ഥിരം ഐറ്റത്തിന്റെ പേര് (ഉദാ: Safari, Suit)'
+      Ironer: 'അയേണിംഗ് സ്റ്റാഫിന്റെ പേര്'
     };
     const name = prompt(`${roleNames[role]} നൽകുക:`);
     if (!name || !name.trim()) return;
