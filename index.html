@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Zibas Tailors - Production, Payments & Delivery Tracker</title>
+  <title>Zibas Tailors - Workshop & Delivery Manager</title>
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#0f172a">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3050/3050253.png">
@@ -48,12 +48,13 @@
 
     body {
       margin: 0;
-      padding: 0 0 94px 0;
+      padding: 0 0 30px 0;
       background-color: var(--bg);
       color: var(--text);
       overflow-x: hidden;
     }
 
+    /* Sticky App Header */
     header {
       background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
       color: white;
@@ -67,7 +68,7 @@
       justify-content: space-between;
       gap: 10px;
     }
-    .brand-area { display: flex; align-items: center; gap: 10px; }
+    .brand-area { display: flex; align-items: center; gap: 10px; cursor: pointer; }
     .brand-logo {
       width: 40px; height: 40px; border-radius: 13px; background: rgba(255,255,255,0.14);
       display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
@@ -76,42 +77,176 @@
     header h1 { margin: 0; font-size: 1.15rem; font-weight: 800; letter-spacing: 0.4px; }
     header p { margin: 1px 0 0; font-size: 0.72rem; opacity: 0.82; }
 
-    .header-actions { display: flex; gap: 6px; }
+    .header-actions { display: flex; gap: 6px; align-items: center; }
     .icon-pill-btn {
       background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.26); color: white;
       padding: 7px 11px; border-radius: 20px; cursor: pointer; font-size: 0.76rem; font-weight: 700;
       display: inline-flex; align-items: center; gap: 4px; transition: 0.15s;
     }
+    .icon-pill-btn.home-btn {
+      background: white;
+      color: var(--primary-dark);
+      border-color: white;
+    }
     .icon-pill-btn:active { transform: scale(0.95); }
 
-    .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      background: rgba(255, 255, 255, 0.97);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border-top: 1px solid var(--border);
-      display: grid; grid-template-columns: repeat(8, 1fr); align-items: center;
-      padding: 6px 2px calc(6px + env(safe-area-inset-bottom));
-      z-index: 800; box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.06);
+    .container { max-width: 780px; margin: 16px auto; padding: 0 14px; }
+
+    /* SKETCH-BASED FRONT PAGE 2-COLUMN MENU GRID */
+    .front-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
-    .nav-item {
-      background: none; border: none; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 2px; padding: 4px 1px; color: var(--muted); font-size: 0.58rem; font-weight: 700; cursor: pointer;
-      border-radius: 10px; transition: 0.15s; white-space: nowrap;
+    .menu-box-card {
+      background: white;
+      border-radius: 20px;
+      padding: 18px 14px;
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 8px;
+      transition: transform 0.14s, box-shadow 0.14s;
+      position: relative;
+      min-height: 112px;
     }
-    .nav-item .nav-icon { font-size: 1.12rem; line-height: 1; transition: transform 0.15s; }
-    .nav-item.active { color: var(--primary); }
-    .nav-item.active .nav-icon { transform: translateY(-2px); }
-    .nav-item.add-fab { position: relative; }
-    .fab-circle {
-      width: 38px; height: 38px; border-radius: 50%;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white;
-      display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 800;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4); margin-top: -12px; border: 2.5px solid white;
+    .menu-box-card:active {
+      transform: scale(0.96);
     }
-    .nav-item.add-fab.active .fab-circle {
-      background: linear-gradient(135deg, #16a34a, #15803d);
-      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+    .menu-box-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.55rem;
+    }
+    .menu-box-title {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: 0.2px;
+    }
+    .menu-box-sub {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    /* Card Color Accents */
+    .mb-admin .menu-box-icon { background: #e0e7ff; }
+    .mb-cutting .menu-box-icon { background: var(--teal-soft); }
+    .mb-stitching .menu-box-icon { background: var(--indigo-soft); }
+    .mb-ironing .menu-box-icon { background: var(--orange-soft); }
+    .mb-shelf .menu-box-icon { background: var(--amber-soft); }
+    .mb-button .menu-box-icon { background: var(--purple-soft); }
+    .mb-list .menu-box-icon { background: #f1f5f9; }
+    .mb-addbill {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      border-color: #1d4ed8;
+    }
+    .mb-addbill .menu-box-icon { background: rgba(255,255,255,0.2); }
+    .mb-addbill .menu-box-title { color: white; }
+    .mb-addbill .menu-box-sub { color: rgba(255,255,255,0.85); }
+
+    /* FULL-WIDTH NOTIFICATIONS BOX AT BOTTOM OF FRONT PAGE */
+    .front-notifications-card {
+      background: white;
+      border-radius: 20px;
+      padding: 16px;
+      border: 1.5px solid #fde68a;
+      box-shadow: var(--shadow-sm);
+    }
+    .notif-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .notif-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .notif-row-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .notif-pill-box {
+      padding: 11px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 0.82rem;
+    }
+    .notif-pill-box.due-box {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border: 1px solid #fecdd3;
+    }
+    .notif-pill-box.uncol-box {
+      background: var(--warning-soft);
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+    .notif-count-num {
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    .alert-list { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 4px; }
+    .alert-badge {
+      background: #f8fafc; border: 1px solid var(--border); color: var(--primary-dark);
+      padding: 6px 12px; border-radius: 20px; font-size: 0.76rem; font-weight: 700; cursor: pointer; white-space: nowrap;
+    }
+    .alert-badge.urgent { border-color: #fda4af; background: var(--danger-soft); color: #be123c; }
+    .alert-badge.late { border-color: #fcd34d; background: var(--warning-soft); color: #b45309; }
+
+    /* Quick Auto-Add Missing Bill Box inside Worker Tabs */
+    .quick-create-bill-box {
+      background: #fffbeb;
+      border: 1.5px dashed #f59e0b;
+      border-radius: 14px;
+      padding: 13px;
+      margin-top: 8px;
+    }
+    .quick-item-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin: 10px 0;
+    }
+    .q-mini-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 6px;
+      text-align: center;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+    .q-mini-item input {
+      width: 48px;
+      padding: 4px;
+      text-align: center;
+      margin-top: 4px;
+      font-weight: 800;
     }
 
     #loader {
@@ -159,46 +294,6 @@
     }
     .loc-choice-btn.selected { background: var(--amber-soft); border-color: var(--amber); color: var(--amber); }
 
-    .container { max-width: 860px; margin: 14px auto; padding: 0 12px; }
-
-    /* Dashboard Summary Tiles */
-    .dashboard-stats-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px;
-    }
-    @media (max-width: 480px) { .dashboard-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; } }
-    .stat-tile {
-      background: white; border-radius: 16px; padding: 12px; border: 1.5px solid var(--border);
-      box-shadow: var(--shadow-sm); cursor: pointer; transition: 0.15s;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .stat-tile:active { transform: scale(0.97); }
-    .stat-tile .st-label { font-size: 0.74rem; font-weight: 700; color: var(--muted); display: block; }
-    .stat-tile .st-val { font-size: 1.35rem; font-weight: 800; color: var(--primary-dark); line-height: 1.1; margin-top: 2px; display: block; }
-    .stat-tile .st-icon {
-      width: 36px; height: 36px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 1.15rem;
-    }
-    .stat-tile.st-pending .st-icon { background: var(--primary-soft); }
-    .stat-tile.st-urgent .st-icon { background: var(--danger-soft); }
-    .stat-tile.st-urgent .st-val { color: var(--danger); }
-    .stat-tile.st-ready .st-icon { background: var(--success-soft); }
-    .stat-tile.st-ready .st-val { color: var(--success); }
-    .stat-tile.st-late .st-icon { background: var(--warning-soft); }
-    .stat-tile.st-late .st-val { color: var(--warning); }
-
-    .alert-section {
-      background: var(--danger-soft); border: 1px solid #fecdd3; border-left: 4px solid var(--danger);
-      border-radius: 14px; padding: 10px 14px; margin-bottom: 10px; display: none;
-    }
-    .alert-section.late-alert { background: var(--warning-soft); border-color: #fde68a; border-left-color: var(--warning); }
-    .alert-section h3 { margin: 0 0 6px 0; color: var(--danger); font-size: 0.82rem; font-weight: 800; }
-    .alert-section.late-alert h3 { color: #b45309; }
-    .alert-list { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 2px; }
-    .alert-badge {
-      background: white; border: 1px solid #fda4af; color: #be123c;
-      padding: 5px 11px; border-radius: 20px; font-size: 0.76rem; font-weight: 700; cursor: pointer; white-space: nowrap;
-    }
-    .alert-section.late-alert .alert-badge { border-color: #fcd34d; color: #b45309; }
-
     .section-card {
       background: var(--card); border-radius: 18px; padding: 16px;
       box-shadow: var(--shadow-sm); border: 1px solid rgba(226, 232, 240, 0.85); margin-bottom: 16px;
@@ -210,7 +305,7 @@
     .section-title { margin: 0; font-size: 1.08rem; font-weight: 800; display: flex; align-items: center; gap: 6px; }
 
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-    .form-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 8px; }
+    .form-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
     @media (max-width: 520px) {
       .form-row { grid-template-columns: 1fr; gap: 10px; }
       .form-row-3 { grid-template-columns: 1fr 1fr 1fr; gap: 7px; }
@@ -236,44 +331,26 @@
       font-size: 0.85rem; font-weight: 800; color: var(--primary-dark);
     }
 
-    /* Bill Photo Upload & Thumbnail */
     .bill-photo-upload-box {
-      border: 1.5px dashed #94a3b8;
-      border-radius: 14px;
-      padding: 10px 12px;
-      background: #f8fafc;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 14px;
+      border: 1.5px dashed #94a3b8; border-radius: 14px; padding: 10px 12px; background: #f8fafc;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px;
     }
     .bill-thumb-img {
       width: 48px; height: 48px; border-radius: 10px; object-fit: cover;
       border: 1.5px solid #cbd5e1; cursor: pointer; background: white;
     }
     .bill-details-banner {
-      background: #fffbeb;
-      border: 1px solid #fde68a;
-      color: #92400e;
-      padding: 7px 11px;
-      border-radius: 10px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      margin-bottom: 10px;
+      background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
+      padding: 7px 11px; border-radius: 10px; font-size: 0.8rem; font-weight: 700; margin-bottom: 10px;
+    }
+    .year-badge {
+      background: #e2e8f0; color: #334155; font-size: 0.72rem; font-weight: 800;
+      padding: 2px 7px; border-radius: 6px; margin-left: 5px; vertical-align: middle;
     }
 
-    /* Payment Installment History Modal List */
     .pay-hist-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      padding: 9px 12px;
-      border-radius: 12px;
-      margin-bottom: 7px;
-      font-size: 0.84rem;
+      display: flex; justify-content: space-between; align-items: center; background: #f8fafc;
+      border: 1px solid var(--border); padding: 9px 12px; border-radius: 12px; margin-bottom: 7px; font-size: 0.84rem;
     }
 
     .search-input-wrap { position: relative; margin-bottom: 10px; }
@@ -508,7 +585,7 @@
       border: 1px solid var(--border); padding: 8px 12px; border-radius: 10px; margin-bottom: 6px; font-size: 0.88rem; font-weight: 700;
     }
 
-    /* Main Page Bill Cards */
+    /* Admin Page Bill Cards */
     .bill-card {
       border: 1px solid var(--border); border-radius: 18px; padding: 15px;
       margin-bottom: 14px; background: white; box-shadow: var(--shadow-sm); transition: 0.15s;
@@ -652,9 +729,8 @@
       <span style="color:var(--danger);">Bal: <strong id="pmBalText">₹0</strong></span>
     </div>
 
-    <!-- Add New Installment Payment -->
     <div style="background:var(--success-soft); border:1.5px solid #bbf7d0; border-radius:14px; padding:12px; margin-bottom:14px;">
-      <label style="color:#15803d; font-size:0.82rem;">➕ പുതിയ പേയ്‌മെന്റ് തവണ ചേർക്കുക (ഉദാ: ഐറ്റം കൊണ്ടുപോകുമ്പോൾ):</label>
+      <label style="color:#15803d; font-size:0.82rem;">➕ പുതിയ പേയ്‌മെന്റ് തവണ ചേർക്കുക:</label>
       <div style="display:grid; grid-template-columns:110px 1fr auto; gap:8px; align-items:center;">
         <input type="number" id="newInstallmentAmount" placeholder="തുക ₹" min="1">
         <input type="text" id="newInstallmentNote" placeholder="കുറിപ്പ് (ഉദാ: Shirt delivery, GPay)">
@@ -684,7 +760,7 @@
   </div>
 </div>
 
-<!-- FULL BILL EDIT MODAL -->
+<!-- FULL BILL EDIT MODAL (WITH YEAR FIELD) -->
 <div id="editBillModal" class="modal-overlay" onclick="if(event.target===this) closeEditBillModal()">
   <div class="modal-box">
     <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:10px; margin-bottom:14px;">
@@ -692,20 +768,24 @@
       <button type="button" class="btn-back" onclick="closeEditBillModal()">✕</button>
     </div>
 
-    <div class="form-row">
+    <div class="form-row-3">
       <div>
-        <label>ബിൽ നമ്പർ (Bill Number) *</label>
+        <label>ബിൽ നമ്പർ *</label>
         <input type="text" id="editBillNo">
       </div>
       <div>
-        <label>ഡെലിവറി ഡേറ്റ് (Delivery Date) *</label>
+        <label>വർഷം (Year)</label>
+        <input type="number" id="editBillYear" placeholder="2026">
+      </div>
+      <div>
+        <label>ഡെലിവറി ഡേറ്റ് *</label>
         <input type="date" id="editDeliveryDate">
       </div>
     </div>
 
     <div class="form-row">
       <div>
-        <label>കസ്റ്റമറുടെ പേര് (Customer Name)</label>
+        <label>കസ്റ്റമറുടെ പേര്</label>
         <input type="text" id="editCustomerName" placeholder="പേര്...">
       </div>
       <div>
@@ -730,7 +810,7 @@
     </div>
 
     <div style="margin-bottom:12px;">
-      <label>ബിൽ ഡീറ്റെയിൽസ് / തയ്യൽ നിർദ്ദേശങ്ങൾ (Bill Details / Notes):</label>
+      <label>ബിൽ ഡീറ്റെയിൽസ് / തയ്യൽ നിർദ്ദേശങ്ങൾ:</label>
       <textarea id="editBillDetails" rows="2" placeholder="ഉദാ: Stiff collar, 2 pockets, Urgent..."></textarea>
     </div>
 
@@ -794,16 +874,18 @@
   </div>
 </div>
 
+<!-- HEADER -->
 <header>
-  <div class="brand-area">
+  <div class="brand-area" onclick="goHome()">
     <div class="brand-logo">✂️</div>
     <div>
       <h1>ZIBAS TAILORS</h1>
-      <p id="headerSubtitle">Production, Payments & Delivery Tracker</p>
+      <p id="headerSubtitle">Workshop & Delivery Tracker</p>
     </div>
   </div>
   <div class="header-actions" id="shopHeaderActions">
-    <button class="icon-pill-btn" onclick="openManageModal()">⚙️ ഡിലീറ്റ്</button>
+    <button id="headerHomeBtn" class="icon-pill-btn home-btn" style="display:none;" onclick="goHome()">🏠 Home</button>
+    <button class="icon-pill-btn" onclick="openManageModal()">⚙️</button>
     <button class="icon-pill-btn" onclick="loadAllData()">🔄 Sync</button>
   </div>
 </header>
@@ -814,52 +896,93 @@
 <!-- MAIN SHOP ADMIN VIEW -->
 <div id="shopMainContainer" class="container">
 
-  <!-- TAB 1: REDESIGNED MAIN HOME & STATUS DASHBOARD -->
-  <div id="statusTab">
+  <!-- FRONT PAGE (EXACTLY MATCHING YOUR SKETCH: 2x4 GRID + NOTIFICATIONS) -->
+  <div id="frontHomeView">
+    <div class="front-menu-grid">
+      <!-- Row 1: Admin | Cutting -->
+      <div class="menu-box-card mb-admin" onclick="openScreen('statusTab')">
+        <div class="menu-box-icon">📊</div>
+        <span class="menu-box-title">Admin</span>
+        <span class="menu-box-sub" id="homeAdminSub">സ്റ്റാറ്റസ് & ഡെലിവറി</span>
+      </div>
 
-    <div class="dashboard-stats-grid">
-      <div class="stat-tile st-pending" onclick="quickSelectFilter('pending', 1)">
-        <div>
-          <span class="st-label">ബാക്കിയുള്ളവ</span>
-          <span class="st-val" id="statPendingCount">0</span>
-        </div>
-        <div class="st-icon">🧵</div>
+      <div class="menu-box-card mb-cutting" onclick="openScreen('cuttingTab')">
+        <div class="menu-box-icon">✂️</div>
+        <span class="menu-box-title">Cutting</span>
+        <span class="menu-box-sub">കട്ടിംഗ് വിഭാഗം</span>
       </div>
-      <div class="stat-tile st-urgent" onclick="quickSelectFilter('urgent', 2)">
-        <div>
-          <span class="st-label">ഇന്ന് / നാളെ</span>
-          <span class="st-val" id="statUrgentCount">0</span>
-        </div>
-        <div class="st-icon">🔥</div>
+
+      <!-- Row 2: Stitching | Ironing -->
+      <div class="menu-box-card mb-stitching" onclick="openScreen('stitchingTab')">
+        <div class="menu-box-icon">🧵</div>
+        <span class="menu-box-title">Stitching</span>
+        <span class="menu-box-sub">തയ്യൽ വിഭാഗം</span>
       </div>
-      <div class="stat-tile st-ready" onclick="quickSelectFilter('ready', 4)">
-        <div>
-          <span class="st-label">റെഡി (Ready)</span>
-          <span class="st-val" id="statReadyCount">0</span>
-        </div>
-        <div class="st-icon">✅</div>
+
+      <div class="menu-box-card mb-ironing" onclick="openScreen('ironingTab')">
+        <div class="menu-box-icon">🔥</div>
+        <span class="menu-box-title">Ironing</span>
+        <span class="menu-box-sub">അയേണിംഗ് വിഭാഗം</span>
       </div>
-      <div class="stat-tile st-late" onclick="quickSelectFilter('uncollected', 3)">
-        <div>
-          <span class="st-label">കൊണ്ടുപോകാത്തവ</span>
-          <span class="st-val" id="statUncollectedCount">0</span>
-        </div>
-        <div class="st-icon">📦</div>
+
+      <!-- Row 3: Shelf | Button -->
+      <div class="menu-box-card mb-shelf" onclick="openScreen('shelfTab')">
+        <div class="menu-box-icon">🗄️</div>
+        <span class="menu-box-title">Shelf</span>
+        <span class="menu-box-sub">ഷെൽഫ് & ബോക്സ്</span>
+      </div>
+
+      <div class="menu-box-card mb-button" onclick="openScreen('buttonTab')">
+        <div class="menu-box-icon">🔘</div>
+        <span class="menu-box-title">Button</span>
+        <span class="menu-box-sub">ബട്ടൺ & ചെക്കിംഗ്</span>
+      </div>
+
+      <!-- Row 4: List | Add Bill -->
+      <div class="menu-box-card mb-list" onclick="openScreen('billListTab')">
+        <div class="menu-box-icon">📋</div>
+        <span class="menu-box-title">List</span>
+        <span class="menu-box-sub" id="homeListSub">എല്ലാ ബില്ലുകളും</span>
+      </div>
+
+      <div class="menu-box-card mb-addbill" onclick="openScreen('entryTab')">
+        <div class="menu-box-icon">➕</div>
+        <span class="menu-box-title">Add Bill</span>
+        <span class="menu-box-sub">പുതിയ ബിൽ ചേർക്കുക</span>
       </div>
     </div>
 
-    <div id="alertSection" class="alert-section">
-      <h3>⚠️ ഡെലിവറി അടുത്ത / തീരാനുള്ള ബില്ലുകൾ:</h3>
-      <div id="alertList" class="alert-list"></div>
-    </div>
+    <!-- Bottom Full-Width Notifications Card -->
+    <div class="front-notifications-card">
+      <div class="notif-header">
+        <span class="notif-title">🔔 Notifications</span>
+        <span style="font-size:0.74rem; color:var(--muted); font-weight:700;">Tap to view</span>
+      </div>
 
-    <div id="late7AlertSection" class="alert-section late-alert">
-      <h3>📦 ഡെലിവറി ഡേറ്റ് കഴിഞ്ഞിട്ടും കൊണ്ടുപോകാത്തവ (Uncollected):</h3>
-      <div id="late7AlertList" class="alert-list"></div>
+      <div class="notif-row-grid">
+        <div class="notif-pill-box due-box" onclick="openAdminWithFilter('urgent', 2)">
+          <span>⚠️ ഇന്ന് / നാളെ</span>
+          <span class="notif-count-num" id="homeDueCount">0</span>
+        </div>
+        <div class="notif-pill-box uncol-box" onclick="openAdminWithFilter('uncollected', 3)">
+          <span>📦 കൊണ്ടുപോകാത്തവ</span>
+          <span class="notif-count-num" id="homeUncolCount">0</span>
+        </div>
+      </div>
+
+      <div id="homeNotifChipsList" class="alert-list"></div>
+    </div>
+  </div>
+
+  <!-- SCREEN 1: ADMIN (STATUS, DELIVERY & PAYMENTS) -->
+  <div id="statusTab" style="display: none;">
+    <div class="section-header">
+      <h3 class="section-title" style="color: var(--primary-dark);">📊 Admin — സ്റ്റാറ്റസ് & ഡെലിവറി</h3>
+      <button type="button" class="btn-back" onclick="goHome()">🏠 Home</button>
     </div>
 
     <div class="search-input-wrap">
-      <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ / പേര് / ഫോൺ / ഷെൽഫ് സെർച്ച് ചെയ്യുക..." onkeyup="renderBills()">
+      <input type="text" id="searchInput" placeholder="ബിൽ നമ്പർ / വർഷം / പേര് / ഫോൺ / ഷെൽഫ്..." onkeyup="renderBills()">
     </div>
 
     <div class="filter-pills">
@@ -888,36 +1011,44 @@
     <div id="billsContainer"></div>
   </div>
 
-  <!-- TAB 2: ALL BILLS LIST -->
+  <!-- SCREEN 2: ALL BILLS LIST (ENTRY ORDER + YEAR + MULTI-SEARCH + EDIT) -->
   <div id="billListTab" class="section-card" style="display: none;">
     <div class="section-header">
       <h3 class="section-title" style="color: var(--primary-dark);">📋 ബിൽ ലിസ്റ്റ് (Entry Order)</h3>
-      <button type="button" id="sortOrderToggleBtn" class="btn-pill" style="background:var(--primary);" onclick="toggleBillListOrder()">⇅ ക്രമം: ആദ്യം ചേർത്തത് ആദ്യം</button>
+      <div style="display:flex; gap:6px;">
+        <button type="button" id="sortOrderToggleBtn" class="btn-pill" style="background:var(--primary);" onclick="toggleBillListOrder()">⇅ ആദ്യം ചേർത്തത്</button>
+        <button type="button" class="btn-back" onclick="goHome()">🏠 Home</button>
+      </div>
     </div>
 
-    <div class="form-row" style="margin-bottom:10px;">
-      <div class="search-input-wrap" style="margin-bottom:0;">
-        <input type="text" id="billListSearchInput" placeholder="Bill No, പേര്, ഫോൺ നമ്പർ, തീയതി..." onkeyup="renderBillListTab()">
+    <div class="form-row-3" style="margin-bottom:10px;">
+      <div style="grid-column: span 2;">
+        <input type="text" id="billListSearchInput" placeholder="Bill No, പേര്, ഫോൺ നമ്പർ, വർഷം..." onkeyup="renderBillListTab()">
       </div>
       <div>
-        <input type="date" id="billListDateFilter" title="തീയതി വെച്ച് ഫിൽറ്റർ ചെയ്യുക" onchange="renderBillListTab()">
+        <select id="billListYearFilter" onchange="renderBillListTab()">
+          <option value="">എല്ലാ വർഷവും</option>
+        </select>
       </div>
     </div>
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-size:0.8rem; color:var(--muted); font-weight:700;">
       <span id="billListCountLabel">ആകെ ബില്ലുകൾ: 0</span>
-      <button type="button" class="btn-back" style="padding:4px 10px; font-size:0.74rem;" onclick="clearBillListFilters()">Reset Filter</button>
+      <button type="button" class="btn-back" style="padding:4px 10px; font-size:0.74rem;" onclick="clearBillListFilters()">Reset</button>
     </div>
 
     <div id="billListRowsContainer"></div>
   </div>
 
-  <!-- TAB 3: IRONING -->
+  <!-- SCREEN 3: IRONING -->
   <div id="ironingTab" class="section-card" style="display: none;">
     <div id="ironerListView">
       <div class="section-header">
         <h3 class="section-title" style="color: var(--orange);">🔥 അയേണിംഗ് വിഭാഗം</h3>
-        <button type="button" class="btn-pill" style="background:var(--orange);" onclick="promptNewStaff('Ironer')">+ പുതിയ സ്റ്റാഫ്</button>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-pill" style="background:var(--orange);" onclick="promptNewStaff('Ironer')">+ സ്റ്റാഫ്</button>
+          <button type="button" class="btn-back" onclick="goHome()">🏠 Home</button>
+        </div>
       </div>
       <div id="ironersGrid" class="worker-grid"></div>
     </div>
@@ -933,7 +1064,7 @@
       </div>
 
       <div class="assign-box-orange">
-        <label style="color:var(--orange);">➕ അയൺ ചെയ്ത ബിൽ നമ്പർ & വെച്ച ഷെൽഫ്/ബോക്സ് ചേർക്കുക:</label>
+        <label style="color:var(--orange);">➕ അയൺ ചെയ്ത ബിൽ നമ്പർ & വെച്ച ഷെൽഫ് ചേർക്കുക:</label>
         <input type="text" id="ironTabBillSearch" placeholder="ബിൽ നമ്പർ ടൈപ്പ് ചെയ്യുക (ഉദാ: 1045)..." onkeyup="searchBillForIroner()">
         <div id="ironTabFoundBillArea" style="margin-top:10px;"></div>
       </div>
@@ -967,18 +1098,24 @@
     </div>
   </div>
 
-  <!-- TAB 4: NEW BILL (WITH PAYMENT, DISCOUNT, PHOTO & BILL DETAILS) -->
+  <!-- SCREEN 4: ADD NEW BILL (WITH YEAR, DISCOUNT, PHOTO & BILL DETAILS) -->
   <div id="entryTab" class="section-card" style="display: none;">
     <div class="section-header">
       <h3 class="section-title" style="color: var(--primary);">➕ പുതിയ ബിൽ ചേർക്കുക</h3>
+      <button type="button" class="btn-back" onclick="goHome()">🏠 Home</button>
     </div>
-    <div class="form-row">
+
+    <div class="form-row-3">
       <div>
-        <label>ബിൽ നമ്പർ (Bill Number) *</label>
+        <label>ബിൽ നമ്പർ *</label>
         <input type="text" id="billNo" placeholder="ഉദാ: 1045">
       </div>
       <div>
-        <label>ഡെലിവറി ഡേറ്റ് (Delivery Date) *</label>
+        <label>വർഷം (Year) *</label>
+        <input type="number" id="billYear" value="2026" min="2020" max="2099">
+      </div>
+      <div>
+        <label>ഡെലിവറി ഡേറ്റ് *</label>
         <input type="date" id="deliveryDate">
       </div>
     </div>
@@ -994,9 +1131,8 @@
       </div>
     </div>
 
-    <!-- Total Amount, Discount & Advance Payment -->
     <div class="payment-entry-box">
-      <div class="form-row-3">
+      <div class="form-row-3" style="margin-bottom:0;">
         <div>
           <label>ടോട്ടൽ (Total ₹)</label>
           <input type="number" id="totalAmount" placeholder="0" min="0" oninput="updateBalancePreview()">
@@ -1016,16 +1152,15 @@
       </div>
     </div>
 
-    <!-- Bill Details / Notes & Photo Capture -->
     <div class="form-row" style="margin-bottom:12px;">
       <div>
-        <label>ബിൽ ഡീറ്റെയിൽസ് / കുറിപ്പ് (Bill Details / Notes)</label>
-        <input type="text" id="billDetails" placeholder="ഉദാ: Stiff collar, 2 pockets, Urgent...">
+        <label>ബിൽ ഡീറ്റെയിൽസ് / കുറിപ്പ് (Details)</label>
+        <input type="text" id="billDetails" placeholder="ഉദാ: Stiff collar, 2 pockets...">
       </div>
       <div>
         <label>ബിൽ / തുണിയുടെ ഫോട്ടോ (Photo)</label>
         <div class="bill-photo-upload-box" style="margin-bottom:0; padding:7px 10px;">
-          <button type="button" class="btn-pill" style="background:var(--primary);" onclick="triggerNewBillPhotoUpload()">📷 ഫോട്ടോ എടുക്കുക / ചേർക്കുക</button>
+          <button type="button" class="btn-pill" style="background:var(--primary);" onclick="triggerNewBillPhotoUpload()">📷 ഫോട്ടോ ചേർക്കുക</button>
           <div id="newBillPhotoPreviewArea" style="display:flex; align-items:center; gap:6px;">
             <span style="font-size:0.74rem; color:var(--muted);">ഫോട്ടോ ഇല്ല</span>
           </div>
@@ -1053,12 +1188,15 @@
     </div>
   </div>
 
-  <!-- TAB 5: CUTTING -->
+  <!-- SCREEN 5: CUTTING -->
   <div id="cuttingTab" class="section-card" style="display: none;">
     <div id="cutterListView">
       <div class="section-header">
         <h3 class="section-title" style="color: var(--teal);">✂️ കട്ടിംഗ് വിഭാഗം</h3>
-        <button type="button" class="btn-pill" onclick="promptNewStaff('Cutter')">+ പുതിയ കട്ടർ</button>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-pill" onclick="promptNewStaff('Cutter')">+ കട്ടർ</button>
+          <button type="button" class="btn-back" onclick="goHome()">🏠 Home</button>
+        </div>
       </div>
       <div id="pendingCuttingChips" class="quick-chips-bar"></div>
       <div id="cuttersGrid" class="worker-grid"></div>
@@ -1085,12 +1223,15 @@
     </div>
   </div>
 
-  <!-- TAB 6: STITCHING -->
+  <!-- SCREEN 6: STITCHING -->
   <div id="stitchingTab" class="section-card" style="display: none;">
     <div id="tailorListView">
       <div class="section-header">
         <h3 class="section-title" style="color: var(--indigo);">🧵 സ്റ്റിച്ചിംഗ് വിഭാഗം</h3>
-        <button type="button" class="btn-pill" style="background:var(--indigo);" onclick="promptNewStaff('Tailor')">+ പുതിയ തയ്യൽക്കാരൻ</button>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-pill" style="background:var(--indigo);" onclick="promptNewStaff('Tailor')">+ തയ്യൽക്കാരൻ</button>
+          <button type="button" class="btn-back" onclick="goHome()">🏠 Home</button>
+        </div>
       </div>
       <div id="tailorsGrid" class="worker-grid"></div>
     </div>
@@ -1116,12 +1257,15 @@
     </div>
   </div>
 
-  <!-- TAB 7: BUTTON & CHECKING -->
+  <!-- SCREEN 7: BUTTON & CHECKING -->
   <div id="buttonTab" class="section-card" style="display: none;">
     <div id="buttonWorkerListView">
       <div class="section-header">
         <h3 class="section-title" style="color: var(--purple);">🔘 ബട്ടൺ & ചെക്കിംഗ്</h3>
-        <button type="button" class="btn-pill" style="background:var(--purple);" onclick="promptNewStaff('Button')">+ പുതിയ സ്റ്റാഫ്</button>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-pill" style="background:var(--purple);" onclick="promptNewStaff('Button')">+ സ്റ്റാഫ്</button>
+          <button type="button" class="btn-back" onclick="goHome()">🏠 Home</button>
+        </div>
       </div>
       <div id="buttonWorkersGrid" class="worker-grid"></div>
     </div>
@@ -1147,12 +1291,15 @@
     </div>
   </div>
 
-  <!-- TAB 8: SHELF & BOXES -->
+  <!-- SCREEN 8: SHELF & BOXES -->
   <div id="shelfTab" class="section-card" style="display: none;">
     <div id="shelfListView">
       <div class="section-header">
         <h3 class="section-title" style="color: var(--amber);">🗄️ ഷെൽഫ് & ബോക്സുകൾ</h3>
-        <button type="button" class="btn-pill" style="background:var(--amber);" onclick="promptNewShelf()">+ പുതിയ ഷെൽഫ് / ബോക്സ്</button>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-pill" style="background:var(--amber);" onclick="promptNewShelf()">+ ഷെൽഫ്</button>
+          <button type="button" class="btn-back" onclick="goHome()">🏠 Home</button>
+        </div>
       </div>
       <p style="font-size:0.82rem; color:var(--muted); margin-top:0;">തുണികൾ വെക്കാനും ഉള്ളിലുള്ളവ കാണാനും താഴെ ഷെൽഫ് / ബോക്സിൽ ക്ലിക്ക് ചെയ്യുക:</p>
       <div id="shelvesGrid" class="worker-grid"></div>
@@ -1180,42 +1327,6 @@
 
 </div>
 
-<!-- BOTTOM MOBILE APP NAVIGATION BAR -->
-<nav class="bottom-nav" id="mobileBottomNav">
-  <button class="nav-item active" onclick="switchTab('statusTab', this)">
-    <span class="nav-icon">🏠</span>
-    <span>ഹോം</span>
-  </button>
-  <button class="nav-item" onclick="switchTab('billListTab', this)">
-    <span class="nav-icon">📋</span>
-    <span>ലിസ്റ്റ്</span>
-  </button>
-  <button class="nav-item" onclick="switchTab('ironingTab', this)">
-    <span class="nav-icon">🔥</span>
-    <span>അയേൺ</span>
-  </button>
-  <button class="nav-item add-fab" onclick="switchTab('entryTab', this)">
-    <div class="fab-circle">+</div>
-    <span>ബിൽ</span>
-  </button>
-  <button class="nav-item" onclick="switchTab('shelfTab', this)">
-    <span class="nav-icon">🗄️</span>
-    <span>ഷെൽഫ്</span>
-  </button>
-  <button class="nav-item" onclick="switchTab('cuttingTab', this)">
-    <span class="nav-icon">✂️</span>
-    <span>കട്ടിംഗ്</span>
-  </button>
-  <button class="nav-item" onclick="switchTab('stitchingTab', this)">
-    <span class="nav-icon">🧵</span>
-    <span>തയ്യൽ</span>
-  </button>
-  <button class="nav-item" onclick="switchTab('buttonTab', this)">
-    <span class="nav-icon">🔘</span>
-    <span>ബട്ടൺ</span>
-  </button>
-</nav>
-
 <script>
   // ⚠️ ഇവിടെ നിങ്ങളുടെ Google Apps Script Web App (/exec) ലിങ്ക് പേസ്റ്റ് ചെയ്യുക:
   const API_URL = 'https://script.google.com/macros/s/AKfycbw55tsv_nEZv0pjrtMDF3_LcKFH-LmRN7qiFt1HF0DWi8H6z1kICTeMyRxGBLRcIlQ1/exec';
@@ -1235,7 +1346,7 @@
   let selectedShelf = null;
   let ironerDateFilter = 'thisWeek';
   let pendingPhotoTarget = null;
-  let billPhotoTargetId = null; // null = new bill, otherwise existing billId
+  let billPhotoTargetId = null;
   let activeLocationTarget = null;
   let editingBillId = null;
   let editingItemsBuffer = [];
@@ -1262,14 +1373,14 @@
     if (customerQueryBill) {
       document.getElementById('shopMainContainer').style.display = 'none';
       document.getElementById('shopHeaderActions').style.display = 'none';
-      document.getElementById('mobileBottomNav').style.display = 'none';
-      document.body.style.paddingBottom = '20px';
       document.getElementById('headerSubtitle').innerText = 'Order Live Status Tracking';
       document.getElementById('customerPublicView').style.display = 'block';
       loadAllData();
       return;
     }
 
+    const now = new Date();
+    document.getElementById('billYear').value = now.getFullYear();
     const defaultDate = new Date();
     defaultDate.setDate(defaultDate.getDate() + 3);
     document.getElementById('deliveryDate').valueAsDate = defaultDate;
@@ -1284,6 +1395,219 @@
 
   function hideLoader() {
     document.getElementById('loader').style.display = 'none';
+  }
+
+  // --- FRONT PAGE NAVIGATION ---
+  function goHome() {
+    ['statusTab', 'billListTab', 'ironingTab', 'shelfTab', 'entryTab', 'cuttingTab', 'stitchingTab', 'buttonTab'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+    document.getElementById('frontHomeView').style.display = 'block';
+    document.getElementById('headerHomeBtn').style.display = 'none';
+    updateFrontHomeDashboard();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function openScreen(tabId) {
+    document.getElementById('frontHomeView').style.display = 'none';
+    ['statusTab', 'billListTab', 'ironingTab', 'shelfTab', 'entryTab', 'cuttingTab', 'stitchingTab', 'buttonTab'].forEach(id => {
+      document.getElementById(id).style.display = id === tabId ? 'block' : 'none';
+    });
+    document.getElementById('headerHomeBtn').style.display = 'inline-flex';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (tabId === 'statusTab') renderBills();
+    if (tabId === 'billListTab') renderBillListTab();
+    if (tabId === 'ironingTab') {
+      selectedIroner = null;
+      document.getElementById('ironerListView').style.display = 'block';
+      document.getElementById('ironerDetailView').style.display = 'none';
+      renderIronersList();
+    }
+    if (tabId === 'shelfTab') {
+      selectedShelf = null;
+      document.getElementById('shelfListView').style.display = 'block';
+      document.getElementById('shelfDetailView').style.display = 'none';
+      renderShelvesList();
+    }
+    if (tabId === 'cuttingTab') {
+      selectedCutter = null;
+      document.getElementById('cutterListView').style.display = 'block';
+      document.getElementById('cutterDetailView').style.display = 'none';
+      renderCuttersList();
+    }
+    if (tabId === 'stitchingTab') {
+      selectedTailor = null;
+      document.getElementById('tailorListView').style.display = 'block';
+      document.getElementById('tailorDetailView').style.display = 'none';
+      renderTailorsList();
+    }
+    if (tabId === 'buttonTab') {
+      selectedButtonWorker = null;
+      document.getElementById('buttonWorkerListView').style.display = 'block';
+      document.getElementById('buttonWorkerDetailView').style.display = 'none';
+      renderButtonWorkersList();
+    }
+  }
+
+  function openAdminWithFilter(filterType, pillIdx) {
+    openScreen('statusTab');
+    const pills = document.querySelectorAll('#statusTab .pill');
+    if (pills[pillIdx]) setFilter(filterType, pills[pillIdx]);
+  }
+
+  function updateFrontHomeDashboard() {
+    let pendingCount = 0;
+    let dueCount = 0;
+    let uncolCount = 0;
+    const notifChips = document.getElementById('homeNotifChipsList');
+    notifChips.innerHTML = '';
+
+    bills.forEach(bill => {
+      const undelivered = bill.items.filter(i => !i.delivered).length;
+      const unready = bill.items.filter(i => !i.ironed && !i.delivered).length;
+      const diff = getDaysDiff(bill.deliveryDate);
+
+      if (undelivered > 0) pendingCount++;
+      if (unready > 0 && diff <= 1) {
+        dueCount++;
+        const lbl = diff === 1 ? 'നാളെ' : (diff === 0 ? 'ഇന്ന്' : 'കഴിഞ്ഞു');
+        const chip = document.createElement('div');
+        chip.className = 'alert-badge urgent';
+        chip.innerHTML = `#${bill.billNo} (${bill.billYear || ''}) • ${lbl}`;
+        chip.onclick = () => quickSearchBill(bill.billNo);
+        notifChips.appendChild(chip);
+      }
+      if (undelivered > 0 && diff < 0) {
+        uncolCount++;
+        const chip = document.createElement('div');
+        chip.className = 'alert-badge late';
+        chip.innerHTML = `#${bill.billNo} (${Math.abs(diff)}d വൈകി)`;
+        chip.onclick = () => quickSearchBill(bill.billNo);
+        notifChips.appendChild(chip);
+      }
+    });
+
+    document.getElementById('homeAdminSub').innerText = `${pendingCount} ബില്ലുകൾ ബാക്കി`;
+    document.getElementById('homeListSub').innerText = `ആകെ ${bills.length} ബില്ലുകൾ`;
+    document.getElementById('homeDueCount').innerText = dueCount;
+    document.getElementById('homeUncolCount').innerText = uncolCount;
+
+    if (dueCount === 0 && uncolCount === 0) {
+      notifChips.innerHTML = `<span style="font-size:0.78rem; color:var(--success); font-weight:700;">✅ നിലവിൽ അടിയന്തിര നോട്ടിഫിക്കേഷനുകൾ ഒന്നുമില്ല.</span>`;
+    }
+  }
+
+  // --- AUTO-ADD MISSING OLD BILL WHEN STAFF SEARCHES ---
+  function renderQuickAutoAddBillHtml(searchedBillNo, targetRole, targetWorkerOrShelf) {
+    const curYear = new Date().getFullYear();
+    const safeBillNo = searchedBillNo.replace(/'/g, "\\'");
+    const safeTarget = targetWorkerOrShelf.replace(/'/g, "\\'");
+
+    return `
+      <div class="quick-create-bill-box">
+        <div style="font-size:0.86rem; font-weight:800; color:#b45309; margin-bottom:4px;">
+          ⚠️ "${searchedBillNo}" എന്ന ബിൽ ആപ്പിൽ ചേർത്തിട്ടില്ല!
+        </div>
+        <div style="font-size:0.78rem; color:#475569; margin-bottom:8px;">
+          പഴയ ബിൽ ആണെങ്കിൽ താഴെ എണ്ണം നൽകി <strong>${targetWorkerOrShelf.toUpperCase()}</strong>-ലേക്ക് നേരിട്ട് ആഡ് ചെയ്യാം:
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
+          <div>
+            <label style="font-size:0.74rem;">വർഷം (Bill Year):</label>
+            <input type="number" id="qAddYear" value="${curYear}" style="padding:7px;">
+          </div>
+          <div>
+            <label style="font-size:0.74rem;">ഡെലിവറി ഡേറ്റ്:</label>
+            <input type="date" id="qAddDelDate" value="${getTodayISO()}" style="padding:7px;">
+          </div>
+        </div>
+        <div class="quick-item-mini-grid">
+          <div class="q-mini-item">Shirt<br><input type="number" id="qCntShirt" value="1" min="0"></div>
+          <div class="q-mini-item">Pant<br><input type="number" id="qCntPant" value="0" min="0"></div>
+          <div class="q-mini-item">Jubba<br><input type="number" id="qCntJubba" value="0" min="0"></div>
+          <div class="q-mini-item">Pajama<br><input type="number" id="qCntPajama" value="0" min="0"></div>
+          <div class="q-mini-item">Kurta<br><input type="number" id="qCntKurta" value="0" min="0"></div>
+          <div class="q-mini-item">Other<br><input type="number" id="qCntOther" value="0" min="0"></div>
+        </div>
+        <button type="button" class="btn-primary-full" style="background:#d97706; padding:11px; font-size:0.88rem;"
+          onclick="executeQuickAutoAddBill('${safeBillNo}', '${targetRole}', '${safeTarget}')">
+          ➕ Bill #${searchedBillNo} ആഡ് ചെയ്ത് വർക്ക് നൽകുക
+        </button>
+      </div>
+    `;
+  }
+
+  async function executeQuickAutoAddBill(billNo, targetRole, targetName) {
+    const billYear = document.getElementById('qAddYear').value || String(new Date().getFullYear());
+    const deliveryDate = document.getElementById('qAddDelDate').value || getTodayISO();
+    const nowTime = formatCurrentDateTime();
+    const todayISO = getTodayISO();
+
+    const counts = [
+      { key: 'Shirt', cnt: parseInt(document.getElementById('qCntShirt').value) || 0 },
+      { key: 'Pant', cnt: parseInt(document.getElementById('qCntPant').value) || 0 },
+      { key: 'Jubba', cnt: parseInt(document.getElementById('qCntJubba').value) || 0 },
+      { key: 'Pajama', cnt: parseInt(document.getElementById('qCntPajama').value) || 0 },
+      { key: 'Kurta', cnt: parseInt(document.getElementById('qCntKurta').value) || 0 },
+      { key: 'Garment', cnt: parseInt(document.getElementById('qCntOther').value) || 0 }
+    ];
+
+    const itemsList = [];
+    counts.forEach(c => {
+      for (let i = 1; i <= c.cnt; i++) {
+        const itemObj = {
+          label: c.cnt > 1 ? `${c.key} #${i}` : c.key,
+          cutter: '', cutTime: '',
+          tailor: '', stitchTime: '', stitchDone: false, stitchDoneTime: '',
+          buttonWorker: '', buttonTime: '',
+          ironer: '', ironTime: '', ironDate: '', ironed: false,
+          location: '', delivered: false, deliveredTime: ''
+        };
+
+        if (targetRole === 'Cutter') {
+          itemObj.cutter = targetName;
+          itemObj.cutTime = nowTime;
+        } else if (targetRole === 'Tailor') {
+          itemObj.tailor = targetName;
+          itemObj.stitchTime = nowTime;
+        } else if (targetRole === 'Button') {
+          itemObj.buttonWorker = targetName;
+          itemObj.buttonTime = nowTime;
+          itemObj.stitchDone = true;
+        } else if (targetRole === 'Ironer') {
+          itemObj.ironer = targetName;
+          itemObj.ironTime = nowTime;
+          itemObj.ironDate = todayISO;
+          itemObj.ironed = true;
+        } else if (targetRole === 'Shelf') {
+          itemObj.location = targetName;
+        }
+
+        itemsList.push(itemObj);
+      }
+    });
+
+    if (itemsList.length === 0) return alert('കുറഞ്ഞത് ഒരു ഐറ്റത്തിന്റെ എണ്ണമെങ്കിലും നൽകുക!');
+
+    const ok = await callApi({
+      action: 'addBill',
+      billData: {
+        billNo, billYear, deliveryDate,
+        customerName: '', customerPhone: '',
+        totalAmount: 0, discountAmount: 0, advanceAmount: 0,
+        billDetails: 'Quick added by staff', billPhoto: '', items: itemsList
+      }
+    }, `Bill #${billNo} ആഡ് ചെയ്യുന്നു...`);
+
+    if (ok) {
+      if (targetRole === 'Cutter') { document.getElementById('cutTabBillSearch').value = ''; document.getElementById('cutTabFoundBillArea').innerHTML = ''; }
+      if (targetRole === 'Tailor') { document.getElementById('tailorTabBillSearch').value = ''; document.getElementById('tailorTabFoundBillArea').innerHTML = ''; }
+      if (targetRole === 'Button') { document.getElementById('btnTabBillSearch').value = ''; document.getElementById('btnTabFoundBillArea').innerHTML = ''; }
+      if (targetRole === 'Ironer') { document.getElementById('ironTabBillSearch').value = ''; document.getElementById('ironTabFoundBillArea').innerHTML = ''; }
+      if (targetRole === 'Shelf') { document.getElementById('shelfTabBillSearch').value = ''; document.getElementById('shelfTabFoundBillArea').innerHTML = ''; }
+      alert(`✅ Bill #${billNo} (${billYear}) ആപ്പിൽ ആഡ് ചെയ്ത് ${targetName}-ലേക്ക് നൽകി!`);
+    }
   }
 
   async function callApi(payload, loaderMsg) {
@@ -1405,7 +1729,7 @@
     const bill = bills.find(b => b.id === billId);
     if (!bill || !bill.billPhoto) return;
     viewingPhotoBillId = billId;
-    document.getElementById('photoViewerTitle').innerText = `📷 Bill #${bill.billNo} ഫോട്ടോ`;
+    document.getElementById('photoViewerTitle').innerText = `📷 Bill #${bill.billNo} (${bill.billYear || ''})`;
     document.getElementById('photoViewerImg').src = bill.billPhoto;
     document.getElementById('photoViewerModal').style.display = 'flex';
   }
@@ -1441,7 +1765,7 @@
       activePayHistoryBuffer.push({ amount: advAmt, date: bill.createdAt || bill.deliveryDate, note: 'Advance' });
     }
 
-    document.getElementById('payModalTitle').innerText = `💰 Bill #${bill.billNo} പേയ്‌മെന്റ് & തവണകൾ`;
+    document.getElementById('payModalTitle').innerText = `💰 Bill #${bill.billNo} (${bill.billYear || ''})`;
     document.getElementById('payModalTotal').value = totalAmt;
     document.getElementById('payModalDisc').value = discAmt;
     document.getElementById('newInstallmentAmount').value = '';
@@ -1542,6 +1866,7 @@
     editingItemsBuffer = JSON.parse(JSON.stringify(bill.items || []));
 
     document.getElementById('editBillNo').value = bill.billNo || '';
+    document.getElementById('editBillYear').value = bill.billYear || new Date().getFullYear();
     document.getElementById('editDeliveryDate').value = bill.deliveryDate || '';
     document.getElementById('editCustomerName').value = bill.customerName || '';
     document.getElementById('editCustomerPhone').value = bill.customerPhone || '';
@@ -1605,6 +1930,7 @@
   async function saveEditedBill() {
     if (!editingBillId) return;
     const billNo = document.getElementById('editBillNo').value.trim();
+    const billYear = document.getElementById('editBillYear').value.trim() || String(new Date().getFullYear());
     const deliveryDate = document.getElementById('editDeliveryDate').value;
     const customerName = document.getElementById('editCustomerName').value.trim();
     const customerPhone = document.getElementById('editCustomerPhone').value.trim();
@@ -1618,7 +1944,7 @@
 
     const targetId = editingBillId;
     const payloadData = {
-      billNo, deliveryDate, customerName, customerPhone, totalAmount, discountAmount, advanceAmount,
+      billNo, billYear, deliveryDate, customerName, customerPhone, totalAmount, discountAmount, advanceAmount,
       billDetails, items: editingItemsBuffer
     };
 
@@ -1626,25 +1952,37 @@
     await callApi({ action: 'editBill', billId: targetId, billData: payloadData }, 'ബിൽ മാറ്റങ്ങൾ സേവ് ചെയ്യുന്നു...');
   }
 
-  // --- TAB 2: BILL LIST ---
+  // --- BILL LIST TAB ---
   function toggleBillListOrder() {
     billListOldestFirst = !billListOldestFirst;
     document.getElementById('sortOrderToggleBtn').innerText = billListOldestFirst
-      ? '⇅ ക്രമം: ആദ്യം ചേർത്തത് ആദ്യം'
-      : '⇅ ക്രമം: പുതിയത് ആദ്യം';
+      ? '⇅ ആദ്യം ചേർത്തത്'
+      : '⇅ പുതിയത് ആദ്യം';
     renderBillListTab();
   }
 
   function clearBillListFilters() {
     document.getElementById('billListSearchInput').value = '';
-    document.getElementById('billListDateFilter').value = '';
+    document.getElementById('billListYearFilter').value = '';
     renderBillListTab();
   }
 
+  function populateBillListYearDropdown() {
+    const sel = document.getElementById('billListYearFilter');
+    const currentVal = sel.value;
+    const yearsSet = new Set([String(new Date().getFullYear())]);
+    bills.forEach(b => { if (b.billYear) yearsSet.add(String(b.billYear)); });
+    const sortedYears = Array.from(yearsSet).sort((a, b) => b.localeCompare(a));
+
+    sel.innerHTML = '<option value="">എല്ലാ വർഷവും</option>' +
+      sortedYears.map(y => `<option value="${y}" ${currentVal === y ? 'selected' : ''}>📅 ${y}</option>`).join('');
+  }
+
   function renderBillListTab() {
+    populateBillListYearDropdown();
     const container = document.getElementById('billListRowsContainer');
     const query = document.getElementById('billListSearchInput').value.trim().toLowerCase();
-    const selectedDate = document.getElementById('billListDateFilter').value;
+    const selectedYear = document.getElementById('billListYearFilter').value;
 
     let sortedBills = [...bills].sort((a, b) => {
       const idxA = a.entryIndex || 0;
@@ -1653,20 +1991,15 @@
     });
 
     const filtered = sortedBills.filter(bill => {
-      if (selectedDate) {
-        const matchDelDate = bill.deliveryDate === selectedDate;
-        const matchCreatedDate = (bill.createdAt || '').startsWith(selectedDate);
-        if (!matchDelDate && !matchCreatedDate) return false;
-      }
-
+      if (selectedYear && String(bill.billYear || '') !== selectedYear) return false;
       if (!query) return true;
       const matchBillNo = bill.billNo.toLowerCase().includes(query);
+      const matchYear = String(bill.billYear || '').includes(query);
       const matchName = (bill.customerName || '').toLowerCase().includes(query);
       const matchPhone = (bill.customerPhone || '').toLowerCase().includes(query);
       const matchDel = (bill.deliveryDate || '').toLowerCase().includes(query);
-      const matchCreated = (bill.createdAt || '').toLowerCase().includes(query);
       const matchDetails = (bill.billDetails || '').toLowerCase().includes(query);
-      return matchBillNo || matchName || matchPhone || matchDel || matchCreated || matchDetails;
+      return matchBillNo || matchYear || matchName || matchPhone || matchDel || matchDetails;
     });
 
     document.getElementById('billListCountLabel').innerText = `കാണിക്കുന്ന ബില്ലുകൾ: ${filtered.length} / ${bills.length}`;
@@ -1699,6 +2032,7 @@
                 <div>
                   <span class="order-sl-badge">#${slNo}</span>
                   <strong style="font-size:1.1rem; color:var(--primary-dark);">Bill #${bill.billNo}</strong>
+                  ${bill.billYear ? `<span class="year-badge">${bill.billYear}</span>` : ''}
                 </div>
                 <div style="font-size:0.82rem; font-weight:700; color:#334155; margin-top:4px;">
                   👤 ${bill.customerName || 'പേര് നൽകിയിട്ടില്ല'} 
@@ -1706,16 +2040,13 @@
                 </div>
               </div>
             </div>
-            <div style="display:flex; gap:5px;">
-              <button type="button" class="btn-edit-bill" onclick="openEditBillModal('${bill.id}')">✏️ Edit</button>
-            </div>
+            <button type="button" class="btn-edit-bill" onclick="openEditBillModal('${bill.id}')">✏️ Edit</button>
           </div>
 
           ${bill.billDetails ? `<div class="bill-details-banner" style="margin-bottom:0;">📝 ${bill.billDetails}</div>` : ''}
 
           <div class="bill-list-meta">
             <span>📅 ഡെലിവറി: <strong>${bill.deliveryDate}</strong></span>
-            ${bill.createdAt ? `<span>🕒 എൻട്രി: ${bill.createdAt}</span>` : ''}
             <span>💰 Total: <strong>₹${totalAmt}</strong> ${discAmt > 0 ? `| Disc: <strong style="color:var(--teal);">₹${discAmt}</strong>` : ''} | Paid: <strong>₹${advAmt}</strong> | <strong style="color:${balAmt > 0 ? 'var(--danger)' : 'var(--success)'};">Bal: ₹${balAmt}</strong></span>
           </div>
 
@@ -1791,11 +2122,11 @@
 
     let matched = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
     if (!matched) {
-      area.innerHTML = `<p style="color:var(--danger); font-size:0.84rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      area.innerHTML = renderQuickAutoAddBillHtml(document.getElementById('shelfTabBillSearch').value.trim(), 'Shelf', selectedShelf);
       return;
     }
 
-    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
+    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matched.billNo} (${matched.billYear || ''}) • ഡെലിവറി: ${matched.deliveryDate}</div>`;
     matched.items.forEach((item, idx) => {
       const isHere = (item.location || '').toLowerCase() === selectedShelf.toLowerCase();
       const note = (item.location && !isHere)
@@ -1851,6 +2182,7 @@
           billId: bill.id,
           itemIdx: idx,
           billNo: bill.billNo,
+          billYear: bill.billYear,
           customerName: bill.customerName,
           deliveryDate: bill.deliveryDate,
           label: item.label,
@@ -1869,7 +2201,7 @@
     listContainer.innerHTML = storedItems.map(h => `
       <div class="history-card shelf-history">
         <div>
-          <strong style="color:var(--primary-dark); font-size:0.98rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          <strong style="color:var(--primary-dark); font-size:0.98rem;">Bill #${h.billNo}</strong> ${h.billYear ? `<span class="year-badge">${h.billYear}</span>` : ''} — <strong>${h.label}</strong>
           ${h.ironed ? '<span style="background:var(--success-soft); color:var(--success); font-size:0.72rem; padding:2px 6px; border-radius:6px; margin-left:4px; font-weight:800;">✅ Ready</span>' : ''}
           <div style="font-size:0.78rem; color:var(--muted); margin-top:2px;">
             ${h.customerName ? `👤 ${h.customerName} • ` : ''}ഡെലിവറി: ${h.deliveryDate}
@@ -2032,7 +2364,7 @@
       <div class="section-card">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:12px;">
           <div>
-            <div style="font-size:1.3rem; font-weight:800; color:var(--primary-dark);">Bill #${bill.billNo}</div>
+            <div style="font-size:1.3rem; font-weight:800; color:var(--primary-dark);">Bill #${bill.billNo} ${bill.billYear ? `<span class="year-badge">${bill.billYear}</span>` : ''}</div>
             ${bill.customerName ? `<div style="font-size:0.9rem; font-weight:700; color:#475569; margin-top:2px;">👤 ${bill.customerName}</div>` : ''}
           </div>
           <span class="delivery-tag ${headerBadgeClass}">${headerBadgeText}</span>
@@ -2108,7 +2440,8 @@
 
   function refreshAllActiveViews() {
     renderItemBoxes();
-    renderBills();
+    updateFrontHomeDashboard();
+    if (document.getElementById('statusTab').style.display === 'block') renderBills();
     if (document.getElementById('billListTab').style.display === 'block') renderBillListTab();
     if (document.getElementById('manageModal').style.display === 'flex') renderManageModalContent();
     if (document.getElementById('ironingTab').style.display === 'block') {
@@ -2130,48 +2463,6 @@
     if (document.getElementById('buttonTab').style.display === 'block') {
       if (selectedButtonWorker) renderButtonWorkerDetail();
       else renderButtonWorkersList();
-    }
-  }
-
-  function switchTab(tabId, btn) {
-    ['statusTab', 'billListTab', 'ironingTab', 'shelfTab', 'entryTab', 'cuttingTab', 'stitchingTab', 'buttonTab'].forEach(id => {
-      document.getElementById(id).style.display = id === tabId ? 'block' : 'none';
-    });
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    if (tabId === 'statusTab') renderBills();
-    if (tabId === 'billListTab') renderBillListTab();
-    if (tabId === 'ironingTab') {
-      selectedIroner = null;
-      document.getElementById('ironerListView').style.display = 'block';
-      document.getElementById('ironerDetailView').style.display = 'none';
-      renderIronersList();
-    }
-    if (tabId === 'shelfTab') {
-      selectedShelf = null;
-      document.getElementById('shelfListView').style.display = 'block';
-      document.getElementById('shelfDetailView').style.display = 'none';
-      renderShelvesList();
-    }
-    if (tabId === 'cuttingTab') {
-      selectedCutter = null;
-      document.getElementById('cutterListView').style.display = 'block';
-      document.getElementById('cutterDetailView').style.display = 'none';
-      renderCuttersList();
-    }
-    if (tabId === 'stitchingTab') {
-      selectedTailor = null;
-      document.getElementById('tailorListView').style.display = 'block';
-      document.getElementById('tailorDetailView').style.display = 'none';
-      renderTailorsList();
-    }
-    if (tabId === 'buttonTab') {
-      selectedButtonWorker = null;
-      document.getElementById('buttonWorkerListView').style.display = 'block';
-      document.getElementById('buttonWorkerDetailView').style.display = 'none';
-      renderButtonWorkersList();
     }
   }
 
@@ -2335,12 +2626,12 @@
 
     let matchedBill = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
     if (!matchedBill) {
-      area.innerHTML = `<p style="color:var(--danger); font-size:0.84rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      area.innerHTML = renderQuickAutoAddBillHtml(document.getElementById('ironTabBillSearch').value.trim(), 'Ironer', selectedIroner);
       return;
     }
 
     const shelves = getAllShelvesList();
-    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matchedBill.billNo} (ഡെലിവറി: ${matchedBill.deliveryDate})</div>`;
+    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matchedBill.billNo} (${matchedBill.billYear || ''}) • ഡെലിവറി: ${matchedBill.deliveryDate}</div>`;
     matchedBill.items.forEach((item, idx) => {
       const isCurrent = item.ironed && item.ironer === selectedIroner;
       const isOther = item.ironed && item.ironer !== selectedIroner;
@@ -2471,7 +2762,7 @@
     const matchedItems = [];
     bills.forEach(bill => bill.items.forEach((item, idx) => {
       if (item.ironed && item.ironer === selectedIroner && isDateInFilter(item.ironDate || item.ironTime, ironerDateFilter)) {
-        matchedItems.push({ billId: bill.id, itemIdx: idx, billNo: bill.billNo, label: item.label, ironTime: item.ironTime || '', location: item.location || '' });
+        matchedItems.push({ billId: bill.id, itemIdx: idx, billNo: bill.billNo, billYear: bill.billYear, label: item.label, ironTime: item.ironTime || '', location: item.location || '' });
       }
     }));
 
@@ -2483,7 +2774,7 @@
     historyContainer.innerHTML = matchedItems.map(h => `
       <div class="history-card iron-history">
         <div>
-          <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> ${h.billYear ? `<span class="year-badge">${h.billYear}</span>` : ''} — <strong>${h.label}</strong>
           ${h.location ? `<div style="font-size:0.78rem; color:var(--amber); font-weight:700; margin-top:2px;">🗄️ ${h.location}</div>` : ''}
         </div>
         <div class="history-right">
@@ -2494,7 +2785,7 @@
     `).join('');
   }
 
-  // --- NEW BILL & PAYMENT PREVIEW (WITH DISCOUNT) ---
+  // --- NEW BILL & PAYMENT PREVIEW ---
   function updateBalancePreview() {
     const total = parseFloat(document.getElementById('totalAmount').value) || 0;
     const disc = parseFloat(document.getElementById('discountAmount').value) || 0;
@@ -2544,6 +2835,7 @@
   async function saveBill() {
     const billNoInput = document.getElementById('billNo');
     const billNo = billNoInput.value.trim();
+    const billYear = document.getElementById('billYear').value.trim() || String(new Date().getFullYear());
     const deliveryDate = document.getElementById('deliveryDate').value;
     const customerName = document.getElementById('customerName').value.trim();
     const customerPhone = document.getElementById('customerPhone').value.trim();
@@ -2573,7 +2865,7 @@
     const ok = await callApi({
       action: 'addBill',
       billData: {
-        billNo, deliveryDate, customerName, customerPhone,
+        billNo, billYear, deliveryDate, customerName, customerPhone,
         totalAmount, discountAmount, advanceAmount,
         billDetails, billPhoto: newBillPhotoBase64, items: itemsList
       }
@@ -2592,7 +2884,7 @@
       allTypes.forEach(t => { const inp = document.getElementById('count-' + t.key); if (inp) inp.value = 0; });
       manualCustomItems = [];
       renderManualCustomChips();
-      alert(`✅ ബിൽ #${billNo} സേവ് ചെയ്തു! അടുത്ത പുതിയ ബിൽ ചേർക്കാം.`);
+      alert(`✅ ബിൽ #${billNo} (${billYear}) സേവ് ചെയ്തു! അടുത്ത പുതിയ ബിൽ ചേർക്കാം.`);
       billNoInput.focus();
     }
   }
@@ -2658,11 +2950,11 @@
 
     let matched = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
     if (!matched) {
-      area.innerHTML = `<p style="color:var(--danger); font-size:0.84rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      area.innerHTML = renderQuickAutoAddBillHtml(document.getElementById('cutTabBillSearch').value.trim(), 'Cutter', selectedCutter);
       return;
     }
 
-    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
+    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matched.billNo} (${matched.billYear || ''}) • ഡെലിവറി: ${matched.deliveryDate}</div>`;
     matched.items.forEach((item, idx) => {
       const isHere = item.cutter === selectedCutter;
       const note = (item.cutter && !isHere) ? `<small style="color:var(--warning); font-weight:700;">(${item.cutter})</small>` : (isHere ? `<small style="color:var(--success); font-weight:700;">(നൽകിക്കഴിഞ്ഞു)</small>` : '');
@@ -2713,7 +3005,7 @@
     const items = [];
     bills.forEach(bill => bill.items.forEach((item, idx) => {
       if (item.cutter === selectedCutter) {
-        items.push({ billId: bill.id, itemIdx: idx, billNo: bill.billNo, deliveryDate: bill.deliveryDate, label: item.label, cutTime: item.cutTime || '' });
+        items.push({ billId: bill.id, itemIdx: idx, billNo: bill.billNo, billYear: bill.billYear, deliveryDate: bill.deliveryDate, label: item.label, cutTime: item.cutTime || '' });
       }
     }));
 
@@ -2724,7 +3016,7 @@
     historyContainer.innerHTML = items.map(h => `
       <div class="history-card cut-history">
         <div>
-          <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> ${h.billYear ? `<span class="year-badge">${h.billYear}</span>` : ''} — <strong>${h.label}</strong>
           <div style="font-size:0.78rem; color:var(--muted);">ഡെലിവറി: ${h.deliveryDate}</div>
         </div>
         <div class="history-right">
@@ -2792,11 +3084,11 @@
 
     let matched = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
     if (!matched) {
-      area.innerHTML = `<p style="color:var(--danger); font-size:0.84rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      area.innerHTML = renderQuickAutoAddBillHtml(document.getElementById('tailorTabBillSearch').value.trim(), 'Tailor', selectedTailor);
       return;
     }
 
-    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
+    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matched.billNo} (${matched.billYear || ''}) • ഡെലിവറി: ${matched.deliveryDate}</div>`;
     matched.items.forEach((item, idx) => {
       const isHere = item.tailor === selectedTailor;
       const note = (item.tailor && !isHere) ? `<small style="color:var(--warning); font-weight:700;">(${item.tailor})</small>` : (isHere ? `<small style="color:var(--success); font-weight:700;">(എടുത്തു കഴിഞ്ഞു)</small>` : '');
@@ -2871,6 +3163,7 @@
           billId: bill.id,
           itemIdx: idx,
           billNo: bill.billNo,
+          billYear: bill.billYear,
           deliveryDate: bill.deliveryDate,
           label: item.label,
           stitchTime: item.stitchTime || '',
@@ -2887,7 +3180,7 @@
     historyContainer.innerHTML = items.map(h => `
       <div class="history-card tailor-history" style="${h.stitchDone ? 'background:#f0fdf4;' : ''}">
         <div>
-          <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> ${h.billYear ? `<span class="year-badge">${h.billYear}</span>` : ''} — <strong>${h.label}</strong>
           <div style="font-size:0.78rem; color:var(--muted); margin-top:2px;">
             ഡെലിവറി: ${h.deliveryDate} ${h.stitchTime ? `| ${h.stitchTime}` : ''}
           </div>
@@ -2952,11 +3245,11 @@
 
     let matched = bills.find(b => b.billNo.toLowerCase() === query) || bills.find(b => b.billNo.toLowerCase().includes(query));
     if (!matched) {
-      area.innerHTML = `<p style="color:var(--danger); font-size:0.84rem;">"${query}" എന്ന ബിൽ നമ്പർ കണ്ടെത്തിയില്ല.</p>`;
+      area.innerHTML = renderQuickAutoAddBillHtml(document.getElementById('btnTabBillSearch').value.trim(), 'Button', selectedButtonWorker);
       return;
     }
 
-    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matched.billNo} (ഡെലിവറി: ${matched.deliveryDate})</div>`;
+    let rowsHtml = `<div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px; font-size:0.9rem;">Bill #${matched.billNo} (${matched.billYear || ''}) • ഡെലിവറി: ${matched.deliveryDate}</div>`;
     matched.items.forEach((item, idx) => {
       const isHere = item.buttonWorker === selectedButtonWorker;
       const note = (item.buttonWorker && !isHere) ? `<small style="color:var(--warning); font-weight:700;">(${item.buttonWorker})</small>` : (isHere ? `<small style="color:var(--success); font-weight:700;">(${item.buttonTime || ''})</small>` : '');
@@ -3013,7 +3306,7 @@
     const items = [];
     bills.forEach(bill => bill.items.forEach((item, idx) => {
       if (item.buttonWorker === selectedButtonWorker) {
-        items.push({ billId: bill.id, itemIdx: idx, billNo: bill.billNo, deliveryDate: bill.deliveryDate, label: item.label, tailor: item.tailor, buttonTime: item.buttonTime || '', ironed: item.ironed });
+        items.push({ billId: bill.id, itemIdx: idx, billNo: bill.billNo, billYear: bill.billYear, deliveryDate: bill.deliveryDate, label: item.label, tailor: item.tailor, buttonTime: item.buttonTime || '', ironed: item.ironed });
       }
     }));
 
@@ -3024,7 +3317,7 @@
     historyContainer.innerHTML = items.map(h => `
       <div class="history-card">
         <div>
-          <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> — <strong>${h.label}</strong>
+          <strong style="color:var(--primary-dark); font-size:0.95rem;">Bill #${h.billNo}</strong> ${h.billYear ? `<span class="year-badge">${h.billYear}</span>` : ''} — <strong>${h.label}</strong>
           ${h.ironed ? '<span style="background:var(--success-soft); color:var(--success); font-size:0.72rem; padding:2px 6px; border-radius:6px; margin-left:4px; font-weight:800;">✅ Ironed</span>' : ''}
           <div style="font-size:0.78rem; color:var(--muted); margin-top:2px;">🧵 ${h.tailor || '-'} | ഡെലിവറി: ${h.deliveryDate}</div>
         </div>
@@ -3156,11 +3449,6 @@
     await callApi({ action: 'deleteBill', billId }, 'ബിൽ ഡിലീറ്റ് ചെയ്യുന്നു...');
   }
 
-  function quickSelectFilter(filterType, pillIdx) {
-    const pills = document.querySelectorAll('#statusTab .pill');
-    if (pills[pillIdx]) setFilter(filterType, pills[pillIdx]);
-  }
-
   function setFilter(filterType, btn) {
     currentFilter = filterType;
     document.querySelectorAll('#statusTab .pill').forEach(p => p.classList.remove('active'));
@@ -3189,68 +3477,15 @@
   }
 
   function quickSearchBill(billNo) {
+    openScreen('statusTab');
     document.getElementById('searchInput').value = billNo;
     setFilter('all', document.querySelectorAll('#statusTab .pill')[0]);
-    switchTab('statusTab', document.querySelectorAll('.nav-item')[0]);
   }
 
   function renderBills() {
     const search = document.getElementById('searchInput').value.trim().toLowerCase();
     const container = document.getElementById('billsContainer');
-    const alertSection = document.getElementById('alertSection');
-    const alertList = document.getElementById('alertList');
-    const late7Section = document.getElementById('late7AlertSection');
-    const late7List = document.getElementById('late7AlertList');
-
-    container.innerHTML = ''; alertList.innerHTML = ''; late7List.innerHTML = '';
-    let hasAlerts = false;
-    let hasLate7 = false;
-
-    let statPending = 0;
-    let statUrgent = 0;
-    let statReady = 0;
-    let statUncollected = 0;
-
-    bills.forEach(bill => {
-      const total = bill.items.length;
-      const unreadyUndelivered = bill.items.filter(i => !i.ironed && !i.delivered).length;
-      const undeliveredCount = bill.items.filter(i => !i.delivered).length;
-      const readyOrDelCount = bill.items.filter(i => i.ironed || i.delivered).length;
-      const diff = getDaysDiff(bill.deliveryDate);
-
-      if (undeliveredCount > 0) statPending++;
-      if (unreadyUndelivered > 0 && diff <= 1) statUrgent++;
-      if (readyOrDelCount === total && undeliveredCount > 0) statReady++;
-      if (undeliveredCount > 0 && diff < 0) statUncollected++;
-
-      if (unreadyUndelivered > 0 && diff <= 1) {
-        hasAlerts = true;
-        let statusText = diff === 1 ? 'നാളെ' : (diff === 0 ? 'ഇന്ന്' : 'കഴിഞ്ഞു');
-        const badge = document.createElement('div');
-        badge.className = 'alert-badge';
-        badge.innerHTML = `#${bill.billNo} (${unreadyUndelivered}) • ${statusText}`;
-        badge.onclick = () => quickSearchBill(bill.billNo);
-        alertList.appendChild(badge);
-      }
-
-      if (undeliveredCount > 0 && diff < 0) {
-        hasLate7 = true;
-        const daysLate = Math.abs(diff);
-        const badge = document.createElement('div');
-        badge.className = 'alert-badge';
-        badge.innerHTML = `#${bill.billNo} (${daysLate} ദിവസം വൈകി)`;
-        badge.onclick = () => quickSearchBill(bill.billNo);
-        late7List.appendChild(badge);
-      }
-    });
-
-    document.getElementById('statPendingCount').innerText = statPending;
-    document.getElementById('statUrgentCount').innerText = statUrgent;
-    document.getElementById('statReadyCount').innerText = statReady;
-    document.getElementById('statUncollectedCount').innerText = statUncollected;
-
-    alertSection.style.display = hasAlerts ? 'block' : 'none';
-    late7Section.style.display = hasLate7 ? 'block' : 'none';
+    container.innerHTML = '';
 
     const minOverdueThreshold = uncollectedMinDays === 'custom'
       ? (parseInt(document.getElementById('customOverdueDaysInput').value) || 1)
@@ -3258,11 +3493,12 @@
 
     const filteredBills = bills.filter(bill => {
       const matchBill = bill.billNo.toLowerCase().includes(search);
+      const matchYear = String(bill.billYear || '').includes(search);
       const matchCust = (bill.customerName || '').toLowerCase().includes(search) || (bill.customerPhone || '').includes(search);
       const matchLoc = bill.items.some(it => (it.location || '').toLowerCase().includes(search));
       const matchDate = (bill.deliveryDate || '').includes(search) || (bill.createdAt || '').toLowerCase().includes(search);
       const matchDetails = (bill.billDetails || '').toLowerCase().includes(search);
-      if (!matchBill && !matchCust && !matchLoc && !matchDate && !matchDetails) return false;
+      if (!matchBill && !matchYear && !matchCust && !matchLoc && !matchDate && !matchDetails) return false;
 
       const total = bill.items.length;
       const deliveredCount = bill.items.filter(i => i.delivered).length;
@@ -3388,7 +3624,7 @@
           <div style="display:flex; gap:10px; align-items:center;">
             ${photoBtnHtml}
             <div>
-              <div class="bill-no">Bill #${bill.billNo}</div>
+              <div class="bill-no">Bill #${bill.billNo} ${bill.billYear ? `<span class="year-badge">${bill.billYear}</span>` : ''}</div>
               ${custLine}
             </div>
           </div>
